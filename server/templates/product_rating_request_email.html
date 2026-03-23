@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #000;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .content {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .item-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-info {
+            flex-grow: 1;
+        }
+
+        .rate-link {
+            color: #000;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .stars {
+            color: #FFD700;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Rate Your Purchase</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{ order.user.first_name|default:order.user.email }},</p>
+            <p>We hope you're enjoying your recent purchase from Cresbyte!</p>
+            <p>Would you mind taking a moment to tell us what you think? Your feedback helps us improve and helps other
+                shoppers.</p>
+
+            <div class="item-list">
+                {% for item in order.items.all %}
+                <div class="item">
+                    <div class="item-info">
+                        <strong>{{ item.product.name }}</strong>
+                        {% if item.variant %}<br><small>{{ item.variant.name }}</small>{% endif %}
+                    </div>
+                    <div>
+                        <a href="http://localhost:3000/products/{{ item.product.id }}?rate=true" class="rate-link">Rate
+                            Product</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="stars">★★★★★</div>
+
+            <p>Thank you for being a valued customer!</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 Cresbyte. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+
+</html>

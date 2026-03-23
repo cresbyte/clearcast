@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'serif', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .header {
+            background-color: #f9f9f7;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        .value {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .message-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid #1a1a1a;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="margin: 0; font-style: italic;">New Contact Message</h1>
+        </div>
+        <div class="content">
+            <p>You have received a new message from the contact form.</p>
+
+            <div class="label">From</div>
+            <div class="value">{{ contact.name }} ({{ contact.email }})</div>
+
+            {% if contact.phone_number %}
+            <div class="label">Phone</div>
+            <div class="value">{{ contact.phone_number }}</div>
+            {% endif %}
+
+            <div class="label">Subject</div>
+            <div class="value">{{ contact.subject }}</div>
+
+            <div class="label">Message</div>
+            <div class="message-box">
+                {{ contact.message|linebreaks }}
+            </div>
+
+            <p style="margin-top: 30px; font-size: 14px;">
+                Received on: {{ contact.created_at|date:"F j, Y, g:i a" }}
+            </p>
+        </div>
+        <div class="footer">
+            &copy; {{ now|date:"Y" }} Cresbyte E-commerce Solution. All rights reserved.
+        </div>
+    </div>
+</body>
+
+</html>

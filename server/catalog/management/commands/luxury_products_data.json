@@ -1,0 +1,2207 @@
+[
+  {
+    "num": 1,
+    "name": "Clay Pomade",
+    "price": "25.00",
+    "sku": "TGG-001",
+    "category": "Men's Grooming",
+    "subcategory": "Hair Care",
+    "description": "High hold, matte finish pomade crafted from natural clay and beeswax. Provides a firm yet flexible hold for classic styles without stiffness or residue.",
+    "details": "<h3>About Clay Pomade</h3><p>High hold, matte finish pomade crafted from natural clay and beeswax. Provides a firm yet flexible hold for classic styles without stiffness or residue.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&q=80",
+    "metadata": {
+      "hold": "High",
+      "finish": "Matte",
+      "weight": "4 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 2,
+    "name": "Bamboo Beard Comb",
+    "price": "25.00",
+    "sku": "TGG-002",
+    "category": "Men's Grooming",
+    "subcategory": "Body Care",
+    "description": "Handcrafted sustainable bamboo comb with fine and coarse teeth for versatile beard grooming. Anti-static design distributes natural oils evenly.",
+    "details": "<h3>About Bamboo Beard Comb</h3><p>Handcrafted sustainable bamboo comb with fine and coarse teeth for versatile beard grooming. Anti-static design distributes natural oils evenly.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80",
+    "metadata": {
+      "material": "Bamboo",
+      "type": "Comb",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 3,
+    "name": "Big Cat Sea Salt Spray",
+    "price": "25.00",
+    "sku": "TGG-003",
+    "category": "Men's Grooming",
+    "subcategory": "Hair Care",
+    "description": "Adds volume and beachy texture with natural sea salt minerals. Creates effortless, tousled waves for a laid-back look without crunchiness.",
+    "details": "<h3>About Big Cat Sea Salt Spray</h3><p>Adds volume and beachy texture with natural sea salt minerals. Creates effortless, tousled waves for a laid-back look without crunchiness.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=800&q=80",
+    "metadata": {
+      "hold": "Light",
+      "finish": "Natural",
+      "volume": "8 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 4,
+    "name": "Original Pomade",
+    "price": "20.00",
+    "sku": "TGG-004",
+    "category": "Men's Grooming",
+    "subcategory": "Hair Care",
+    "description": "Classic medium-hold pomade with refined shine, perfect for slicked-back styles, side parts, and pompadours. Premium ingredients for clean, all-day hold.",
+    "details": "<h3>About Original Pomade</h3><p>Classic medium-hold pomade with refined shine, perfect for slicked-back styles, side parts, and pompadours. Premium ingredients for clean, all-day hold.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=800&q=80",
+    "metadata": {
+      "hold": "Medium",
+      "finish": "Shine",
+      "weight": "4 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 5,
+    "name": "Deadwood Hair & Body Wash",
+    "price": "25.00",
+    "sku": "TGG-005",
+    "category": "Men's Grooming",
+    "subcategory": "Body Care",
+    "description": "Two-in-one pine-scented wash that cleanses hair and body with a refreshing forest fragrance. Sulfate-free, paraben-free.",
+    "details": "<h3>About Deadwood Hair & Body Wash</h3><p>Two-in-one pine-scented wash that cleanses hair and body with a refreshing forest fragrance. Sulfate-free, paraben-free.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1585751119414-ef2636f8aede?w=800&q=80",
+    "metadata": {
+      "scent": "Pine Blend",
+      "volume": "12 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 6,
+    "name": "Deadwood Deep Conditioner",
+    "price": "25.00",
+    "sku": "TGG-006",
+    "category": "Men's Grooming",
+    "subcategory": "Hair Care",
+    "description": "Pine-scented deep conditioning treatment enriched with argan oil and keratin. Restores moisture and strength to damaged hair.",
+    "details": "<h3>About Deadwood Deep Conditioner</h3><p>Pine-scented deep conditioning treatment enriched with argan oil and keratin. Restores moisture and strength to damaged hair.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&q=80",
+    "metadata": {
+      "scent": "Pine Blend",
+      "volume": "8 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 7,
+    "name": "Lawless Deep Conditioner",
+    "price": "25.00",
+    "sku": "TGG-007",
+    "category": "Men's Grooming",
+    "subcategory": "Hair Care",
+    "description": "Invigorating peppermint-scented conditioner delivering intense hydration with a cooling scalp sensation. Repairs dry, brittle hair.",
+    "details": "<h3>About Lawless Deep Conditioner</h3><p>Invigorating peppermint-scented conditioner delivering intense hydration with a cooling scalp sensation. Repairs dry, brittle hair.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80",
+    "metadata": {
+      "scent": "Peppermint",
+      "volume": "8 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 8,
+    "name": "Lawless Hair & Body Wash",
+    "price": "25.00",
+    "sku": "TGG-008",
+    "category": "Men's Grooming",
+    "subcategory": "Body Care",
+    "description": "Energizing peppermint-blend wash for hair and body. Sulfate-free formula gently cleanses while maintaining natural moisture balance.",
+    "details": "<h3>About Lawless Hair & Body Wash</h3><p>Energizing peppermint-blend wash for hair and body. Sulfate-free formula gently cleanses while maintaining natural moisture balance.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=800&q=80",
+    "metadata": {
+      "scent": "Peppermint",
+      "volume": "12 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 9,
+    "name": "Steadfast Hair & Body Wash",
+    "price": "25.00",
+    "sku": "TGG-009",
+    "category": "Men's Grooming",
+    "subcategory": "Body Care",
+    "description": "Bright citrus-scented dual-purpose wash for an invigorating start. Natural ingredients cleanse without stripping essential oils.",
+    "details": "<h3>About Steadfast Hair & Body Wash</h3><p>Bright citrus-scented dual-purpose wash for an invigorating start. Natural ingredients cleanse without stripping essential oils.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=800&q=80",
+    "metadata": {
+      "scent": "Citrus Blend",
+      "volume": "12 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 10,
+    "name": "Steadfast Deep Conditioner",
+    "price": "25.00",
+    "sku": "TGG-010",
+    "category": "Men's Grooming",
+    "subcategory": "Hair Care",
+    "description": "Citrus-infused deep conditioner nourishing hair from root to tip. Packed with vitamin E and natural oils for healthy, shiny hair.",
+    "details": "<h3>About Steadfast Deep Conditioner</h3><p>Citrus-infused deep conditioner nourishing hair from root to tip. Packed with vitamin E and natural oils for healthy, shiny hair.</p><h3>Brand</h3><p>True Grit Grooming</p>",
+    "image_url": "https://images.unsplash.com/photo-1585751119414-ef2636f8aede?w=800&q=80",
+    "metadata": {
+      "scent": "Citrus Blend",
+      "volume": "8 oz",
+      "brand": "True Grit Grooming"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 11,
+    "name": "A Perfectly Useless Afternoon",
+    "price": "295.00",
+    "sku": "MJW-011",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Whimsical timepiece featuring an illustrated figure lounging poolside as the hours drift by. Swiss quartz movement in 37mm stainless steel.",
+    "details": "<h3>About A Perfectly Useless Afternoon</h3><p>Whimsical timepiece featuring an illustrated figure lounging poolside as the hours drift by. Swiss quartz movement in 37mm stainless steel.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1609587312208-cea54be969e7?w=800&q=80",
+    "metadata": {
+      "case_size": "37mm",
+      "movement": "Swiss Quartz",
+      "water_resistance": "3 ATM",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 12,
+    "name": "Beam Me Up",
+    "price": "295.00",
+    "sku": "MJW-012",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Playful alien-abduction themed watch where a tiny UFO beam tells the time. Swiss quartz movement with mineral crystal.",
+    "details": "<h3>About Beam Me Up</h3><p>Playful alien-abduction themed watch where a tiny UFO beam tells the time. Swiss quartz movement with mineral crystal.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+    "metadata": {
+      "case_size": "37mm",
+      "movement": "Swiss Quartz",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 13,
+    "name": "The Accurate",
+    "price": "245.00",
+    "sku": "MJW-013",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Minimalist watch featuring a skull motif \u2014 a memento mori reminding the wearer of life's fleeting nature. Japanese quartz movement.",
+    "details": "<h3>About The Accurate</h3><p>Minimalist watch featuring a skull motif \u2014 a memento mori reminding the wearer of life's fleeting nature. Japanese quartz movement.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80",
+    "metadata": {
+      "case_size": "37mm",
+      "movement": "Japanese Quartz",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 15,
+    "variants": []
+  },
+  {
+    "num": 14,
+    "name": "Monster Melter 3000",
+    "price": "295.00",
+    "sku": "MJW-014",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Vibrant, psychedelic monster artwork adorns this bold timepiece. The monster's tongue sweeps the minutes. Limited edition Swiss quartz.",
+    "details": "<h3>About Monster Melter 3000</h3><p>Vibrant, psychedelic monster artwork adorns this bold timepiece. The monster's tongue sweeps the minutes. Limited edition Swiss quartz.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800&q=80",
+    "metadata": {
+      "case_size": "37mm",
+      "movement": "Swiss Quartz",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 15,
+    "name": "Feline Fine",
+    "price": "295.00",
+    "sku": "MJW-015",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Elegant cat-themed watch where a feline's tail sweeps the seconds. Hand-painted dial with Swiss quartz movement.",
+    "details": "<h3>About Feline Fine</h3><p>Elegant cat-themed watch where a feline's tail sweeps the seconds. Hand-painted dial with Swiss quartz movement.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=800&q=80",
+    "metadata": {
+      "case_size": "37mm",
+      "movement": "Swiss Quartz",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 16,
+    "name": "Ricochet",
+    "price": "425.00",
+    "sku": "MJW-016",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Mesmerizing mechanical watch with layered cut-out shapes. Complex dial reveals different patterns as hands rotate. Automatic movement with exhibition caseback.",
+    "details": "<h3>About Ricochet</h3><p>Mesmerizing mechanical watch with layered cut-out shapes. Complex dial reveals different patterns as hands rotate. Automatic movement with exhibition caseback.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=800&q=80",
+    "metadata": {
+      "case_size": "40mm",
+      "movement": "Automatic",
+      "power_reserve": "40 hours",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Leather Strap",
+        "price": null
+      },
+      {
+        "name": "Metal Bracelet",
+        "price": "455.00"
+      }
+    ]
+  },
+  {
+    "num": 17,
+    "name": "A Perfectly Useless Morning",
+    "price": "295.00",
+    "sku": "MJW-017",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "The morning companion to the afternoon edition, featuring a sunrise scene. Swiss quartz in polished stainless steel.",
+    "details": "<h3>About A Perfectly Useless Morning</h3><p>The morning companion to the afternoon edition, featuring a sunrise scene. Swiss quartz in polished stainless steel.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1609587312208-cea54be969e7?w=800&q=80",
+    "metadata": {
+      "case_size": "37mm",
+      "movement": "Swiss Quartz",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 15,
+    "variants": []
+  },
+  {
+    "num": 18,
+    "name": "Continuum",
+    "price": "395.00",
+    "sku": "MJW-018",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Abstract visualization of time flowing like water across the dial. Hours melt into one another. Automatic Swiss movement.",
+    "details": "<h3>About Continuum</h3><p>Abstract visualization of time flowing like water across the dial. Hours melt into one another. Automatic Swiss movement.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+    "metadata": {
+      "case_size": "40mm",
+      "movement": "Automatic",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 19,
+    "name": "Number Cruncher",
+    "price": "395.00",
+    "sku": "MJW-019",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "A playful monster devours the numbers as hours pass. Incredible detail in the hand-painted dial. Automatic movement, 40-hour reserve.",
+    "details": "<h3>About Number Cruncher</h3><p>A playful monster devours the numbers as hours pass. Incredible detail in the hand-painted dial. Automatic movement, 40-hour reserve.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&q=80",
+    "metadata": {
+      "case_size": "40mm",
+      "movement": "Automatic",
+      "power_reserve": "40 hours",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 20,
+    "name": "The Ascendent",
+    "price": "425.00",
+    "sku": "MJW-020",
+    "category": "Watches",
+    "subcategory": "Artistic Watches",
+    "description": "Adventure-inspired watch with a mountain climber scaling toward the hour markers. Automatic movement with sapphire crystal.",
+    "details": "<h3>About The Ascendent</h3><p>Adventure-inspired watch with a mountain climber scaling toward the hour markers. Automatic movement with sapphire crystal.</p><h3>Brand</h3><p>Mr Jones Watches</p>",
+    "image_url": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=800&q=80",
+    "metadata": {
+      "case_size": "40mm",
+      "movement": "Automatic",
+      "crystal": "Sapphire",
+      "brand": "Mr Jones Watches"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 21,
+    "name": "Gucci 25H Watch 36mm",
+    "price": "2390.00",
+    "sku": "GUC-021",
+    "category": "Watches",
+    "subcategory": "Luxury Watches",
+    "description": "Ultra-slim timepiece with architectural dial inspired by modern design. Swiss quartz movement in a sleek 36mm case. Water-resistant to 50m.",
+    "details": "<h3>About Gucci 25H Watch 36mm</h3><p>Ultra-slim timepiece with architectural dial inspired by modern design. Swiss quartz movement in a sleek 36mm case. Water-resistant to 50m.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=800&q=80",
+    "metadata": {
+      "case_size": "36mm",
+      "movement": "Swiss Quartz",
+      "crystal": "Sapphire",
+      "water_resistance": "50m",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 22,
+    "name": "Gucci 25H Watch 40mm",
+    "price": "3950.00",
+    "sku": "GUC-022",
+    "category": "Watches",
+    "subcategory": "Luxury Watches",
+    "description": "Bold 40mm version of Gucci's 25H line with commanding wrist presence. Premium Swiss movement, sapphire crystal. Water-resistant to 50m.",
+    "details": "<h3>About Gucci 25H Watch 40mm</h3><p>Bold 40mm version of Gucci's 25H line with commanding wrist presence. Premium Swiss movement, sapphire crystal. Water-resistant to 50m.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=800&q=80",
+    "metadata": {
+      "case_size": "40mm",
+      "movement": "Swiss Quartz",
+      "crystal": "Sapphire",
+      "water_resistance": "50m",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 23,
+    "name": "Gucci Interlocking Watch 41mm",
+    "price": "2600.00",
+    "sku": "GUC-023",
+    "category": "Watches",
+    "subcategory": "Luxury Watches",
+    "description": "Features the iconic interlocking G logo on the dial in 41mm case. Swiss-made quartz with sapphire crystal and steel bracelet.",
+    "details": "<h3>About Gucci Interlocking Watch 41mm</h3><p>Features the iconic interlocking G logo on the dial in 41mm case. Swiss-made quartz with sapphire crystal and steel bracelet.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1609587312208-cea54be969e7?w=800&q=80",
+    "metadata": {
+      "case_size": "41mm",
+      "movement": "Swiss Quartz",
+      "crystal": "Sapphire",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 24,
+    "name": "Wild Vetiver",
+    "price": "380.00",
+    "sku": "CRD-024",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Woody floral fragrance blending wild vetiver with bergamot and geranium. Raw beauty meets refinement in a long-lasting scent for evening.",
+    "details": "<h3>About Wild Vetiver</h3><p>Woody floral fragrance blending wild vetiver with bergamot and geranium. Raw beauty meets refinement in a long-lasting scent for evening.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Woody Floral",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "247.0"
+      },
+      {
+        "name": "75ml",
+        "price": "323.0"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 25,
+    "name": "Aventus",
+    "price": "495.00",
+    "sku": "CRD-025",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "The legendary Creed fragrance defining modern masculinity since 2010. Pineapple, birch, and oakmoss create an unmistakable signature.",
+    "details": "<h3>About Aventus</h3><p>The legendary Creed fragrance defining modern masculinity since 2010. Pineapple, birch, and oakmoss create an unmistakable signature.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1541643600914-78b084683601?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Dry Woods, Citrus & Fruity",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "321.75"
+      },
+      {
+        "name": "75ml",
+        "price": "420.75"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 26,
+    "name": "Oud Zarian",
+    "price": "470.00",
+    "sku": "CRD-026",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Rich, opulent blend of rare oud wood, saffron, and amber. Intensely warm, transporting you to ancient spice routes with exceptional longevity.",
+    "details": "<h3>About Oud Zarian</h3><p>Rich, opulent blend of rare oud wood, saffron, and amber. Intensely warm, transporting you to ancient spice routes with exceptional longevity.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Woody, Ambery, Spicy",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "305.5"
+      },
+      {
+        "name": "75ml",
+        "price": "399.5"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 27,
+    "name": "Absolu Aventus",
+    "price": "450.00",
+    "sku": "CRD-027",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Deeper, more intense reinterpretation of Aventus. Rich blackcurrant and green apple over Haitian vetiver and oak. Limited edition.",
+    "details": "<h3>About Absolu Aventus</h3><p>Deeper, more intense reinterpretation of Aventus. Rich blackcurrant and green apple over Haitian vetiver and oak. Limited edition.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1594035910387-fea081ce5b57?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Dry Woods",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 10,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "292.5"
+      },
+      {
+        "name": "75ml",
+        "price": "382.5"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 28,
+    "name": "Green Irish Tweed",
+    "price": "360.00",
+    "sku": "CRD-028",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Aromatic fougere capturing the Irish countryside. Lemon verbena and violet leaves over Florentine iris and ambergris. Timeless since 1985.",
+    "details": "<h3>About Green Irish Tweed</h3><p>Aromatic fougere capturing the Irish countryside. Lemon verbena and violet leaves over Florentine iris and ambergris. Timeless since 1985.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1563170351-be82bc888aa4?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Aromatic Fougere, Green",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "234.0"
+      },
+      {
+        "name": "75ml",
+        "price": "306.0"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 29,
+    "name": "Silver Mountain Water",
+    "price": "360.00",
+    "sku": "CRD-029",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Inspired by sparkling Swiss Alpine streams. Crisp bergamot, green tea, and white musk. Clean and refreshing for everyday sophistication.",
+    "details": "<h3>About Silver Mountain Water</h3><p>Inspired by sparkling Swiss Alpine streams. Crisp bergamot, green tea, and white musk. Clean and refreshing for everyday sophistication.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Citrus, Fruity, Woody",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "234.0"
+      },
+      {
+        "name": "75ml",
+        "price": "306.0"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 30,
+    "name": "Millesime Imperial",
+    "price": "360.00",
+    "sku": "CRD-030",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Marine-citrus masterpiece evoking Mediterranean coastlines. Sea salt and iris meet lemon in this fresh, regal composition.",
+    "details": "<h3>About Millesime Imperial</h3><p>Marine-citrus masterpiece evoking Mediterranean coastlines. Sea salt and iris meet lemon in this fresh, regal composition.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1541643600914-78b084683601?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Citrus, Marine, Woody",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 10,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "234.0"
+      },
+      {
+        "name": "75ml",
+        "price": "306.0"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 31,
+    "name": "Aventus Cologne",
+    "price": "380.00",
+    "sku": "CRD-031",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Lighter, citrus-forward Aventus variation. Ginger, mandarin, and green apple create a bright, energetic, versatile scent.",
+    "details": "<h3>About Aventus Cologne</h3><p>Lighter, citrus-forward Aventus variation. Ginger, mandarin, and green apple create a bright, energetic, versatile scent.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Woody Fresh, Citrus",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "247.0"
+      },
+      {
+        "name": "75ml",
+        "price": "323.0"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 32,
+    "name": "Viking",
+    "price": "380.00",
+    "sku": "CRD-032",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Bold and daring, inspired by Norse explorers. Pink pepper and bergamot over rose and patchouli. Commanding.",
+    "details": "<h3>About Viking</h3><p>Bold and daring, inspired by Norse explorers. Pink pepper and bergamot over rose and patchouli. Commanding.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1594035910387-fea081ce5b57?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Aromatic Fougere, Spicy",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "247.0"
+      },
+      {
+        "name": "75ml",
+        "price": "323.0"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 33,
+    "name": "Royal Oud",
+    "price": "415.00",
+    "sku": "CRD-033",
+    "category": "Fragrances",
+    "subcategory": "Men's Cologne",
+    "description": "Definitive oud fragrance blending Gaiac wood with pink pepper and lemon. Smoky and regal. A masterpiece of restraint and power.",
+    "details": "<h3>About Royal Oud</h3><p>Definitive oud fragrance blending Gaiac wood with pink pepper and lemon. Smoky and regal. A masterpiece of restraint and power.</p><h3>Brand</h3><p>Creed</p>",
+    "image_url": "https://images.unsplash.com/photo-1563170351-be82bc888aa4?w=800&q=80",
+    "metadata": {
+      "concentration": "Eau de Parfum",
+      "profile": "Woody, Spicy, Smoky",
+      "origin": "France",
+      "brand": "Creed"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "50ml",
+        "price": "269.75"
+      },
+      {
+        "name": "75ml",
+        "price": "352.75"
+      },
+      {
+        "name": "100ml",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 34,
+    "name": "Roadster Cashmere Sweater",
+    "price": "1850.00",
+    "sku": "LRP-034",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Sweaters & Wraps",
+    "description": "Iconic cashmere sweater from finest Mongolian cashmere. Refined silhouette with ribbed cuffs and hem for timeless sophistication.",
+    "details": "<h3>About Roadster Cashmere Sweater</h3><p>Iconic cashmere sweater from finest Mongolian cashmere. Refined silhouette with ribbed cuffs and hem for timeless sophistication.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1544441893-675973e31985?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Navy",
+        "price": null
+      },
+      {
+        "name": "Charcoal",
+        "price": null
+      },
+      {
+        "name": "Ivory",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 35,
+    "name": "Karlie Wrap",
+    "price": "195.00",
+    "sku": "NKC-035",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Sweaters & Wraps",
+    "description": "Versatile cashmere wrap styled as shawl, scarf, or blanket. Lightweight yet warm for effortless layering.",
+    "details": "<h3>About Karlie Wrap</h3><p>Versatile cashmere wrap styled as shawl, scarf, or blanket. Lightweight yet warm for effortless layering.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 20,
+    "variants": [
+      {
+        "name": "Black",
+        "price": null
+      },
+      {
+        "name": "Camel",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 36,
+    "name": "Cashmere Travel Set",
+    "price": "350.00",
+    "sku": "NKC-036",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Scarves & Accessories",
+    "description": "Complete luxury travel set: cashmere blanket, eye mask, and socks. First-class comfort on every journey.",
+    "details": "<h3>About Cashmere Travel Set</h3><p>Complete luxury travel set: cashmere blanket, eye mask, and socks. First-class comfort on every journey.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
+    "metadata": {
+      "includes": "Blanket, Eye Mask, Socks",
+      "material": "100% Cashmere",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 37,
+    "name": "Cable Dog Sweater",
+    "price": "95.00",
+    "sku": "NKC-037",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Sweaters & Wraps",
+    "description": "Classic cable knit cashmere sweater for your elegant companion. Luxury extends to every family member.",
+    "details": "<h3>About Cable Dog Sweater</h3><p>Classic cable knit cashmere sweater for your elegant companion. Luxury extends to every family member.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "type": "Pet Apparel",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 38,
+    "name": "Fletcher Cashmere Throw Blanket",
+    "price": "450.00",
+    "sku": "NKC-038",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Home Textiles",
+    "description": "Ultra-soft throw blanket bringing hotel-suite luxury home. Generously sized for sofa or bed.",
+    "details": "<h3>About Fletcher Cashmere Throw Blanket</h3><p>Ultra-soft throw blanket bringing hotel-suite luxury home. Generously sized for sofa or bed.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1609803384069-19f3b07c6596?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "dimensions": "50x70 in",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 15,
+    "variants": []
+  },
+  {
+    "num": 39,
+    "name": "Cashmere Beanie & Scarf Set",
+    "price": "225.00",
+    "sku": "NKC-039",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Scarves & Accessories",
+    "description": "Matched beanie and scarf set in premium cashmere. Soft ribbed knit with relaxed, modern fit.",
+    "details": "<h3>About Cashmere Beanie & Scarf Set</h3><p>Matched beanie and scarf set in premium cashmere. Soft ribbed knit with relaxed, modern fit.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1544441893-675973e31985?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Charcoal",
+        "price": null
+      },
+      {
+        "name": "Navy",
+        "price": null
+      },
+      {
+        "name": "Oatmeal",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 40,
+    "name": "Classic Cashmere Scarf",
+    "price": "550.00",
+    "sku": "LRP-040",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Scarves & Accessories",
+    "description": "Timeless Loro Piana scarf from finest cashmere. The hallmark of quiet luxury in refined colours.",
+    "details": "<h3>About Classic Cashmere Scarf</h3><p>Timeless Loro Piana scarf from finest cashmere. The hallmark of quiet luxury in refined colours.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 41,
+    "name": "Vicuna Scarf",
+    "price": "2500.00",
+    "sku": "LRP-041",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Scarves & Accessories",
+    "description": "The ultimate luxury scarf from rare vicuna fiber. Softer and warmer than cashmere, each piece is a treasure.",
+    "details": "<h3>About Vicuna Scarf</h3><p>The ultimate luxury scarf from rare vicuna fiber. Softer and warmer than cashmere, each piece is a treasure.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80",
+    "metadata": {
+      "material": "100% Vicuna",
+      "origin": "Italy/Peru",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 42,
+    "name": "Cashmere Beanie",
+    "price": "450.00",
+    "sku": "LRP-042",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Scarves & Accessories",
+    "description": "Warm beanie from Loro Piana baby cashmere. Understated elegance with ribbed turn-up design.",
+    "details": "<h3>About Cashmere Beanie</h3><p>Warm beanie from Loro Piana baby cashmere. Understated elegance with ribbed turn-up design.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=800&q=80",
+    "metadata": {
+      "material": "Baby Cashmere",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 43,
+    "name": "Cashmere Socks Set",
+    "price": "150.00",
+    "sku": "LRP-043",
+    "category": "Cashmere & Knitwear",
+    "subcategory": "Scarves & Accessories",
+    "description": "Set of three luxurious cashmere socks in neutral tones. The ultimate everyday indulgence.",
+    "details": "<h3>About Cashmere Socks Set</h3><p>Set of three luxurious cashmere socks in neutral tones. The ultimate everyday indulgence.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1609803384069-19f3b07c6596?w=800&q=80",
+    "metadata": {
+      "material": "Cashmere Blend",
+      "quantity": 3,
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 44,
+    "name": "Gucci Giglio Large Tote Bag",
+    "price": "2350.00",
+    "sku": "GUC-044",
+    "category": "Designer Handbags",
+    "subcategory": "Tote Bags",
+    "description": "Spacious tote with iconic Giglio floral print. Premium leather with gold-tone hardware and suede lining. Made in Italy.",
+    "details": "<h3>About Gucci Giglio Large Tote Bag</h3><p>Spacious tote with iconic Giglio floral print. Premium leather with gold-tone hardware and suede lining. Made in Italy.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "hardware": "Gold-tone",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 45,
+    "name": "Bamboo Tote Large Bag",
+    "price": "4450.00",
+    "sku": "GUC-045",
+    "category": "Designer Handbags",
+    "subcategory": "Tote Bags",
+    "description": "Signature bamboo handle bag defining Gucci since 1947. Handcrafted in Florence from finest leather.",
+    "details": "<h3>About Bamboo Tote Large Bag</h3><p>Signature bamboo handle bag defining Gucci since 1947. Handcrafted in Florence from finest leather.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "handle": "Bamboo",
+      "origin": "Italy",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 46,
+    "name": "Jackie 1961 Small Shoulder Bag",
+    "price": "2950.00",
+    "sku": "GUC-046",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Timeless icon reimagined with signature piston closure. Named after Jackie Kennedy \u2014 understated American glamour.",
+    "details": "<h3>About Jackie 1961 Small Shoulder Bag</h3><p>Timeless icon reimagined with signature piston closure. Named after Jackie Kennedy \u2014 understated American glamour.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "closure": "Piston",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 47,
+    "name": "Horsebit 1955 Shoulder Bag",
+    "price": "3250.00",
+    "sku": "GUC-047",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Signature horsebit detail from Gucci's equestrian heritage. Structured silhouette in premium leather.",
+    "details": "<h3>About Horsebit 1955 Shoulder Bag</h3><p>Signature horsebit detail from Gucci's equestrian heritage. Structured silhouette in premium leather.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "hardware": "Horsebit",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 48,
+    "name": "GG Marmont Small Shoulder Bag",
+    "price": "2550.00",
+    "sku": "GUC-048",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Chevron leather with iconic double G hardware. Matelasse finish with antique gold chain strap.",
+    "details": "<h3>About GG Marmont Small Shoulder Bag</h3><p>Chevron leather with iconic double G hardware. Matelasse finish with antique gold chain strap.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80",
+    "metadata": {
+      "material": "Matelasse Leather",
+      "hardware": "Double G",
+      "brand": "Gucci"
+    },
+    "discount": 10,
+    "variants": []
+  },
+  {
+    "num": 49,
+    "name": "Dionysus Small Shoulder Bag",
+    "price": "2950.00",
+    "sku": "GUC-049",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Striking tiger head closure with hand-painted edges and sliding chain strap. Versatile styling.",
+    "details": "<h3>About Dionysus Small Shoulder Bag</h3><p>Striking tiger head closure with hand-painted edges and sliding chain strap. Versatile styling.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "closure": "Tiger Head",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 50,
+    "name": "Ophidia GG Small Shoulder Bag",
+    "price": "1980.00",
+    "sku": "GUC-050",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "GG Supreme canvas with green-red-green web stripe. Heritage design from Gucci's archive.",
+    "details": "<h3>About Ophidia GG Small Shoulder Bag</h3><p>GG Supreme canvas with green-red-green web stripe. Heritage design from Gucci's archive.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&q=80",
+    "metadata": {
+      "material": "GG Supreme Canvas",
+      "detail": "Web Stripe",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 51,
+    "name": "Gucci Bamboo 1947 Small Bag",
+    "price": "4200.00",
+    "sku": "GUC-051",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Iconic bamboo handle first created in 1947. Each handle handcrafted through heating and bending natural bamboo.",
+    "details": "<h3>About Gucci Bamboo 1947 Small Bag</h3><p>Iconic bamboo handle first created in 1947. Each handle handcrafted through heating and bending natural bamboo.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "handle": "Bamboo",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 52,
+    "name": "Jackie 1961 Medium Shoulder Bag",
+    "price": "3500.00",
+    "sku": "GUC-052",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Larger Jackie with signature piston closure. Spacious interior with multiple compartments.",
+    "details": "<h3>About Jackie 1961 Medium Shoulder Bag</h3><p>Larger Jackie with signature piston closure. Spacious interior with multiple compartments.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "closure": "Piston",
+      "size": "Medium",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 53,
+    "name": "Horsebit 1955 Small Shoulder Bag",
+    "price": "2850.00",
+    "sku": "GUC-053",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Compact Horsebit 1955 with heritage hardware. Perfect proportions for day-to-evening versatility.",
+    "details": "<h3>About Horsebit 1955 Small Shoulder Bag</h3><p>Compact Horsebit 1955 with heritage hardware. Perfect proportions for day-to-evening versatility.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "hardware": "Horsebit",
+      "size": "Small",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 54,
+    "name": "GG Marmont Medium Shoulder Bag",
+    "price": "2950.00",
+    "sku": "GUC-054",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Spacious matelasse shoulder bag with double G logo. Generous interior with antique gold chain.",
+    "details": "<h3>About GG Marmont Medium Shoulder Bag</h3><p>Spacious matelasse shoulder bag with double G logo. Generous interior with antique gold chain.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80",
+    "metadata": {
+      "material": "Matelasse Leather",
+      "hardware": "Double G",
+      "size": "Medium",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 55,
+    "name": "Dionysus Medium Shoulder Bag",
+    "price": "3200.00",
+    "sku": "GUC-055",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Medium Dionysus with tiger head spur closure. A wearable work of art.",
+    "details": "<h3>About Dionysus Medium Shoulder Bag</h3><p>Medium Dionysus with tiger head spur closure. A wearable work of art.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "closure": "Tiger Head",
+      "size": "Medium",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 56,
+    "name": "Ophidia GG Medium Tote Bag",
+    "price": "1750.00",
+    "sku": "GUC-056",
+    "category": "Designer Handbags",
+    "subcategory": "Tote Bags",
+    "description": "GG Supreme tote with generous proportions. Web stripe and double G honor Gucci's rich archive.",
+    "details": "<h3>About Ophidia GG Medium Tote Bag</h3><p>GG Supreme tote with generous proportions. Web stripe and double G honor Gucci's rich archive.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&q=80",
+    "metadata": {
+      "material": "GG Supreme Canvas",
+      "size": "Medium",
+      "brand": "Gucci"
+    },
+    "discount": 10,
+    "variants": []
+  },
+  {
+    "num": 57,
+    "name": "Gucci Diana Small Tote Bag",
+    "price": "3300.00",
+    "sku": "GUC-057",
+    "category": "Designer Handbags",
+    "subcategory": "Tote Bags",
+    "description": "Bamboo handles with removable neon leather bands. Contemporary reinterpretation of archival design.",
+    "details": "<h3>About Gucci Diana Small Tote Bag</h3><p>Bamboo handles with removable neon leather bands. Contemporary reinterpretation of archival design.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "handle": "Bamboo",
+      "detail": "Neon Bands",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 58,
+    "name": "Gucci Blondie Shoulder Bag",
+    "price": "3100.00",
+    "sku": "GUC-058",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Retro-inspired with oversized round interlocking G from 1970s archive. Soft, slouchy silhouette.",
+    "details": "<h3>About Gucci Blondie Shoulder Bag</h3><p>Retro-inspired with oversized round interlocking G from 1970s archive. Soft, slouchy silhouette.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "hardware": "Round IG",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 59,
+    "name": "Gucci Attache Small Shoulder Bag",
+    "price": "2980.00",
+    "sku": "GUC-059",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Crescent-shaped bag with distinctive G-shaped clasp hook. Clean lines, architectural form.",
+    "details": "<h3>About Gucci Attache Small Shoulder Bag</h3><p>Crescent-shaped bag with distinctive G-shaped clasp hook. Clean lines, architectural form.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80",
+    "metadata": {
+      "material": "Leather",
+      "closure": "G-Hook",
+      "brand": "Gucci"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 60,
+    "name": "Gucci Aphrodite Small Shoulder Bag",
+    "price": "1980.00",
+    "sku": "GUC-060",
+    "category": "Designer Handbags",
+    "subcategory": "Shoulder Bags",
+    "description": "Soft leather with double G hardware on flowing silhouette. Named after the goddess of beauty.",
+    "details": "<h3>About Gucci Aphrodite Small Shoulder Bag</h3><p>Soft leather with double G hardware on flowing silhouette. Named after the goddess of beauty.</p><h3>Brand</h3><p>Gucci</p>",
+    "image_url": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80",
+    "metadata": {
+      "material": "Soft Leather",
+      "hardware": "Double G",
+      "brand": "Gucci"
+    },
+    "discount": 15,
+    "variants": []
+  },
+  {
+    "num": 61,
+    "name": "Leather Travel Bag",
+    "price": "4500.00",
+    "sku": "LRP-061",
+    "category": "Designer Handbags",
+    "subcategory": "Travel Bags",
+    "description": "Spacious weekend bag from finest full-grain leather. Italian craftsmanship with brass hardware.",
+    "details": "<h3>About Leather Travel Bag</h3><p>Spacious weekend bag from finest full-grain leather. Italian craftsmanship with brass hardware.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80",
+    "metadata": {
+      "material": "Full-Grain Leather",
+      "hardware": "Brass",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 62,
+    "name": "14K Yellow Gold Black Diamond Dog Tag",
+    "price": "5040.00",
+    "sku": "EFY-062",
+    "category": "Fine Jewelry",
+    "subcategory": "Pendants & Necklaces",
+    "description": "Bold dog tag pendant with 1.36 TCW black diamonds in 14K yellow gold. Bridges streetwear and fine jewelry.",
+    "details": "<h3>About 14K Yellow Gold Black Diamond Dog Tag</h3><p>Bold dog tag pendant with 1.36 TCW black diamonds in 14K yellow gold. Bridges streetwear and fine jewelry.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Black Diamonds 1.36 TCW",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 63,
+    "name": "Black Diamond Pave Panther Link Bracelet",
+    "price": "7035.00",
+    "sku": "EFY-063",
+    "category": "Fine Jewelry",
+    "subcategory": "Bracelets",
+    "description": "Panther link bracelet with 3+ carat black diamond pave. Bold masculine design with secure clasp.",
+    "details": "<h3>About Black Diamond Pave Panther Link Bracelet</h3><p>Panther link bracelet with 3+ carat black diamond pave. Bold masculine design with secure clasp.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Black Diamonds 3+ TCW",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 64,
+    "name": "14K Yellow Gold Black Diamond Anchor Pendant",
+    "price": "3777.00",
+    "sku": "EFY-064",
+    "category": "Fine Jewelry",
+    "subcategory": "Pendants & Necklaces",
+    "description": "Nautical anchor pendant with black diamond accents. A symbol of strength in meticulous detail.",
+    "details": "<h3>About 14K Yellow Gold Black Diamond Anchor Pendant</h3><p>Nautical anchor pendant with black diamond accents. A symbol of strength in meticulous detail.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Black Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 65,
+    "name": "Black Diamond Anchor Chain Bracelet",
+    "price": "4830.00",
+    "sku": "EFY-065",
+    "category": "Fine Jewelry",
+    "subcategory": "Bracelets",
+    "description": "Anchor chain bracelet with pave-set black diamonds. Heavy, substantial 14K gold links.",
+    "details": "<h3>About Black Diamond Anchor Chain Bracelet</h3><p>Anchor chain bracelet with pave-set black diamonds. Heavy, substantial 14K gold links.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Black Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 10,
+    "variants": []
+  },
+  {
+    "num": 66,
+    "name": "Brasillica Diamond and Emerald Ring",
+    "price": "5810.00",
+    "sku": "EFY-066",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Vibrant natural emerald surrounded by brilliant-cut diamonds. Celebrating the lush beauty of Brazil.",
+    "details": "<h3>About Brasillica Diamond and Emerald Ring</h3><p>Vibrant natural emerald surrounded by brilliant-cut diamonds. Celebrating the lush beauty of Brazil.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1515562141589-67f0d706a5c0?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "center_stone": "Emerald",
+      "accent": "Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 67,
+    "name": "14K Yellow Gold Tanzanite and Diamond Ring",
+    "price": "11696.00",
+    "sku": "EFY-067",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Large, vivid tanzanite crowned by diamonds. The rare blue-violet stone: 1000x rarer than diamonds.",
+    "details": "<h3>About 14K Yellow Gold Tanzanite and Diamond Ring</h3><p>Large, vivid tanzanite crowned by diamonds. The rare blue-violet stone: 1000x rarer than diamonds.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "center_stone": "Tanzanite",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 68,
+    "name": "Sterling Silver Citrine and Diamond Ring",
+    "price": "735.00",
+    "sku": "EFY-068",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Warm citrine center stone with diamond accents in sterling silver. Accessible fine jewelry with presence.",
+    "details": "<h3>About Sterling Silver Citrine and Diamond Ring</h3><p>Warm citrine center stone with diamond accents in sterling silver. Accessible fine jewelry with presence.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
+    "metadata": {
+      "metal": "Sterling Silver",
+      "center_stone": "Citrine",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 20,
+    "variants": [
+      {
+        "name": "Size 8",
+        "price": null
+      },
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 69,
+    "name": "18K Two Tone Paraiba and Diamond Ring",
+    "price": "25550.00",
+    "sku": "EFY-069",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "GIA-certified Paraiba tourmaline in 18K two-tone gold with diamond halo. One of the world's rarest gems.",
+    "details": "<h3>About 18K Two Tone Paraiba and Diamond Ring</h3><p>GIA-certified Paraiba tourmaline in 18K two-tone gold with diamond halo. One of the world's rarest gems.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80",
+    "metadata": {
+      "metal": "18K Two-Tone Gold",
+      "center_stone": "Paraiba Tourmaline (GIA)",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 70,
+    "name": "14K Yellow Gold Diamond Cluster Ring",
+    "price": "6297.00",
+    "sku": "EFY-070",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Brilliant diamond cluster in 14K gold creating a dazzling sunburst effect. Maximum sparkle from every angle.",
+    "details": "<h3>About 14K Yellow Gold Diamond Cluster Ring</h3><p>Brilliant diamond cluster in 14K gold creating a dazzling sunburst effect. Maximum sparkle from every angle.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Diamond Cluster",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 71,
+    "name": "Blue and White Diamond Ships Wheel Ring",
+    "price": "4690.00",
+    "sku": "EFY-071",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Nautical ship's wheel in blue and white diamonds. Statement piece for the maritime enthusiast.",
+    "details": "<h3>About Blue and White Diamond Ships Wheel Ring</h3><p>Nautical ship's wheel in blue and white diamonds. Statement piece for the maritime enthusiast.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
+    "metadata": {
+      "metal": "14K Gold",
+      "stones": "Blue & White Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 72,
+    "name": "14K Yellow Gold Black Diamond Signet Ring",
+    "price": "5317.00",
+    "sku": "EFY-072",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Classic signet ring with black diamond pave surface. Modern heirloom bridging tradition and avant-garde.",
+    "details": "<h3>About 14K Yellow Gold Black Diamond Signet Ring</h3><p>Classic signet ring with black diamond pave surface. Modern heirloom bridging tradition and avant-garde.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1515562141589-67f0d706a5c0?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Black Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 73,
+    "name": "14K White Gold Diamond Band",
+    "price": "3500.00",
+    "sku": "EFY-073",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Sleek band with channel-set brilliant diamonds. Minimalist elegance for wedding band or statement.",
+    "details": "<h3>About 14K White Gold Diamond Band</h3><p>Sleek band with channel-set brilliant diamonds. Minimalist elegance for wedding band or statement.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80",
+    "metadata": {
+      "metal": "14K White Gold",
+      "stones": "Channel-Set Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 8",
+        "price": null
+      },
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 74,
+    "name": "14K Yellow Gold Lion Head Ring",
+    "price": "4200.00",
+    "sku": "EFY-074",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Powerful lion head with diamond eyes and full mane. Symbol of courage in solid 14K gold.",
+    "details": "<h3>About 14K Yellow Gold Lion Head Ring</h3><p>Powerful lion head with diamond eyes and full mane. Symbol of courage in solid 14K gold.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Diamond Eyes",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 75,
+    "name": "14K Rose Gold Diamond Cross Pendant",
+    "price": "2800.00",
+    "sku": "EFY-075",
+    "category": "Fine Jewelry",
+    "subcategory": "Pendants & Necklaces",
+    "description": "Masculine rose gold cross with brilliant-cut diamonds. Faith meets luxury in warm rose gold.",
+    "details": "<h3>About 14K Rose Gold Diamond Cross Pendant</h3><p>Masculine rose gold cross with brilliant-cut diamonds. Faith meets luxury in warm rose gold.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80",
+    "metadata": {
+      "metal": "14K Rose Gold",
+      "stones": "Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 76,
+    "name": "14K White Gold Sapphire and Diamond Cufflinks",
+    "price": "3900.00",
+    "sku": "EFY-076",
+    "category": "Fine Jewelry",
+    "subcategory": "Earrings & Cufflinks",
+    "description": "Blue sapphires surrounded by diamond halos. The finishing touch for formal ensembles.",
+    "details": "<h3>About 14K White Gold Sapphire and Diamond Cufflinks</h3><p>Blue sapphires surrounded by diamond halos. The finishing touch for formal ensembles.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
+    "metadata": {
+      "metal": "14K White Gold",
+      "stones": "Sapphires & Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 77,
+    "name": "14K Yellow Gold Onyx and Diamond Ring",
+    "price": "2400.00",
+    "sku": "EFY-077",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Black onyx center with sparkling diamond border. Art Deco-inspired timeless sophistication.",
+    "details": "<h3>About 14K Yellow Gold Onyx and Diamond Ring</h3><p>Black onyx center with sparkling diamond border. Art Deco-inspired timeless sophistication.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "center_stone": "Onyx",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 15,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 78,
+    "name": "14K White Gold Black Diamond Stud Earrings",
+    "price": "1500.00",
+    "sku": "EFY-078",
+    "category": "Fine Jewelry",
+    "subcategory": "Earrings & Cufflinks",
+    "description": "Elegant black diamond studs in polished white gold. Bold yet refined for any occasion.",
+    "details": "<h3>About 14K White Gold Black Diamond Stud Earrings</h3><p>Elegant black diamond studs in polished white gold. Bold yet refined for any occasion.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1515562141589-67f0d706a5c0?w=800&q=80",
+    "metadata": {
+      "metal": "14K White Gold",
+      "stones": "Black Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 79,
+    "name": "14K Yellow Gold Diamond Tennis Bracelet",
+    "price": "8500.00",
+    "sku": "EFY-079",
+    "category": "Fine Jewelry",
+    "subcategory": "Bracelets",
+    "description": "Continuous row of brilliant diamonds in 14K gold. 5+ carats in a flexible, comfortable setting.",
+    "details": "<h3>About 14K Yellow Gold Diamond Tennis Bracelet</h3><p>Continuous row of brilliant diamonds in 14K gold. 5+ carats in a flexible, comfortable setting.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Diamonds 5+ TCW",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 80,
+    "name": "14K White Gold Diamond Cross Ring",
+    "price": "3200.00",
+    "sku": "EFY-080",
+    "category": "Fine Jewelry",
+    "subcategory": "Rings",
+    "description": "Diamond-encrusted cross design in white gold. Faith rendered in precious materials.",
+    "details": "<h3>About 14K White Gold Diamond Cross Ring</h3><p>Diamond-encrusted cross design in white gold. Faith rendered in precious materials.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80",
+    "metadata": {
+      "metal": "14K White Gold",
+      "stones": "Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "Size 9",
+        "price": null
+      },
+      {
+        "name": "Size 10",
+        "price": null
+      },
+      {
+        "name": "Size 11",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 81,
+    "name": "14K Yellow Gold Diamond Eagle Pendant",
+    "price": "4500.00",
+    "sku": "EFY-081",
+    "category": "Fine Jewelry",
+    "subcategory": "Pendants & Necklaces",
+    "description": "Majestic eagle pendant with diamond-encrusted wings. Freedom and strength in 14K gold.",
+    "details": "<h3>About 14K Yellow Gold Diamond Eagle Pendant</h3><p>Majestic eagle pendant with diamond-encrusted wings. Freedom and strength in 14K gold.</p><h3>Brand</h3><p>Effy Jewelry</p>",
+    "image_url": "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80",
+    "metadata": {
+      "metal": "14K Yellow Gold",
+      "stones": "Diamonds",
+      "brand": "Effy Jewelry"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 82,
+    "name": "Andre Shirt 45x45 Foulard",
+    "price": "305.00",
+    "sku": "LRP-082",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Belts & Ties",
+    "description": "Elegant silk foulard with refined geometric print. Versatile as pocket square, neck scarf, or bag accessory.",
+    "details": "<h3>About Andre Shirt 45x45 Foulard</h3><p>Elegant silk foulard with refined geometric print. Versatile as pocket square, neck scarf, or bag accessory.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
+    "metadata": {
+      "material": "100% Silk",
+      "dimensions": "45x45 cm",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 83,
+    "name": "Sloop Beanie",
+    "price": "605.00",
+    "sku": "LRP-083",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Travel & Comfort",
+    "description": "Sumptuous beanie from exclusive Wish wool. Double-layered knit provides exceptional warmth without bulk.",
+    "details": "<h3>About Sloop Beanie</h3><p>Sumptuous beanie from exclusive Wish wool. Double-layered knit provides exceptional warmth without bulk.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&q=80",
+    "metadata": {
+      "material": "Wish Wool",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 84,
+    "name": "Mayfair Belt",
+    "price": "905.00",
+    "sku": "LRP-084",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Belts & Ties",
+    "description": "Classic leather belt with brushed palladium buckle. Full-grain leather develops beautiful patina.",
+    "details": "<h3>About Mayfair Belt</h3><p>Classic leather belt with brushed palladium buckle. Full-grain leather develops beautiful patina.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1589756823695-278bc923e1d3?w=800&q=80",
+    "metadata": {
+      "material": "Full-Grain Leather",
+      "buckle": "Palladium",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 85,
+    "name": "Open Walk Shoes",
+    "price": "1050.00",
+    "sku": "LRP-085",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Shoes",
+    "description": "Signature suede ankle boots with Walk rubber sole. Bridges casual and smart dressing.",
+    "details": "<h3>About Open Walk Shoes</h3><p>Signature suede ankle boots with Walk rubber sole. Bridges casual and smart dressing.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=800&q=80",
+    "metadata": {
+      "material": "Suede",
+      "sole": "Walk Rubber",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "EU 40",
+        "price": null
+      },
+      {
+        "name": "EU 42",
+        "price": null
+      },
+      {
+        "name": "EU 43",
+        "price": null
+      },
+      {
+        "name": "EU 44",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 86,
+    "name": "Summer Walk Shoes",
+    "price": "950.00",
+    "sku": "LRP-086",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Shoes",
+    "description": "Classic suede loafers for polished style. Pebble rubber sole with unlined interior for warm weather.",
+    "details": "<h3>About Summer Walk Shoes</h3><p>Classic suede loafers for polished style. Pebble rubber sole with unlined interior for warm weather.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=80",
+    "metadata": {
+      "material": "Suede",
+      "sole": "Pebble Rubber",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 10,
+    "variants": [
+      {
+        "name": "EU 40",
+        "price": null
+      },
+      {
+        "name": "EU 42",
+        "price": null
+      },
+      {
+        "name": "EU 43",
+        "price": null
+      },
+      {
+        "name": "EU 44",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 87,
+    "name": "Horsey Jacket",
+    "price": "3200.00",
+    "sku": "LRP-087",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Outerwear",
+    "description": "Storm System cashmere jacket for rain and wind resistance. Elegant for city, durable for countryside.",
+    "details": "<h3>About Horsey Jacket</h3><p>Storm System cashmere jacket for rain and wind resistance. Elegant for city, durable for countryside.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
+    "metadata": {
+      "material": "Storm System Cashmere",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 88,
+    "name": "Traveller Jacket",
+    "price": "2800.00",
+    "sku": "LRP-088",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Outerwear",
+    "description": "Versatile wind-resistant wool blend jacket. Packable design makes it the ideal travel companion.",
+    "details": "<h3>About Traveller Jacket</h3><p>Versatile wind-resistant wool blend jacket. Packable design makes it the ideal travel companion.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&q=80",
+    "metadata": {
+      "material": "Wool Blend",
+      "feature": "Packable",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 89,
+    "name": "Cashmere Scarf",
+    "price": "550.00",
+    "sku": "LRP-089",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Travel & Comfort",
+    "description": "Ultra-soft cashmere scarf in generous size. The pinnacle of cold-weather elegance.",
+    "details": "<h3>About Cashmere Scarf</h3><p>Ultra-soft cashmere scarf in generous size. The pinnacle of cold-weather elegance.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1589756823695-278bc923e1d3?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 90,
+    "name": "Leather Card Holder",
+    "price": "425.00",
+    "sku": "LRP-090",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Small Leather Goods",
+    "description": "Minimalist smooth calf leather card holder with four slots and central pocket. Understated luxury.",
+    "details": "<h3>About Leather Card Holder</h3><p>Minimalist smooth calf leather card holder with four slots and central pocket. Understated luxury.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=800&q=80",
+    "metadata": {
+      "material": "Calf Leather",
+      "slots": 4,
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 91,
+    "name": "Remi Eye Mask",
+    "price": "65.00",
+    "sku": "NKC-091",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Travel & Comfort",
+    "description": "Pure cashmere eye mask with silk lining. Adjustable strap with cotton drawstring pouch.",
+    "details": "<h3>About Remi Eye Mask</h3><p>Pure cashmere eye mask with silk lining. Adjustable strap with cotton drawstring pouch.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=80",
+    "metadata": {
+      "material": "Cashmere/Silk",
+      "includes": "Travel Pouch",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 92,
+    "name": "Tabitha Cashmere Tote Bag",
+    "price": "295.00",
+    "sku": "NKC-092",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Travel & Comfort",
+    "description": "Structured tote entirely from cashmere. Unique alternative to leather with surprising durability.",
+    "details": "<h3>About Tabitha Cashmere Tote Bag</h3><p>Structured tote entirely from cashmere. Unique alternative to leather with surprising durability.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 93,
+    "name": "Cashmere Socks",
+    "price": "55.00",
+    "sku": "NKC-093",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Travel & Comfort",
+    "description": "Premium cashmere everyday socks. Hidden indulgence transforming daily routine into luxury.",
+    "details": "<h3>About Cashmere Socks</h3><p>Premium cashmere everyday socks. Hidden indulgence transforming daily routine into luxury.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&q=80",
+    "metadata": {
+      "material": "Cashmere Blend",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 94,
+    "name": "Cashmere Gloves",
+    "price": "75.00",
+    "sku": "NKC-094",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Travel & Comfort",
+    "description": "Warm cashmere gloves with touchscreen-compatible fingertips. Modern functionality meets luxury.",
+    "details": "<h3>About Cashmere Gloves</h3><p>Warm cashmere gloves with touchscreen-compatible fingertips. Modern functionality meets luxury.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1589756823695-278bc923e1d3?w=800&q=80",
+    "metadata": {
+      "material": "100% Cashmere",
+      "feature": "Touchscreen",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "S/M",
+        "price": null
+      },
+      {
+        "name": "M/L",
+        "price": null
+      }
+    ]
+  },
+  {
+    "num": 95,
+    "name": "Silk and Cashmere Tie",
+    "price": "250.00",
+    "sku": "LRP-095",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Belts & Ties",
+    "description": "Refined tie in luxurious silk-cashmere blend. Perfect finishing touch for business or formal.",
+    "details": "<h3>About Silk and Cashmere Tie</h3><p>Refined tie in luxurious silk-cashmere blend. Perfect finishing touch for business or formal.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=800&q=80",
+    "metadata": {
+      "material": "Silk/Cashmere",
+      "width": "8 cm",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 96,
+    "name": "Leather Wallet",
+    "price": "650.00",
+    "sku": "LRP-096",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Small Leather Goods",
+    "description": "Classic bifold in full-grain calfskin. Multiple card slots, bill compartments, hand-painted edges.",
+    "details": "<h3>About Leather Wallet</h3><p>Classic bifold in full-grain calfskin. Multiple card slots, bill compartments, hand-painted edges.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=80",
+    "metadata": {
+      "material": "Full-Grain Calfskin",
+      "type": "Bifold",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 97,
+    "name": "Suede Belt",
+    "price": "750.00",
+    "sku": "LRP-097",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Belts & Ties",
+    "description": "Elegant suede belt with polished palladium buckle. Pairs perfectly with casual and tailored looks.",
+    "details": "<h3>About Suede Belt</h3><p>Elegant suede belt with polished palladium buckle. Pairs perfectly with casual and tailored looks.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80",
+    "metadata": {
+      "material": "Suede",
+      "buckle": "Palladium",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 98,
+    "name": "Cashmere Eye Mask",
+    "price": "125.00",
+    "sku": "LRP-098",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Travel & Comfort",
+    "description": "Soft cashmere eye mask for restful travel. Contoured design with leather travel case.",
+    "details": "<h3>About Cashmere Eye Mask</h3><p>Soft cashmere eye mask for restful travel. Contoured design with leather travel case.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&q=80",
+    "metadata": {
+      "material": "Cashmere",
+      "includes": "Leather Case",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 99,
+    "name": "Leather Passport Holder",
+    "price": "350.00",
+    "sku": "LRP-099",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Small Leather Goods",
+    "description": "Burnished calf leather passport holder with card slots. Hand-stitched with embossed logo.",
+    "details": "<h3>About Leather Passport Holder</h3><p>Burnished calf leather passport holder with card slots. Hand-stitched with embossed logo.</p><h3>Brand</h3><p>Loro Piana</p>",
+    "image_url": "https://images.unsplash.com/photo-1589756823695-278bc923e1d3?w=800&q=80",
+    "metadata": {
+      "material": "Calf Leather",
+      "origin": "Italy",
+      "brand": "Loro Piana"
+    },
+    "discount": 0,
+    "variants": []
+  },
+  {
+    "num": 100,
+    "name": "Shearling Mule Slippers",
+    "price": "150.00",
+    "sku": "NKC-100",
+    "category": "Lifestyle & Accessories",
+    "subcategory": "Shoes",
+    "description": "Shearling-lined suede slippers with memory foam insole. Indoor-outdoor versatility.",
+    "details": "<h3>About Shearling Mule Slippers</h3><p>Shearling-lined suede slippers with memory foam insole. Indoor-outdoor versatility.</p><h3>Brand</h3><p>Naked Cashmere</p>",
+    "image_url": "https://images.unsplash.com/photo-1560343090-f0409e92791a?w=800&q=80",
+    "metadata": {
+      "material": "Suede/Shearling",
+      "insole": "Memory Foam",
+      "brand": "Naked Cashmere"
+    },
+    "discount": 0,
+    "variants": [
+      {
+        "name": "S (7-8)",
+        "price": null
+      },
+      {
+        "name": "M (9-10)",
+        "price": null
+      },
+      {
+        "name": "L (11-12)",
+        "price": null
+      }
+    ]
+  }
+]

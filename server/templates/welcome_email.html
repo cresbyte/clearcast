@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #f8f9fa; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
+        .content { padding: 20px; }
+        .footer { margin-top: 20px; font-size: 0.8em; color: #777; text-align: center; }
+        .button { display: inline-block; padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Cresbyte!</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{ user.first_name|default:user.email }},</p>
+            <p>Thank you for joining us! We're excited to have you as part of our community.</p>
+            <p>You can now log in to your account and start exploring our collections.</p>
+            <p><a href="http://localhost:3000/login" class="button">Log In to Your Account</a></p>
+            <p>If you have any questions, feel free to reply to this email.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 Cresbyte. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

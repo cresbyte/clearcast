@@ -1,0 +1,30 @@
+{
+  "venvPath": ".",
+  "venv": ".venv",
+  "extraPaths": [".venv/lib/python3.11/site-packages"],
+  "pythonVersion": "3.11",
+  "pythonPath": ".venv/bin/python",
+  "analysis": {
+    "autoImportCompletions": true,
+    "typeCheckingMode": "off", // Changed from "basic" to "off"
+    "useLibraryCodeForTypes": true,
+    "diagnosticMode": "workspace",
+    "autoSearchPaths": true,
+    "reportOptionalMemberAccess": false,
+    "reportOptionalSubscript": false,
+    "reportOptionalCall": false,
+    "reportOptionalIterable": false,
+    "reportOptionalContextManager": false,
+    "reportOptionalOperand": false,
+    "reportGeneralTypeIssues": false,
+    "reportUnusedImport": true,
+    "reportUnusedClass": true,
+    "reportUnusedFunction": true,
+    "reportUnusedVariable": true,
+    "reportDuplicateImport": true,
+    "reportMissingImports": true,
+    "reportMissingTypeStubs": false,
+    "reportPrivateImportUsage": false
+  },
+  "typeCheckingMode": "off"
+}

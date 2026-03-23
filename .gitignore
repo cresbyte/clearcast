@@ -1,0 +1,68 @@
+# Ignore Python bytecode files
+*.pyc
+__pycache__/
+
+
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore environment files
+.env
+
+# Ignore local settings files (adjust according to your project structure)
+**/settings/local.py
+
+# Ignore collected static files (adjust according to STATIC_ROOT)
+/staticfiles/*
+
+# Ignore media files (user-uploaded, adjust according to MEDIA_ROOT)
+/media/*
+
+# Ignore IDE settings
+.vscode/
+.idea/
+
+# Ignore coverage reports
+.coverage
+/coverage/
+
+# Ignore data dumps
+*.dump
+
+# Ignore Node.js modules
+node_modules/
+
+# Ignore npm debug logs
+npm-debug.log
+
+# Ignore frontend build outputs (adjust according to your build setup)
+/frontend/build/*
+/frontend/dist/*
+/frontend/bundles/*
+
+# Ignore Sass cache and source maps
+.sass-cache
+*.map
+
+# Ignore virtual environments (adjust according to your setup)
+/venv/
+/env/
+
+# Ignore output and cache directories
+/output/
+/cache/
+
+# Ignore temporary email templates (if applicable)
+tmp_email/
+
+# Ignore dev tools files
+.direnv
+.envrc
+.tool-versions
+
+# Ignore logs
+*.log
+
+# Ignore React-specific cache directories
+/.cache

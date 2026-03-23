@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #eee;
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #000;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .order-info {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .item-table th {
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .item-table td {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .totals {
+            float: right;
+            width: 200px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .grand-total {
+            font-weight: bold;
+            border-top: 2px solid #000;
+            margin-top: 10px;
+            padding-top: 10px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Order Confirmed</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{ order.user.first_name|default:order.user.email }},</p>
+            <p>Thank you for your order! We're processing it and will notify you once it shifts.</p>
+
+            <div class="order-info">
+                <strong>Order ID:</strong> #{{ order.id }}<br>
+                <strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}<br>
+                <strong>Shipping Address:</strong><br>
+                {{ order.shipping_address|linebreaksbr }}
+            </div>
+
+            <table class="item-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order.items.all %}
+                    <tr>
+                        <td>
+                            {{ item.product.name }}
+                            {% if item.variant %} - {{ item.variant.name }}{% endif %}
+                        </td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="totals">
+                {% if order.coupon %}
+                <div class="total-row">
+                    <span>Discount ({{ order.coupon.code }}):</span>
+                    <span>-{{ order.coupon.value }}%</span>
+                </div>
+                {% endif %}
+                <div class="total-row grand-total">
+                    <span>Total:</span>
+                    <span>${{ order.total_amount }}</span>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+
+            <center>
+                <a href="http://localhost:3000/profile/orders/{{ order.id }}" class="button">View Order Status</a>
+            </center>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 Cresbyte. All rights reserved.</p>
+            <p>This is an automated email, please do not reply.</p>
+        </div>
+    </div>
+</body>
+
+</html>
