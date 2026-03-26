@@ -15,9 +15,22 @@ export default function ContactForm() {
     const [phone, setPhone] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
+    const [attachment, setAttachment] = useState<File | null>(null);
 
     const sendContactMutation = useSendContactMessage();
     const isSubmitting = sendContactMutation.isPending;
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error("File size must be less than 5MB.");
+                e.target.value = '';
+                return;
+            }
+            setAttachment(file);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,15 +40,17 @@ export default function ContactForm() {
             return;
         }
 
-        const formData = {
-            name,
-            email,
-            phone_number: phone,
-            subject,
-            message
-        };
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone_number', phone);
+        formData.append('subject', subject);
+        formData.append('message', message);
+        if (attachment) {
+            formData.append('attachment', attachment);
+        }
 
-        sendContactMutation.mutate(formData, {
+        sendContactMutation.mutate(formData as any, {
             onSuccess: () => {
                 toast.success("Your message has been sent successfully. We'll get back to you soon!");
                 setName('');
@@ -43,6 +58,7 @@ export default function ContactForm() {
                 setPhone('');
                 setSubject('');
                 setMessage('');
+                setAttachment(null);
             },
             onError: (error: any) => {
                 const message = error.response?.data?.detail || "Failed to send message. Please try again later.";
@@ -57,9 +73,8 @@ export default function ContactForm() {
             <div className="space-y-8">
                 <div>
                     <h2 className="text-3xl font-bold font-serif italic mb-4">Get in Touch</h2>
-                    <p className="text-muted-foreground leading-relaxed">
-                        Have a question about our patterns or need assistance with an order?
-                        Our dedicated team is here to help you match the hatch.
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                        For all inquiries, including order questions, return requests, and general support, please reach out to us. We strive to respond to all emails within 24-48 hours.
                     </p>
                 </div>
 
@@ -69,23 +84,11 @@ export default function ContactForm() {
                             <MapPin className="h-5 w-5" />
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold uppercase tracking-widest">Our Boutique</h3>
+                            <h3 className="text-sm font-bold uppercase tracking-widest">Address</h3>
                             <p className="text-muted-foreground text-sm mt-1">
-                                123 River Road<br />
-                                Bozeman, MT 59715
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-start gap-4">
-                        <div className="h-10 w-10 rounded-none bg-muted flex items-center justify-center shrink-0">
-                            <Phone className="h-5 w-5" />
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold uppercase tracking-widest">Phone</h3>
-                            <p className="text-muted-foreground text-sm mt-1">
-                                +1 (212) 555-0198<br />
-                                Mon-Fri: 9am - 6pm EST
+                                Kirangare Farm<br />
+                                Lengenet, Rongai<br />
+                                Nakuru County, Kenya
                             </p>
                         </div>
                     </div>
@@ -97,8 +100,7 @@ export default function ContactForm() {
                         <div>
                             <h3 className="text-sm font-bold uppercase tracking-widest">Email</h3>
                             <p className="text-muted-foreground text-sm mt-1">
-                                support@clearcast-fly.com<br />
-                                concierge@clearcast-fly.com
+                                lila@clearcastfly.com
                             </p>
                         </div>
                     </div>
@@ -183,6 +185,22 @@ export default function ContactForm() {
                             className="min-h-[150px] rounded-none bg-white"
                             required
                         />
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-border/20">
+                        <div className="flex flex-col gap-2">
+                            <Label htmlFor="attachment" className="text-[10px] uppercase tracking-widest font-bold">Attachment (Optional, Max 5MB)</Label>
+                            <div className="relative group">
+                                <Input
+                                    id="attachment"
+                                    type="file"
+                                    onChange={handleFileChange}
+                                    className="cursor-pointer file:cursor-pointer file:bg-primary file:text-primary-foreground file:border-none file:px-4 file:h-full file:mr-4 rounded-none h-11 text-xs"
+                                    accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                                />
+                            </div>
+                            <p className="text-[9px] text-muted-foreground uppercase tracking-wider">Accepted: JPG, PNG, PDF, Word</p>
+                        </div>
                     </div>
 
                     <Button

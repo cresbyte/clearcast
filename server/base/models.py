@@ -67,6 +67,7 @@ class ContactMessage(models.Model):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     subject = models.CharField(max_length=255)
     message = models.TextField()
+    attachment = models.FileField(upload_to="contact_attachments/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

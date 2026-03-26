@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Mail, Trash2, ExternalLink } from 'lucide-react';
+import { Loader2, Mail, Trash2, ExternalLink, Paperclip } from 'lucide-react';
 import { format } from 'date-fns';
 import {
     Dialog,
@@ -118,6 +118,20 @@ export default function AdminMessagesPage() {
                                                         <div className="bg-muted/30 p-6 border-l-4 border-primary italic text-sm leading-relaxed whitespace-pre-wrap">
                                                             {msg.message}
                                                         </div>
+                                                        {msg.attachment && (
+                                                            <div className="pt-4 border-t border-border/20">
+                                                                <span className="font-bold uppercase text-[10px] tracking-widest text-muted-foreground block mb-2">Attachment:</span>
+                                                                <a 
+                                                                    href={msg.attachment} 
+                                                                    target="_blank" 
+                                                                    rel="noopener noreferrer"
+                                                                    className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline"
+                                                                >
+                                                                    <Paperclip className="h-4 w-4" />
+                                                                    View / Download Attachment
+                                                                </a>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </DialogContent>
                                             </Dialog>

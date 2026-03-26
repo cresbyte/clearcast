@@ -3,7 +3,7 @@ import api from './axios';
 
 /**
  * Send a contact message to the backend
- * @param {Object} messageData - The contact form data
+ * @param {FormData | Object} messageData - The contact form data
  * @param {string} messageData.name - Sender's name
  * @param {string} messageData.email - Sender's email
  * @param {string} [messageData.phone_number] - Sender's phone number
