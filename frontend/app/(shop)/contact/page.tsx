@@ -1,9 +1,8 @@
-import React from 'react';
 import ContactForm from '@/components/shop/ContactForm';
 
 export const metadata = {
-    title: 'Contact Us | Gucci',
-    description: 'Get in touch with our client service team for any inquiries or assistance.',
+    title: 'Contact Us | Clearcast Fly Ltd',
+    description: 'Get in touch with our team for any inquiries or assistance.',
 };
 
 export default function ContactPage() {
@@ -43,7 +42,7 @@ export default function ContactPage() {
                         </div>
                         <div className="p-6">
                             <h3 className="text-sm font-bold uppercase tracking-widest mb-3">Product Care</h3>
-                            <p className="text-xs text-muted-foreground italic">Discover how to maintain the quality and longevity of your Gucci items.</p>
+                            <p className="text-xs text-muted-foreground italic">Discover how to maintain the quality and longevity of your Clearcast flies.</p>
                         </div>
                     </div>
                 </div>

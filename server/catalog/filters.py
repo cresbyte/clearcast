@@ -28,6 +28,8 @@ class ProductFilter(django_filters.FilterSet):
     
     # Filter by specific category ids
     category_id = NumberInFilter(field_name="category_id", lookup_expr="in")
+    
+    is_set = django_filters.BooleanFilter()
 
     # Optional: Price range filtering
     min_price = django_filters.NumberFilter(field_name="base_price", lookup_expr="gte")
@@ -59,4 +61,4 @@ class ProductFilter(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ["category__slug", "category__id", "category_root", "category_id", "is_active"]
+        fields = ["category__slug", "category__id", "category_root", "category_id", "is_active", "is_set"]

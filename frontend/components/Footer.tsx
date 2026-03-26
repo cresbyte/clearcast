@@ -14,10 +14,10 @@ const Footer = () => {
                     {/* Brand & About */}
                     <div className="space-y-6">
                         <Link href="/" className="text-2xl font-serif font-bold tracking-tighter text-foreground">
-                            Cresbyte
+                            Clearcast
                         </Link>
                         <p className="text-[13px] text-muted-foreground/80 leading-relaxed max-w-xs">
-                            Curating the epitome of modern luxury. Timeless collections designed for the discerning connoisseur.
+                            Premium fly-tying patterns and high-caliber gear for serious anglers. Born on the water, built for the hatch.
                         </p>
                         <div className="flex space-x-5 pt-2">
                             <a href="#" className="text-muted-foreground hover:text-foreground transition-all duration-300"><Facebook className="h-[18px] w-[18px]" /></a>
@@ -69,7 +69,7 @@ const Footer = () => {
 
                 <div className="border-t border-border/30 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
                     <p className="text-[11px] uppercase tracking-widest text-muted-foreground/60 font-medium">
-                        &copy; {new Date().getFullYear()} Cresbyte. All rights reserved.
+                        &copy; {new Date().getFullYear()} Clearcast Fly Ltd. All rights reserved.
                     </p>
                     <div className="flex items-center gap-8">
                         <div className="flex gap-4">

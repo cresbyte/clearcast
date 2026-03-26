@@ -14,12 +14,14 @@ export const fetchProducts = async ({
     subcategories = [],
     priceRange = [0, 1000],
     sortBy = 'featured',
-    page = 1
+    page = 1,
+    isSet = null
 }) => {
     const params = new URLSearchParams();
 
     if (searchQuery) params.append('search', searchQuery);
     if (page) params.append('page', page);
+    if (isSet !== null && isSet !== undefined) params.append('is_set', isSet.toString());
 
     // Categories and subcategories are expected to be valid slugs already
     categories.forEach((slug) => params.append('category__slug', slug));

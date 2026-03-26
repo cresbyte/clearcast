@@ -85,9 +85,7 @@ def send_contact_notification_email(contact_id):
         from .models import ContactMessage
         contact = ContactMessage.objects.get(pk=contact_id)
         subject = f"New Contact Message: {contact.subject}"
-        
-        # In a real app, this would go to a support email. 
-        # Using DEFAULT_FROM_EMAIL or a dedicated support email.
+
         recipient_list = [getattr(settings, "SUPPORT_EMAIL", settings.DEFAULT_FROM_EMAIL)]
         
         html_message = render_to_string("contact_notification_email.html", {"contact": contact})

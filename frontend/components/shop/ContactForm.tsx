@@ -58,8 +58,8 @@ export default function ContactForm() {
                 <div>
                     <h2 className="text-3xl font-bold font-serif italic mb-4">Get in Touch</h2>
                     <p className="text-muted-foreground leading-relaxed">
-                        Have a question about our collections or need assistance with an order?
-                        Our dedicated client service team is here to help you.
+                        Have a question about our patterns or need assistance with an order?
+                        Our dedicated team is here to help you match the hatch.
                     </p>
                 </div>
 
@@ -71,8 +71,8 @@ export default function ContactForm() {
                         <div>
                             <h3 className="text-sm font-bold uppercase tracking-widest">Our Boutique</h3>
                             <p className="text-muted-foreground text-sm mt-1">
-                                123 Fashion Avenue<br />
-                                New York, NY 10022
+                                123 River Road<br />
+                                Bozeman, MT 59715
                             </p>
                         </div>
                     </div>
@@ -97,8 +97,8 @@ export default function ContactForm() {
                         <div>
                             <h3 className="text-sm font-bold uppercase tracking-widest">Email</h3>
                             <p className="text-muted-foreground text-sm mt-1">
-                                support@gucci-shop.com<br />
-                                concierge@gucci-shop.com
+                                support@clearcast-fly.com<br />
+                                concierge@clearcast-fly.com
                             </p>
                         </div>
                     </div>

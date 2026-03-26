@@ -12,6 +12,7 @@ const useUIStore = create(
             selectedCategories: [],
             selectedSubcategories: [],
             priceRange: [0, 1000],
+            isSetFilter: null, // null means all, true means is_set=True, false means is_set=False
 
             // Sort state
             sortBy: 'featured', // 'featured', 'price-asc', 'price-desc', 'newest', 'name'
@@ -117,8 +118,14 @@ const useUIStore = create(
                     selectedCategories: [],
                     selectedSubcategories: [],
                     priceRange: [0, 1000],
+                    isSetFilter: null,
                     currentPage: 1,
                 });
+            },
+
+            // isSet filter
+            setIsSetFilter: (value) => {
+                set({ isSetFilter: value, currentPage: 1 });
             },
 
             // Sort actions

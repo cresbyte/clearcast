@@ -25,7 +25,7 @@ import {
   X
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
@@ -34,6 +34,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { user, logout } = useAuth();
 
   const cartItemCount = useCartStore((state) => state.items.length);
@@ -127,7 +128,7 @@ const Navbar = () => {
               href="/"
               className="text-2xl font-serif font-bold text-foreground tracking-tighter"
             >
-              Cresbyte
+              Clearcast
             </Link>
           </div>
 
@@ -147,15 +148,26 @@ const Navbar = () => {
                   HOME
                 </Link>
                 <Link
-                  href="/shop"
+                  href="/fly-sets"
                   className={cn(
                     "text-[11px] font-bold tracking-[0.2em] transition-colors",
-                    isActive("/shop")
+                    isActive("/fly-sets")
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  SHOP
+                  FLY SET
+                </Link>
+                <Link
+                  href="/fly-bars"
+                  className={cn(
+                    "text-[11px] font-bold tracking-[0.2em] transition-colors",
+                    isActive("/fly-bars")
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  FLY BARS
                 </Link>
                 <Link
                   href="/about"
@@ -371,11 +383,18 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              href="/shop"
+              href="/fly-sets"
               onClick={() => setIsMenuOpen(false)}
               className="block text-3xl font-serif font-bold"
             >
-              Shop
+              Fly Set
+            </Link>
+            <Link
+              href="/fly-bars"
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-3xl font-serif font-bold"
+            >
+              Fly Bars
             </Link>
             <Link
               href="/about"

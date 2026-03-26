@@ -37,7 +37,7 @@ const Home = () => {
       <section className="relative h-[85vh] flex items-center justify-center bg-[#F9F9F7] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src={activeHero?.image || "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"}
+            src={activeHero?.image || "https://images.unsplash.com/photo-1516934024742-b461fbc4760a?w=1600&auto=format&fit=crop&q=80"}
             alt={activeHero?.title || "Hero Background"}
             className="w-full h-full object-cover"
           />
@@ -47,16 +47,16 @@ const Home = () => {
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-8">
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tighter leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              {activeHero?.title || "Redefine Your Style"}
+              {activeHero?.title || "Master the Drift"}
             </h1>
             <p className="text-lg md:text-xl text-white/90 font-medium max-w-2xl mx-auto tracking-wide animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-              {activeHero?.subtitle || "Discover the new collection. Elegant, timeless, and exclusively yours."}
+              {activeHero?.subtitle || "Premium fly-tying patterns and high-caliber gear for serious anglers."}
             </p>
           </div>
           <div className="pt-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
             <Link href={activeHero?.button_link || "/shop"}>
               <Button size="lg" className="h-14 px-10 text-[11px] font-black uppercase tracking-[0.2em] rounded-none bg-white text-black hover:bg-black hover:text-white transition-all duration-500">
-                {activeHero?.button_text || "Explore Collection"}
+                {activeHero?.button_text || "Shop the Fly Bar"}
               </Button>
             </Link>
           </div>
@@ -129,7 +129,7 @@ const Home = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20 space-y-4">
             <span className="text-[10px] uppercase tracking-[0.3em] font-black text-muted-foreground/60">Featured</span>
-            <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground tracking-tighter">Selected Arrivals</h2>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground tracking-tighter">Featured Patterns</h2>
             <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
           </div>
 
@@ -219,7 +219,7 @@ const Home = () => {
                 <div className="space-y-4">
                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Limited Release</span>
                   <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-tight tracking-tighter">
-                    The Signature Collection
+                    The Clearcast Collection
                   </h2>
                 </div>
                 <p className="text-[15px] text-muted-foreground/80 leading-loose max-w-sm mx-auto md:mx-0">

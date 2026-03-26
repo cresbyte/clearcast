@@ -79,7 +79,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                     <h2 className="text-4xl font-serif font-bold tracking-tight">Product Not Found</h2>
                     <p className="text-muted-foreground text-sm">The selection you are looking for is currently unavailable.</p>
                 </div>
-                <Link href="/shop">
+                <Link href="/">
                     <Button variant="outline" className="h-12 px-10 text-[10px] font-black uppercase tracking-[0.2em] rounded-none border-foreground hover:bg-foreground hover:text-white transition-all duration-500">
                         Back to Collection
                     </Button>
@@ -162,12 +162,16 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                 <nav className="flex items-center space-x-3 text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/60">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <span>/</span>
-                    <Link href="/shop" className="hover:text-primary transition-colors">Shop</Link>
+                    {product.is_set ? (
+                        <Link href="/fly-sets" className="hover:text-primary transition-colors">Fly Set</Link>
+                    ) : (
+                        <Link href="/fly-bars" className="hover:text-primary transition-colors">Fly Bars</Link>
+                    )}
                     {product.category && (
                         <>
                             <span>/</span>
                             <Link
-                                href={`/shop?category=${product.category.slug}`}
+                                href={`/${product.is_set ? 'fly-sets' : 'fly-bars'}?category=${product.category.slug}`}
                                 className="hover:text-primary transition-colors truncate max-w-[100px]"
                             >
                                 {product.category.name}

@@ -16,6 +16,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import {
     Dialog,
@@ -69,6 +70,7 @@ export default function ProductForm() {
     const [price, setPrice] = useState('');
     const [discountPercentage, setDiscountPercentage] = useState('');
     const [status, setStatus] = useState('active');
+    const [isSet, setIsSet] = useState(false);
 
     // Inventory
     const [sku, setSku] = useState('');
@@ -109,6 +111,7 @@ export default function ProductForm() {
             setSku(product.sku || '');
             setQuantity(product.stock_quantity || '');
             setSelectedCategory(product.category?.id?.toString() || '');
+            setIsSet(product.is_set || false);
 
             // Load images
             if (product.images && product.images.length > 0) {
@@ -356,6 +359,7 @@ export default function ProductForm() {
             sku: sku,
             stock_quantity: parseInt(quantity) || 0,
             is_active: status === 'active',
+            is_set: isSet,
             category_id: parseInt(selectedCategory),
             metadata: {
                 options: options.map(opt => ({ name: opt.name, values: opt.values })),
@@ -698,11 +702,9 @@ export default function ProductForm() {
                             )}
 
                             <Dialog open={showOptionDialog} onOpenChange={setShowOptionDialog}>
-                                <DialogTrigger>
-                                    <Button variant="outline" className="w-full rounded-none border-dashed border-2 py-6">
-                                        <Plus className="h-4 w-4 mr-2" />
-                                        <span className="text-[10px] uppercase tracking-widest font-bold">Add Option</span>
-                                    </Button>
+                                <DialogTrigger render={<Button variant="outline" className="w-full rounded-none border-dashed border-2 py-6" />}>
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    <span className="text-[10px] uppercase tracking-widest font-bold">Add Option</span>
                                 </DialogTrigger>
                                 <DialogContent className="rounded-none">
                                     <DialogHeader>
@@ -835,6 +837,18 @@ export default function ProductForm() {
                             <CardTitle className="font-serif italic">Organization</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
+                            <div className="flex items-center space-x-2 border border-border/50 bg-muted/20 p-4">
+                                <Label htmlFor="is-set-toggle" className="flex-1 text-[10px] uppercase tracking-widest font-bold cursor-pointer">
+                                    Is Fly Set
+                                </Label>
+                                <Checkbox 
+                                    id="is-set-toggle" 
+                                    checked={isSet} 
+                                    onCheckedChange={(checked) => setIsSet(!!checked)}
+                                    className="h-5 w-5"
+                                    style={{ borderRadius: 0 }}
+                                />
+                            </div>
                             <div className="space-y-2">
                                 <Label className="text-[10px] uppercase tracking-widest font-bold">Category *</Label>
                                 {isLoadingCategories ? (
@@ -866,11 +880,11 @@ export default function ProductForm() {
                             </div>
 
                             <Dialog open={showCategoryDialog} onOpenChange={setShowCategoryDialog}>
-                                <DialogTrigger>
-                                    <Button variant="outline" className="w-full rounded-none text-[10px] uppercase tracking-widest font-bold">
+                                <DialogTrigger render={<Button variant="outline" className="w-full rounded-none text-[10px] uppercase tracking-widest font-bold" />}>
+                                    <div className="flex items-center justify-center">
                                         <Plus className="h-4 w-4 mr-2" />
                                         Add Category
-                                    </Button>
+                                    </div>
                                 </DialogTrigger>
                                 <DialogContent className="rounded-none">
                                     <DialogHeader>

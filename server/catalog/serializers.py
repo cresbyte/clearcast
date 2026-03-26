@@ -73,7 +73,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'category', 'name', 'slug', 'description', 'details', 
             'base_price', 'price', 'discount_percentage', 'sale_price', 'current_price', 'has_discount',
-            'sku', 'metadata', 'stock_quantity', 'is_active', 
+            'sku', 'metadata', 'is_set', 'stock_quantity', 'is_active', 
             'created_at', 'updated_at', 'images', 'primary_image', 'variants',
             'reviews_count', 'average_rating', 'price_range'
         ]
@@ -251,7 +251,7 @@ class ProductWriteSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'slug', 'description', 'details', 'base_price', 
             'discount_percentage', 'sale_price',
-            'sku', 'metadata', 'stock_quantity', 'is_active',
+            'sku', 'metadata', 'is_set', 'stock_quantity', 'is_active',
             'category_id', 'category', 
             'images_data', 'images',
             'variants_data', 'variants',

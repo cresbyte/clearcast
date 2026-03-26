@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 
-const figtree = Figtree({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
 export const metadata: Metadata = {
-  title: "Gucci - Luxury Shopping",
-  description: "Discover the latest collection of luxury fashion and accessories.",
+  title: "Clearcast - Clearcast Fly Ltd",
+  description: "Premium fly-tying patterns and high-caliber gear for serious anglers.",
 };
 
 export default function RootLayout({
@@ -21,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${figtree.variable} font-sans antialiased bg-background text-foreground flex flex-col min-h-screen`}
+        className={`font-sans antialiased bg-background text-foreground flex flex-col min-h-screen`}
       >
         <Providers>
           {children}

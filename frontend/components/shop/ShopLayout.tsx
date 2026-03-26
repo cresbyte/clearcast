@@ -15,7 +15,12 @@ import { ChevronDown, ChevronRight, Filter, LayoutGrid, List, Loader2, SlidersHo
 import { useSearchParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-const ProductListing = () => {
+interface ShopLayoutProps {
+    isSet: boolean;
+    fallbackTitle?: string;
+}
+
+const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
     const [page, setPage] = React.useState(1);
     const searchParams = useSearchParams();
     const [initializedFromUrl, setInitializedFromUrl] = React.useState(false);
@@ -35,7 +40,14 @@ const ProductListing = () => {
         setSelectedSubcategories,
         priceRange,
         setPriceRange,
+        isSetFilter,
+        setIsSetFilter,
     } = useUIStore();
+
+    // Set the filter natively on mount/prop change based on route
+    React.useEffect(() => {
+        setIsSetFilter(isSet);
+    }, [isSet, setIsSetFilter]);
 
     // Sync local price range with store when store changes (e.g. reset filters)
     React.useEffect(() => {
@@ -100,6 +112,7 @@ const ProductListing = () => {
         sortBy,
         page,
         priceRange: priceRange,
+        isSet: isSetFilter,
     });
 
     const products = data?.results || [];
@@ -312,6 +325,13 @@ const ProductListing = () => {
     return (
         <div className="min-h-screen bg-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                {/* Page Title */}
+                <div className="mb-10 text-center md:text-left">
+                    <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tight text-foreground">
+                        {isSetFilter === true ? "Fly Set" : isSetFilter === false ? "Fly Bars" : "Shop"}
+                    </h1>
+                </div>
+
                 {/* Toolbar */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b border-border/50 pb-6">
                     <div className="flex items-center gap-6">
@@ -609,4 +629,4 @@ const ProductListing = () => {
     );
 };
 
-export default ProductListing;
+export default ShopLayout;

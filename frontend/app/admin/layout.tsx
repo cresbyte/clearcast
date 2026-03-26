@@ -97,7 +97,7 @@ export default function AdminLayout({
                 <header className="h-16 border-b border-border bg-card sticky top-0 z-20 px-4 md:px-6 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-6">
                         <Link href="/admin" className="text-2xl font-bold font-serif tracking-tighter text-primary shrink-0">
-                            Cresbyte
+                            Clearcast
                         </Link>
 
                         {/* Desktop Navigation */}
@@ -176,7 +176,7 @@ export default function AdminLayout({
                                         </Avatar>
                                         <div className="hidden md:flex flex-col items-start text-left">
                                             <p className="text-xs font-medium leading-none">{user?.name || user?.first_name || "Admin"}</p>
-                                            <p className="text-[10px] text-muted-foreground leading-none mt-1">{user?.email || "admin@cresbyte.com"}</p>
+                                            <p className="text-[10px] text-muted-foreground leading-none mt-1">{user?.email || "admin@clearcast-fly.com"}</p>
                                         </div>
                                         <ChevronDown className="hidden md:block h-3 w-3 opacity-50" />
                                     </Button>
@@ -213,7 +213,7 @@ export default function AdminLayout({
                                 <SheetContent side="left" className="w-72 p-0 rounded-none">
                                     <div className="flex flex-col h-full bg-card">
                                         <div className="p-6 h-16 flex items-center border-b border-border">
-                                            <span className="text-2xl font-bold font-serif tracking-tighter text-primary">Cresbyte</span>
+                                            <span className="text-2xl font-bold font-serif tracking-tighter text-primary">Clearcast</span>
                                         </div>
                                         <div className="flex-1 overflow-y-auto py-6 px-4">
                                             <nav className="space-y-6">

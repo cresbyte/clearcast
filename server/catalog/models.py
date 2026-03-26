@@ -43,6 +43,7 @@ class Product(models.Model):
     # JSONField allows you to store specific specs (e.g., 'hook_size' for flies) 
     # without needing a thousand different tables.
     metadata = models.JSONField(default=dict, blank=True)
+    is_set = models.BooleanField(default=False)
     
     stock_quantity = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)

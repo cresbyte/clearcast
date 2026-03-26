@@ -11,7 +11,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 md:p-12">
                 <div className="w-full max-w-md mb-12 text-center scale-110">
                     <Link href="/" className="text-4xl font-serif font-bold text-foreground tracking-tighter hover:opacity-70 transition-all duration-300 uppercase">
-                        Cresbyte
+                        Clearcast
                     </Link>
                 </div>
 
@@ -25,7 +25,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
                         <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
                         <Link href="/contact" className="hover:text-foreground transition-colors">Help</Link>
                     </div>
-                    <p>&copy; {new Date().getFullYear()} Cresbyte. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Clearcast Fly Ltd. All rights reserved.</p>
                 </div>
             </div>
         </RouteGuard>
