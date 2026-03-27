@@ -103,3 +103,57 @@ def send_contact_notification_email(contact_id):
         return True
     except ContactMessage.DoesNotExist:
         return False
+
+def send_custom_order_email(order_id, stage):
+    """
+    Sends an email to the customer regarding their custom order status.
+    """
+    try:
+        from .models import CustomOrder
+        order = CustomOrder.objects.get(pk=order_id)
+        
+        email = None
+        name = order.customer_details.get("name", "Valued Customer")
+        if order.customer:
+            email = order.customer.email
+            if order.customer.first_name:
+                name = order.customer.first_name
+        else:
+            email = order.customer_details.get("email")
+
+        if not email:
+            return False
+
+        subject = ""
+        template = ""
+        
+        if stage == "ORDER_CREATED":
+            subject = "Your Custom Order has been received - Clearcast Fly Ltd"
+            template = "custom_order_created_email.html"
+        elif stage == "PAYMENT_RECEIVED":
+            subject = "Payment Received for Your Custom Order - Clearcast Fly Ltd"
+            template = "custom_order_paid_email.html"
+        elif stage == "ORDER_SHIPPED":
+            subject = "Your Custom Order has Shipped - Clearcast Fly Ltd"
+            template = "custom_order_shipped_email.html"
+        elif stage == "ORDER_DELIVERED":
+            subject = "Your Custom Order has been Delivered - Clearcast Fly Ltd"
+            template = "custom_order_delivered_email.html"
+        else:
+            return False
+
+        html_message = render_to_string(template, {"order": order, "name": name})
+        plain_message = strip_tags(html_message)
+        from_email = getattr(settings, "EMAIL_HOST_USER", "noreply@clearcast-fly.com")
+
+        send_mail(
+            subject,
+            plain_message,
+            from_email,
+            [email],
+            html_message=html_message,
+            fail_silently=False,
+        )
+        return True
+    except CustomOrder.DoesNotExist:
+        return False

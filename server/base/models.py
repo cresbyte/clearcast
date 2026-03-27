@@ -72,3 +72,71 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"Message from {self.name} - {self.subject}"
+
+
+class CustomOrder(models.Model):
+    STATUS_CHOICES = (
+        ("Pending", "Pending"),
+        ("Processing", "Processing"),
+        ("Shipped", "Shipped"),
+        ("Delivered", "Delivered"),
+        ("Canceled", "Canceled"),
+    )
+
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    customer_details = models.JSONField(help_text="JSON containing name, email, phone, etc.", default=dict)
+    items = models.JSONField(help_text="JSON array of ordered items", default=list)
+    transaction_details = models.JSONField(help_text="JSON containing payment info, receipts, etc.", blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"CustomOrder #{self.pk} - {self.status}"
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        old_status = None
+        old_balance = None
+
+        if not is_new:
+            try:
+                old_instance = CustomOrder.objects.get(pk=self.pk)
+                old_status = old_instance.status
+                old_balance = old_instance.balance
+            except CustomOrder.DoesNotExist:
+                pass
+
+        # Autocreate user if needed
+        if not self.customer and self.customer_details:
+            email = self.customer_details.get("email")
+            if email:
+                user = User.objects.filter(email=email).first()
+                if not user:
+                    user = User.objects.create_user(email=email, password=User.objects.make_random_password())
+                    name = self.customer_details.get("name", "")
+                    if name:
+                        parts = name.split(" ", 1)
+                        user.first_name = parts[0]
+                        if len(parts) > 1:
+                            user.last_name = parts[1]
+                        user.save()
+                self.customer = user
+
+        super().save(*args, **kwargs)
+
+        # Trigger emails
+        from .tasks import send_custom_order_email
+
+        if is_new:
+            send_custom_order_email(self.pk, "ORDER_CREATED")
+        else:
+            if old_status != self.status and self.status in ["Shipped", "Delivered"]:
+                stage = "ORDER_SHIPPED" if self.status == "Shipped" else "ORDER_DELIVERED"
+                send_custom_order_email(self.pk, stage)
+                
+            if old_balance is not None and old_balance > 0 and self.balance <= 0:
+                send_custom_order_email(self.pk, "PAYMENT_RECEIVED")
+

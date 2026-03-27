@@ -83,3 +83,31 @@ export const verifyPaystackPayment = async (reference) => {
     const response = await api.get('orders/gateways/paystack-verify/', { params: { reference } });
     return response.data;
 };
+
+/**
+ * Custom Orders
+ */
+export const fetchCustomOrders = async () => {
+    const response = await api.get('admin/custom-orders/');
+    return response.data;
+};
+
+export const fetchCustomOrderById = async (id) => {
+    const response = await api.get(`admin/custom-orders/${id}/`);
+    return response.data;
+};
+
+export const createCustomOrder = async (data) => {
+    const response = await api.post('admin/custom-orders/', data);
+    return response.data;
+};
+
+export const updateCustomOrder = async (id, data) => {
+    const response = await api.patch(`admin/custom-orders/${id}/`, data);
+    return response.data;
+};
+
+export const deleteCustomOrder = async (id) => {
+    const response = await api.delete(`admin/custom-orders/${id}/`);
+    return response.data;
+};

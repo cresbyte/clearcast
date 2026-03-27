@@ -1,0 +1,11 @@
+<p>Dear {{ name }},</p>
+<p>We have successfully received your custom order (Order #{{ order.id }}).</p>
+<p><strong>Order Details:</strong></p>
+<ul>
+{% for item in order.items %}
+    <li>{{ item.name }} - Qty: {{ item.qty|default:"1" }}</li>
+{% endfor %}
+</ul>
+<p>Total Amount: ${{ order.total_amount }}</p>
+<p>Balance Due: ${{ order.balance }}</p>
+<p>We will be processing it shortly. Thank you for choosing Clearcast Fly Ltd!</p>

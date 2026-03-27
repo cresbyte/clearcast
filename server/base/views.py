@@ -22,9 +22,10 @@ from .serializers import (
     AdminCustomerSerializer,
     AdminStaffSerializer,
     ContactMessageSerializer,
+    CustomOrderSerializer,
 )
 from base import serializers, models
-from .models import ContactMessage
+from .models import ContactMessage, CustomOrder
 
 User = get_user_model()
 
@@ -49,6 +50,13 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
         from .tasks import send_contact_notification_email
 
         send_contact_notification_email(contact.id)
+
+
+class CustomOrderViewSet(viewsets.ModelViewSet):
+    """ViewSet for admin to manage custom orders"""
+    queryset = CustomOrder.objects.all().order_by("-created_at")
+    serializer_class = CustomOrderSerializer
+    permission_classes = [IsAdminUser]
 
 
 class RegisterView(generics.CreateAPIView):

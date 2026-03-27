@@ -28,6 +28,7 @@ import {
     Monitor,
     Package,
     Percent,
+    PhoneCall,
     Search,
     Settings,
     ShoppingCart,
@@ -53,6 +54,7 @@ const navGroups = [
         icon: ShoppingCart,
         items: [
             { icon: ShoppingCart, label: 'Orders', href: '/admin/orders' },
+            { icon: PhoneCall, label: 'Custom Orders', href: '/admin/custom-orders' },
             { icon: Percent, label: 'Discounts', href: '/admin/discounts' },
         ]
     },

@@ -215,7 +215,7 @@ export default function ProductList() {
                                         </div>
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                        <Badge variant="secondary" className="font-normal rounded-none text-[10px]">
+                                        <Badge variant="ghost" className="font-normal rounded-none text-[10px]">
                                             {product.category?.name || 'Uncategorized'}
                                         </Badge>
                                     </TableCell>

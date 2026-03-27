@@ -1,7 +1,7 @@
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from base.models import User, Address, ContactMessage
+from base.models import User, Address, ContactMessage, CustomOrder
 
 
 class ContactMessageSerializer(serializers.ModelSerializer):
@@ -9,6 +9,12 @@ class ContactMessageSerializer(serializers.ModelSerializer):
         model = ContactMessage
         fields = ["id", "name", "email", "phone_number", "subject", "message", "attachment", "created_at"]
         read_only_fields = ["id", "created_at"]
+
+
+class CustomOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomOrder
+        fields = "__all__"
 
 
 class UserSerializer(serializers.ModelSerializer):
