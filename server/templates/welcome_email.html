@@ -1,30 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #f8f9fa; padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
-        .content { padding: 20px; }
-        .footer { margin-top: 20px; font-size: 0.8em; color: #777; text-align: center; }
-        .button { display: inline-block; padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Welcome to Cresbyte!</h1>
-        </div>
-        <div class="content">
-            <p>Hello {{ user.first_name|default:user.email }},</p>
-            <p>Thank you for joining us! We're excited to have you as part of our community.</p>
-            <p>You can now log in to your account and start exploring our collections.</p>
-            <p><a href="http://localhost:3000/login" class="button">Log In to Your Account</a></p>
-            <p>If you have any questions, feel free to reply to this email.</p>
-        </div>
-        <div class="footer">
-            <p>&copy; 2026 Cresbyte. All rights reserved.</p>
-        </div>
-    </div>
-</body>
-</html>
+{% extends 'email.html' %}
+
+{% block title %}Welcome to Clearcast Fly{% endblock %}
+
+{% block heading %}
+    Welcome to Clearcast Fly!
+{% endblock %}
+
+{% block content %}
+    <p style="margin: 0; margin-bottom: 16px;">Hello {{ user.first_name|default:user.email }},</p>
+    <p style="margin: 0; margin-bottom: 16px;">Thank you for joining us! We're excited to have you as part of our community.</p>
+    <p style="margin: 0; margin-bottom: 16px;">You can now log in to your account and start exploring our collections.</p>
+    <p style="margin: 0;">If you have any questions, feel free to reply to this email.</p>
+{% endblock %}
+
+{% block action %}
+    <a href="http://localhost:3000/login" target="_blank" style="color:#f4f4f6;text-decoration:none;"><!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3000/login" style="height:51px;width:249px;v-text-anchor:middle;" arcsize="10%" fillcolor="#0e1318">
+    <v:stroke dashstyle="Solid" weight="1px" color="#f4f4f6"/>
+    <w:anchorlock/>
+    <v:textbox inset="0px,0px,0px,0px">
+    <center dir="false" style="color:#f4f4f6;font-family:sans-serif;font-size:16px">
+    <![endif]--><span class="button" style="background-color: #0e1318; border-bottom: 1px solid #f4f4f6; border-left: 1px solid #f4f4f6; border-radius: 5px; border-right: 1px solid #f4f4f6; border-top: 1px solid #f4f4f6; color: #f4f4f6; display: inline-block; font-family: 'Orbit','Helvetica'; font-size: 16px; font-weight: 400; mso-border-alt: none; text-align: center; width: auto; word-break: keep-all; letter-spacing: normal;"><span class="btn-pad" style="word-break: break-word; padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; display: block;"><span style="word-break: break-word; line-height: 32px;">Log In to Your Account →</span></span></span><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></a>
+{% endblock %}

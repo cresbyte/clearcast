@@ -283,7 +283,6 @@ const PaymentSettingsPage = () => {
                                             value={gateway.config[key] || ''}
                                             onChange={(e) => handleConfigChange(gateway.id, key, e.target.value)}
                                             className="bg-white border-none h-11 text-[12px] font-bold tracking-wide rounded-none focus-visible:ring-1 focus-visible:ring-black"
-                                        //type={key.includes('secret') || key.includes('key') ? 'password' : 'text'}
                                         />
                                     </div>
                                 ))}

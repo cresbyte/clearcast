@@ -1,3 +1,28 @@
-<p>Dear {{ name }},</p>
-<p>Great news! Your custom order (Order #{{ order.id }}) has been shipped.</p>
-<p>Thank you for choosing Clearcast Fly Ltd!</p>
+{% extends 'email.html' %}
+
+{% block title %}Order Shipped - Clearcast Fly{% endblock %}
+
+{% block heading %}
+    Your Order is on the Way!
+{% endblock %}
+
+{% block content %}
+    <p style="margin: 0; margin-bottom: 16px;">Dear {{ name }},</p>
+    <p style="margin: 0; margin-bottom: 24px;">Great news! Your custom order (<strong>Order #{{ order.id }}</strong>) has been shipped and is heading your way.</p>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: left; margin-bottom: 24px; border-left: 4px solid #000000;">
+        <p style="margin: 0;">We hope you enjoy your new gear! If you have any questions about your shipment, please don't hesitate to reach out.</p>
+    </div>
+
+    <p style="margin: 0;">Thank you for choosing <strong>Clearcast Fly!</strong></p>
+{% endblock %}
+
+{% block action %}
+    <a href="http://localhost:3000/account/orders/{{ order.id }}" target="_blank" style="color:#f4f4f6;text-decoration:none;"><!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3000/account/orders/{{ order.id }}" style="height:51px;width:249px;v-text-anchor:middle;" arcsize="10%" fillcolor="#0e1318">
+    <v:stroke dashstyle="Solid" weight="1px" color="#f4f4f6"/>
+    <w:anchorlock/>
+    <v:textbox inset="0px,0px,0px,0px">
+    <center dir="false" style="color:#f4f4f6;font-family:sans-serif;font-size:16px">
+    <![endif]--><span class="button" style="background-color: #0e1318; border-bottom: 1px solid #f4f4f6; border-left: 1px solid #f4f4f6; border-radius: 5px; border-right: 1px solid #f4f4f6; border-top: 1px solid #f4f4f6; color: #f4f4f6; display: inline-block; font-family: 'Orbit','Helvetica'; font-size: 16px; font-weight: 400; mso-border-alt: none; text-align: center; width: auto; word-break: keep-all; letter-spacing: normal;"><span class="btn-pad" style="word-break: break-word; padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; display: block;"><span style="word-break: break-word; line-height: 32px;">Track Your Shipment →</span></span></span><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></a>
+{% endblock %}

@@ -10,6 +10,7 @@ router.register(r"admin/customers", views.AdminUserViewSet, basename="admin-user
 router.register(r"admin/staff", views.AdminStaffViewSet, basename="admin-staff")
 router.register(r"contact-messages", views.ContactMessageViewSet, basename="contact-messages")
 router.register(r"admin/custom-orders", views.CustomOrderViewSet, basename="admin-custom-orders")
+router.register(r"admin/email-settings", views.EmailConfigurationViewSet, basename="admin-email-settings")
 
 urlpatterns = [
     path('login/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

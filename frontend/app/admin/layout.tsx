@@ -74,6 +74,7 @@ const navGroups = [
             { icon: UserCog, label: 'Staff', href: '/admin/staff' },
             { icon: Monitor, label: 'Landing Page', href: '/admin/content' },
             { icon: Settings, label: 'Settings', href: '/admin/settings' },
+            { icon: Mail, label: 'Mail Config', href: '/admin/mail-config' },
         ]
     }
 ];

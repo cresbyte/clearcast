@@ -1,164 +1,58 @@
-<!DOCTYPE html>
-<html>
+{% extends 'email.html' %}
 
-<head>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
+{% block title %}Order Confirmation - Clearcast Fly{% endblock %}
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #eee;
-        }
+{% block heading %}
+    Order Confirmed!
+{% endblock %}
 
-        .header {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #000;
-        }
+{% block content %}
+    <p style="margin: 0; margin-bottom: 24px; font-size: 18px; text-align: left;">Hello {{ order.user.first_name|default:order.user.email }},</p>
+    <p style="margin: 0; margin-bottom: 24px; text-align: left;">Thank you for your order! We're processing it and will notify you once it ships.</p>
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .content {
-            padding: 20px 0;
-        }
-
-        .order-info {
-            margin-bottom: 20px;
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-        }
-
-        .item-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        .item-table th {
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-        }
-
-        .item-table td {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .totals {
-            float: right;
-            width: 200px;
-        }
-
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-        }
-
-        .grand-total {
-            font-weight: bold;
-            border-top: 2px solid #000;
-            margin-top: 10px;
-            padding-top: 10px;
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 12px;
-            color: #777;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Order Confirmed</h1>
-        </div>
-        <div class="content">
-            <p>Hello {{ order.user.first_name|default:order.user.email }},</p>
-            <p>Thank you for your order! We're processing it and will notify you once it shifts.</p>
-
-            <div class="order-info">
-                <strong>Order ID:</strong> #{{ order.id }}<br>
-                <strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}<br>
-                <strong>Shipping Address:</strong><br>
-                {{ order.shipping_address|linebreaksbr }}
-            </div>
-
-            <table class="item-table">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in order.items.all %}
-                    <tr>
-                        <td>
-                            {{ item.product.name }}
-                            {% if item.variant %} - {{ item.variant.name }}{% endif %}
-                        </td>
-                        <td>{{ item.quantity }}</td>
-                        <td>${{ item.price }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            <div class="totals">
-                {% if order.coupon %}
-                <div class="total-row">
-                    <span>Discount ({{ order.coupon.code }}):</span>
-                    <span>-{{ order.coupon.value }}%</span>
-                </div>
-                {% endif %}
-                <div class="total-row grand-total">
-                    <span>Total:</span>
-                    <span>${{ order.total_amount }}</span>
-                </div>
-            </div>
-            <div style="clear: both;"></div>
-
-            <center>
-                <a href="http://localhost:3000/profile/orders/{{ order.id }}" class="button">View Order Status</a>
-            </center>
-        </div>
-        <div class="footer">
-            <p>&copy; 2026 Cresbyte. All rights reserved.</p>
-            <p>This is an automated email, please do not reply.</p>
-        </div>
+    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: left; margin-bottom: 24px;">
+        <p style="margin: 0; margin-bottom: 8px;"><strong>Order ID:</strong> #{{ order.id }}</p>
+        <p style="margin: 0; margin-bottom: 16px;"><strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}</p>
+        <p style="margin: 0; margin-bottom: 8px;"><strong>Shipping Address:</strong></p>
+        <p style="margin: 0; font-size: 14px; line-height: 1.5;">{{ order.shipping_address|linebreaksbr }}</p>
     </div>
-</body>
 
-</html>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; text-align: left;">
+        <thead>
+            <tr style="border-bottom: 2px solid #0e1318;">
+                <th style="padding: 10px 0; font-family: 'Orbit', sans-serif; font-size: 14px;">Item</th>
+                <th style="padding: 10px 0; font-family: 'Orbit', sans-serif; font-size: 14px; text-align: center;">Qty</th>
+                <th style="padding: 10px 0; font-family: 'Orbit', sans-serif; font-size: 14px; text-align: right;">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 12px 0; font-size: 14px;">
+                    {{ item.product.name }}
+                    {% if item.variant %}<br/><span style="color: #666; font-size: 12px;">Variant: {{ item.variant.name }}</span>{% endif %}
+                </td>
+                <td style="padding: 12px 0; font-size: 14px; text-align: center;">{{ item.quantity }}</td>
+                <td style="padding: 12px 0; font-size: 14px; text-align: right;">${{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="text-align: right; margin-bottom: 24px;">
+        {% if order.coupon %}
+        <p style="margin: 0; margin-bottom: 8px; font-size: 14px; color: #666;">Discount ({{ order.coupon.code }}): -{{ order.coupon.value }}%</p>
+        {% endif %}
+        <p style="margin: 0; font-size: 20px; font-weight: bold; color: #0e1318;">Total: ${{ order.total_amount }}</p>
+    </div>
+{% endblock %}
+
+{% block action %}
+    <a href="http://localhost:3000/profile/orders/{{ order.id }}" target="_blank" style="color:#f4f4f6;text-decoration:none;"><!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3000/profile/orders/{{ order.id }}" style="height:51px;width:249px;v-text-anchor:middle;" arcsize="10%" fillcolor="#0e1318">
+    <v:stroke dashstyle="Solid" weight="1px" color="#f4f4f6"/>
+    <w:anchorlock/>
+    <v:textbox inset="0px,0px,0px,0px">
+    <center dir="false" style="color:#f4f4f6;font-family:sans-serif;font-size:16px">
+    <![endif]--><span class="button" style="background-color: #0e1318; border-bottom: 1px solid #f4f4f6; border-left: 1px solid #f4f4f6; border-radius: 5px; border-right: 1px solid #f4f4f6; border-top: 1px solid #f4f4f6; color: #f4f4f6; display: inline-block; font-family: 'Orbit','Helvetica'; font-size: 16px; font-weight: 400; mso-border-alt: none; text-align: center; width: auto; word-break: keep-all; letter-spacing: normal;"><span class="btn-pad" style="word-break: break-word; padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; display: block;"><span style="word-break: break-word; line-height: 32px;">View Order Status →</span></span></span><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></a>
+{% endblock %}

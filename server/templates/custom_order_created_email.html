@@ -1,11 +1,35 @@
-<p>Dear {{ name }},</p>
-<p>We have successfully received your custom order (Order #{{ order.id }}).</p>
-<p><strong>Order Details:</strong></p>
-<ul>
-{% for item in order.items %}
-    <li>{{ item.name }} - Qty: {{ item.qty|default:"1" }}</li>
-{% endfor %}
-</ul>
-<p>Total Amount: ${{ order.total_amount }}</p>
-<p>Balance Due: ${{ order.balance }}</p>
-<p>We will be processing it shortly. Thank you for choosing Clearcast Fly Ltd!</p>
+{% extends 'email.html' %}
+
+{% block title %}Order Created - Clearcast Fly{% endblock %}
+
+{% block heading %}
+    Order Confirmed!
+{% endblock %}
+
+{% block content %}
+    <p style="margin: 0; margin-bottom: 16px; font-size: 18px;">Dear {{ name }},</p>
+    <p style="margin: 0; margin-bottom: 24px;">We have successfully received your custom order (<strong>Order #{{ order.id }}</strong>).</p>
+    
+    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: left; margin-bottom: 24px;">
+        <p style="margin: 0; margin-bottom: 12px; font-weight: bold; border-bottom: 1px solid #ddd; padding-bottom: 8px;">Order Details:</p>
+        <ul style="margin: 0; padding-left: 20px; margin-bottom: 16px; line-height: 1.8;">
+        {% for item in order.items %}
+            <li>{{ item.name }} - Qty: {{ item.qty|default:"1" }}</li>
+        {% endfor %}
+        </ul>
+        <p style="margin: 0; margin-bottom: 8px;"><strong>Total Amount:</strong> ${{ order.total_amount }}</p>
+        <p style="margin: 0;"><strong>Balance Due:</strong> ${{ order.balance }}</p>
+    </div>
+
+    <p style="margin: 0;">We will be processing it shortly. Thank you for choosing <strong>Clearcast Fly!</strong></p>
+{% endblock %}
+
+{% block action %}
+    <a href="http://localhost:3000/account/orders/{{ order.id }}" target="_blank" style="color:#f4f4f6;text-decoration:none;"><!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3000/account/orders/{{ order.id }}" style="height:51px;width:249px;v-text-anchor:middle;" arcsize="10%" fillcolor="#0e1318">
+    <v:stroke dashstyle="Solid" weight="1px" color="#f4f4f6"/>
+    <w:anchorlock/>
+    <v:textbox inset="0px,0px,0px,0px">
+    <center dir="false" style="color:#f4f4f6;font-family:sans-serif;font-size:16px">
+    <![endif]--><span class="button" style="background-color: #0e1318; border-bottom: 1px solid #f4f4f6; border-left: 1px solid #f4f4f6; border-radius: 5px; border-right: 1px solid #f4f4f6; border-top: 1px solid #f4f4f6; color: #f4f4f6; display: inline-block; font-family: 'Orbit','Helvetica'; font-size: 16px; font-weight: 400; mso-border-alt: none; text-align: center; width: auto; word-break: keep-all; letter-spacing: normal;"><span class="btn-pad" style="word-break: break-word; padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; display: block;"><span style="word-break: break-word; line-height: 32px;">View Order Status →</span></span></span><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></a>
+{% endblock %}

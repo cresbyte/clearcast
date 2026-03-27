@@ -6,8 +6,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.core.mail import send_mail
-from django.conf import settings
 from rest_framework import generics, status, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from django.db.models import Count, Sum
@@ -23,9 +21,10 @@ from .serializers import (
     AdminStaffSerializer,
     ContactMessageSerializer,
     CustomOrderSerializer,
+    EmailConfigurationSerializer,
 )
 from base import serializers, models
-from .models import ContactMessage, CustomOrder
+from .models import ContactMessage, CustomOrder, EmailConfiguration
 
 User = get_user_model()
 
@@ -57,6 +56,73 @@ class CustomOrderViewSet(viewsets.ModelViewSet):
     queryset = CustomOrder.objects.all().order_by("-created_at")
     serializer_class = CustomOrderSerializer
     permission_classes = [IsAdminUser]
+
+
+class EmailConfigurationViewSet(viewsets.ModelViewSet):
+    """ViewSet for admin to manage email configuration"""
+    queryset = EmailConfiguration.objects.all()
+    serializer_class = EmailConfigurationSerializer
+    permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        return EmailConfiguration.objects.all().order_by("-is_active", "-updated_at")
+
+    from rest_framework.decorators import action
+
+    @action(detail=False, methods=["get", "patch"])
+    def current(self, request):
+        """Get or update the active email configuration"""
+        config = EmailConfiguration.objects.filter(is_active=True).first()
+        
+        if request.method == "GET":
+            if not config:
+                # Return empty config instead of 404 to allow frontend to initialize
+                return Response({
+                    "email_backend": "django.core.mail.backends.smtp.EmailBackend",
+                    "email_host": "smtp.example.com",
+                    "email_port": 587,
+                    "email_use_tls": True,
+                    "email_use_ssl": False,
+                    "email_host_user": "",
+                    "email_host_password": "",
+                    "default_from_email": "noreply@example.com",
+                    "notify_email": ""
+                })
+            serializer = self.get_serializer(config)
+            return Response(serializer.data)
+            
+        elif request.method == "PATCH":
+            if not config:
+                serializer = self.get_serializer(data=request.data)
+            else:
+                serializer = self.get_serializer(config, data=request.data, partial=True)
+            
+            if serializer.is_valid():
+                serializer.save(is_active=True)
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=["post"])
+    def test_connection(self, request):
+        """Test SMTP connection with provided settings"""
+        from django.core.mail import get_connection
+        
+        data = request.data
+        try:
+            connection = get_connection(
+                backend=data.get("email_backend", "django.core.mail.backends.smtp.EmailBackend"),
+                host=data.get("email_host"),
+                port=data.get("email_port"),
+                username=data.get("email_host_user"),
+                password=data.get("email_host_password"),
+                use_tls=data.get("email_use_tls", True),
+                use_ssl=data.get("email_use_ssl", False),
+                timeout=10
+            )
+            connection.open()
+            return Response({"success": True, "message": "Connection successful!"})
+        except Exception as e:
+            return Response({"success": False, "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegisterView(generics.CreateAPIView):

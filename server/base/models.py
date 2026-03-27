@@ -140,3 +140,31 @@ class CustomOrder(models.Model):
             if old_balance is not None and old_balance > 0 and self.balance <= 0:
                 send_custom_order_email(self.pk, "PAYMENT_RECEIVED")
 
+
+class EmailConfiguration(models.Model):
+    """
+    Stores SMTP and general email configuration.
+    Using a singleton-like pattern where the 'active' one is used.
+    """
+    email_backend = models.CharField(max_length=255, default='django.core.mail.backends.smtp.EmailBackend')
+    email_host = models.CharField(max_length=255, default='smtp.example.com')
+    email_port = models.IntegerField(default=587)
+    email_use_tls = models.BooleanField(default=True)
+    email_use_ssl = models.BooleanField(default=False)
+    email_host_user = models.CharField(max_length=255, blank=True)
+    email_host_password = models.CharField(max_length=255, blank=True)
+    default_from_email = models.CharField(max_length=255, default='noreply@example.com')
+    notify_email = models.CharField(max_length=255, blank=True, null=True, help_text="Email for administrative notifications")
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            # Mark all others as inactive if this one is active
+            EmailConfiguration.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Email Config ({self.email_host_user}) - {'Active' if self.is_active else 'Inactive'}"

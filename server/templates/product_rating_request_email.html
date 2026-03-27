@@ -1,114 +1,42 @@
-<!DOCTYPE html>
-<html>
+{% extends 'email.html' %}
 
-<head>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
+{% block title %}Rate Your Purchase - Clearcast Fly{% endblock %}
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #eee;
-        }
+{% block heading %}
+    Tell Us What You Think
+{% endblock %}
 
-        .header {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #000;
-        }
+{% block content %}
+    <p style="margin: 0; margin-bottom: 24px;">Hello {{ order.user.first_name|default:order.user.email }},</p>
+    <p style="margin: 0; margin-bottom: 24px;">We hope you're enjoying your recent purchase from <strong>Clearcast Fly!</strong></p>
+    <p style="margin: 0; margin-bottom: 32px;">Would you mind taking a moment to tell us what you think? Your feedback helps us improve and helps other shoppers find the best gear.</p>
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .content {
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .item-list {
-            text-align: left;
-            margin: 30px 0;
-        }
-
-        .item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .item-info {
-            flex-grow: 1;
-        }
-
-        .rate-link {
-            color: #000;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 12px;
-            color: #777;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-
-        .stars {
-            color: #FFD700;
-            font-size: 24px;
-            margin: 20px 0;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Rate Your Purchase</h1>
-        </div>
-        <div class="content">
-            <p>Hello {{ order.user.first_name|default:order.user.email }},</p>
-            <p>We hope you're enjoying your recent purchase from Cresbyte!</p>
-            <p>Would you mind taking a moment to tell us what you think? Your feedback helps us improve and helps other
-                shoppers.</p>
-
-            <div class="item-list">
-                {% for item in order.items.all %}
-                <div class="item">
-                    <div class="item-info">
-                        <strong>{{ item.product.name }}</strong>
-                        {% if item.variant %}<br><small>{{ item.variant.name }}</small>{% endif %}
-                    </div>
-                    <div>
-                        <a href="http://localhost:3000/products/{{ item.product.id }}?rate=true" class="rate-link">Rate
-                            Product</a>
-                    </div>
-                </div>
-                {% endfor %}
+    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: left; margin-bottom: 32px;">
+        <p style="margin: 0; margin-bottom: 16px; font-weight: bold; border-bottom: 1px solid #ddd; padding-bottom: 8px;">Rate Your Items:</p>
+        {% for item in order.items.all %}
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee;">
+            <div style="flex-grow: 1;">
+                <p style="margin: 0; font-size: 15px; font-weight: 500;">{{ item.product.name }}</p>
+                {% if item.variant %}<p style="margin: 0; font-size: 12px; color: #666;">Variant: {{ item.variant.name }}</p>{% endif %}
             </div>
-
-            <div class="stars">★★★★★</div>
-
-            <p>Thank you for being a valued customer!</p>
+            <div style="margin-left: 20px;">
+                <a href="http://localhost:3000/products/{{ item.product.id }}?rate=true" target="_blank" style="color: #0e1318; font-weight: bold; text-decoration: underline; font-size: 14px;">Rate Product →</a>
+            </div>
         </div>
-        <div class="footer">
-            <p>&copy; 2026 Cresbyte. All rights reserved.</p>
-        </div>
+        {% endfor %}
     </div>
-</body>
 
-</html>
+    <div style="color: #FFD700; font-size: 32px; margin-bottom: 24px; text-align: center; letter-spacing: 5px;">★★★★★</div>
+
+    <p style="margin: 0;">Thank you for being a valued customer!</p>
+{% endblock %}
+
+{% block action %}
+    <a href="http://localhost:3000/profile/orders/{{ order.id }}" target="_blank" style="color:#f4f4f6;text-decoration:none;"><!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost:3000/profile/orders/{{ order.id }}" style="height:51px;width:249px;v-text-anchor:middle;" arcsize="10%" fillcolor="#0e1318">
+    <v:stroke dashstyle="Solid" weight="1px" color="#f4f4f6"/>
+    <w:anchorlock/>
+    <v:textbox inset="0px,0px,0px,0px">
+    <center dir="false" style="color:#f4f4f6;font-family:sans-serif;font-size:16px">
+    <![endif]--><span class="button" style="background-color: #0e1318; border-bottom: 1px solid #f4f4f6; border-left: 1px solid #f4f4f6; border-radius: 5px; border-right: 1px solid #f4f4f6; border-top: 1px solid #f4f4f6; color: #f4f4f6; display: inline-block; font-family: 'Orbit','Helvetica'; font-size: 16px; font-weight: 400; mso-border-alt: none; text-align: center; width: auto; word-break: keep-all; letter-spacing: normal;"><span class="btn-pad" style="word-break: break-word; padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; display: block;"><span style="word-break: break-word; line-height: 32px;">View Your Gear →</span></span></span><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></a>
+{% endblock %}

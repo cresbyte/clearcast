@@ -1,93 +1,43 @@
-<!DOCTYPE html>
-<html>
+{% extends 'email.html' %}
 
-<head>
-    <style>
-        body {
-            font-family: 'serif', 'Times New Roman', serif;
-            line-height: 1.6;
-            color: #333;
-        }
+{% block title %}New Contact Message - Clearcast Fly{% endblock %}
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #eee;
-        }
+{% block heading %}
+    New Contact Message
+{% endblock %}
 
-        .header {
-            background-color: #f9f9f7;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid #1a1a1a;
-        }
+{% block content %}
+    <p style="margin: 0; margin-bottom: 24px;">You have received a new message from the contact form.</p>
 
-        .content {
-            padding: 20px;
-        }
+    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; border-left: 4px solid #0e1318; text-align: left;">
+        <p style="margin: 0; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; color: #666; font-weight: bold; letter-spacing: 1px;">From</p>
+        <p style="margin: 0; margin-bottom: 16px; font-size: 16px;">{{ contact.name }} ({{ contact.email }})</p>
 
-        .footer {
-            font-size: 12px;
-            color: #888;
-            text-align: center;
-            margin-top: 20px;
-        }
+        {% if contact.phone_number %}
+        <p style="margin: 0; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; color: #666; font-weight: bold; letter-spacing: 1px;">Phone</p>
+        <p style="margin: 0; margin-bottom: 16px; font-size: 16px;">{{ contact.phone_number }}</p>
+        {% endif %}
 
-        .label {
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 10px;
-            letter-spacing: 1px;
-            color: #666;
-        }
+        <p style="margin: 0; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; color: #666; font-weight: bold; letter-spacing: 1px;">Subject</p>
+        <p style="margin: 0; margin-bottom: 16px; font-size: 16px;">{{ contact.subject }}</p>
 
-        .value {
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .message-box {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-left: 4px solid #1a1a1a;
-            font-style: italic;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <div class="header">
-            <h1 style="margin: 0; font-style: italic;">New Contact Message</h1>
-        </div>
-        <div class="content">
-            <p>You have received a new message from the contact form.</p>
-
-            <div class="label">From</div>
-            <div class="value">{{ contact.name }} ({{ contact.email }})</div>
-
-            {% if contact.phone_number %}
-            <div class="label">Phone</div>
-            <div class="value">{{ contact.phone_number }}</div>
-            {% endif %}
-
-            <div class="label">Subject</div>
-            <div class="value">{{ contact.subject }}</div>
-
-            <div class="label">Message</div>
-            <div class="message-box">
-                {{ contact.message|linebreaks }}
-            </div>
-
-            <p style="margin-top: 30px; font-size: 14px;">
-                Received on: {{ contact.created_at|date:"F j, Y, g:i a" }}
-            </p>
-        </div>
-        <div class="footer">
-            &copy; {{ now|date:"Y" }} Cresbyte E-commerce Solution. All rights reserved.
+        <p style="margin: 0; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; color: #666; font-weight: bold; letter-spacing: 1px;">Message</p>
+        <div style="font-style: italic; font-size: 16px; line-height: 1.6; color: #0e1318;">
+            {{ contact.message|linebreaks }}
         </div>
     </div>
-</body>
 
-</html>
+    <p style="margin: 0; margin-top: 24px; font-size: 14px; text-align: right; color: #666;">
+        Received on: {{ contact.created_at|date:"F j, Y, g:i a" }}
+    </p>
+{% endblock %}
+
+{% block action %}
+    <a href="mailto:{{ contact.email }}" target="_blank" style="color:#f4f4f6;text-decoration:none;"><!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="mailto:{{ contact.email }}" style="height:51px;width:249px;v-text-anchor:middle;" arcsize="10%" fillcolor="#0e1318">
+    <v:stroke dashstyle="Solid" weight="1px" color="#f4f4f6"/>
+    <w:anchorlock/>
+    <v:textbox inset="0px,0px,0px,0px">
+    <center dir="false" style="color:#f4f4f6;font-family:sans-serif;font-size:16px">
+    <![endif]--><span class="button" style="background-color: #0e1318; border-bottom: 1px solid #f4f4f6; border-left: 1px solid #f4f4f6; border-radius: 5px; border-right: 1px solid #f4f4f6; border-top: 1px solid #f4f4f6; color: #f4f4f6; display: inline-block; font-family: 'Orbit','Helvetica'; font-size: 16px; font-weight: 400; mso-border-alt: none; text-align: center; width: auto; word-break: keep-all; letter-spacing: normal;"><span class="btn-pad" style="word-break: break-word; padding-left: 30px; padding-right: 30px; padding-top: 10px; padding-bottom: 10px; display: block;"><span style="word-break: break-word; line-height: 32px;">Reply to Message →</span></span></span><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></a>
+{% endblock %}
