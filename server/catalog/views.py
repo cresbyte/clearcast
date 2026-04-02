@@ -4,10 +4,12 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.db import transaction
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Category, Product, ProductImage
+from .models import FilterGroup, FilterOption, Product, ProductImage
 from .serializers import (
-    CategorySerializer,
-    CategoryWriteSerializer,
+    FilterGroupSerializer,
+    FilterGroupWriteSerializer,
+    FilterOptionSerializer,
+    FilterOptionWriteSerializer,
     ProductSerializer,
     ProductWriteSerializer,
     ProductImageSerializer,
@@ -17,46 +19,47 @@ from .permissions import IsStaffOrReadOnly
 from .filters import ProductFilter
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class FilterGroupViewSet(viewsets.ModelViewSet):
     """
-    ViewSet for Categories with full CRUD operations.
-    - List and retrieve are public
-    - Create, update, delete require staff permissions
+    ViewSet for FilterGroups.
     """
-
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer  # Default serializer
+    queryset = FilterGroup.objects.all()
+    serializer_class = FilterGroupSerializer
     permission_classes = [IsStaffOrReadOnly]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ["name", "description"]
-    ordering_fields = ["name", "created_at"]
+    ordering_fields = ["name"]
     ordering = ["name"]
     lookup_field = "slug"
     pagination_class = None
 
     def get_serializer_class(self):
-        """Use write serializer for create/update, read serializer otherwise"""
         if self.action in ["create", "update", "partial_update"]:
-            return CategoryWriteSerializer
-        return CategorySerializer
+            return FilterGroupWriteSerializer
+        return FilterGroupSerializer
 
-    def get_serializer_context(self):
-        """Add request to serializer context for building absolute URLs"""
-        context = super().get_serializer_context()
-        context["request"] = self.request
-        return context
 
-    def get_queryset(self):
-        """Return categories with parent=None for root categories, or all if ?all=true"""
-        queryset = Category.objects.all()
+class FilterOptionViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for FilterOptions.
+    """
+    queryset = FilterOption.objects.select_related('group')
+    serializer_class = FilterOptionSerializer
+    permission_classes = [IsStaffOrReadOnly]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ["group__slug", "group_id"]
+    search_fields = ["name"]
+    ordering_fields = ["name", "group__name"]
+    ordering = ["group__name", "name"]
+    lookup_field = "slug"
+    pagination_class = None
 
-        # Filter by parent categories if not requesting all
-        show_all = self.request.query_params.get("all", "false").lower() == "true"
-        if not show_all and self.action == "list":
-            queryset = queryset.filter(parent=None)
-
-        return queryset
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return FilterOptionWriteSerializer
+        return FilterOptionSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -66,8 +69,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     - Create, update, delete require staff permissions
     """
 
-    queryset = Product.objects.select_related("category").prefetch_related(
-        "images", "variants"
+    queryset = Product.objects.prefetch_related(
+        "images", "variants", "filters"
     )
     serializer_class = ProductSerializer  # Default serializer
     permission_classes = [IsStaffOrReadOnly]
@@ -88,8 +91,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         Return all products for staff users, only active products for others.
         Always prefetch related data for performance.
         """
-        queryset = Product.objects.select_related("category").prefetch_related(
-            "images", "variants"
+        queryset = Product.objects.prefetch_related(
+            "images", "variants", "filters"
         )
 
         # Show all products to staff, only active to others

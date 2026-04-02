@@ -1,15 +1,25 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function ShopLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const pathname = usePathname();
+    const isHome = pathname === "/";
+
     return (
         <>
             <Navbar />
-            <main className="flex-grow">
+            <main className={cn(
+                "flex-grow min-h-screen",
+                !isHome && "pt-16 md:pt-20"
+            )}>
                 {children}
             </main>
             <Footer />

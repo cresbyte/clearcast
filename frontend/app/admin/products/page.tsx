@@ -1,8 +1,8 @@
 "use client";
 
 import { useAdminProducts, useDeleteProduct } from "@/api/adminProductApi";
-import { useCategories } from "@/api/categoryQueries";
-import CategoryFilter from "@/components/common/CategoryFilter";
+import { useFilters } from "@/api/filterQueries";
+import ProductFilter from "@/components/common/ProductFilter";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,38 +24,24 @@ import { toast } from "sonner";
 export default function ProductList() {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+    const [selectedFilters, setSelectedFilters] = useState<number[]>([]);
 
-    // Categories for catalog filter
-    const { data: categoriesData = [], isLoading: isLoadingCategories } = useCategories();
-    const categories = Array.isArray(categoriesData) ? categoriesData : (categoriesData as any).results || [];
-
-    const flatCategories = useMemo(() => {
-        const result: any[] = [];
-        const flatten = (items: any[], level = 0) => {
-            items.forEach((cat) => {
-                result.push({ ...cat, level });
-                if (cat.children && cat.children.length > 0) {
-                    flatten(cat.children, level + 1);
-                }
-            });
-        };
-        flatten(categories);
-        return result;
-    }, [categories]);
+    // Filter groups for catalog filter
+    const { data: filtersDataResponse = [], isLoading: isLoadingFilters } = useFilters();
+    const filterGroups = Array.isArray(filtersDataResponse) ? filtersDataResponse : (filtersDataResponse as any).results || [];
 
     // Fetch products with search filter
     const [page, setPage] = useState(1);
     const { data, isLoading, isError, error } = useAdminProducts({
         search: searchQuery,
         page: page,
-        category_id: selectedCategories.length > 0 ? selectedCategories : undefined,
+        filters_id: selectedFilters.length > 0 ? selectedFilters : undefined,
     });
 
     // Reset pagination when filters change
     useEffect(() => {
         setPage(1);
-    }, [searchQuery, selectedCategories]);
+    }, [searchQuery, selectedFilters]);
 
     const products = data?.results || [];
     const totalCount = data?.count || 0;
@@ -131,17 +117,17 @@ export default function ProductList() {
                     />
                 </div>
                 <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <CategoryFilter
-                        categories={categories}
-                        selectedValues={selectedCategories}
-                        onChange={setSelectedCategories}
-                        isLoading={isLoadingCategories}
+                    <ProductFilter
+                        filterGroups={filterGroups}
+                        selectedValues={selectedFilters}
+                        onChange={setSelectedFilters}
+                        isLoading={isLoadingFilters}
                     />
                     <Button
                         variant="outline"
                         className="hidden sm:flex rounded-none text-[10px] uppercase tracking-widest font-bold"
                         onClick={() => {
-                            setSelectedCategories([]);
+                            setSelectedFilters([]);
                             setSearchQuery("");
                         }}
                     >
@@ -158,7 +144,7 @@ export default function ProductList() {
                                 Image
                             </TableHead>
                             <TableHead className="text-[10px] uppercase tracking-widest font-bold">Name</TableHead>
-                            <TableHead className="hidden md:table-cell text-[10px] uppercase tracking-widest font-bold">Category</TableHead>
+                            <TableHead className="hidden md:table-cell text-[10px] uppercase tracking-widest font-bold">Filters</TableHead>
                             <TableHead className="text-[10px] uppercase tracking-widest font-bold">Status</TableHead>
                             <TableHead className="text-[10px] uppercase tracking-widest font-bold">Qty</TableHead>
                             <TableHead className="text-right text-[10px] uppercase tracking-widest font-bold">Price</TableHead>
@@ -211,12 +197,12 @@ export default function ProductList() {
                                     <TableCell className="font-medium">
                                         <span className="font-serif">{product.name}</span>
                                         <div className="text-[10px] text-muted-foreground sm:hidden italic">
-                                            {product.category?.name || 'Uncategorized'}
+                                            {product.filters?.map((f: any) => f.name).join(', ') || 'No Filters'}
                                         </div>
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
                                         <Badge variant="ghost" className="font-normal rounded-none text-[10px]">
-                                            {product.category?.name || 'Uncategorized'}
+                                            {product.filters?.map((f: any) => f.name).join(', ') || 'No Filters'}
                                         </Badge>
                                     </TableCell>
                                     <TableCell>

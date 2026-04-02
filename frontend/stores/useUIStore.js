@@ -9,8 +9,7 @@ const useUIStore = create(
             searchHistory: [],
 
             // Filter state
-            selectedCategories: [],
-            selectedSubcategories: [],
+            selectedFilters: [],
             priceRange: [0, 1000],
             isSetFilter: null, // null means all, true means is_set=True, false means is_set=False
 
@@ -48,65 +47,16 @@ const useUIStore = create(
             },
 
             // Filter actions
-            setSelectedCategories: (categories) => {
-                set({ selectedCategories: categories, currentPage: 1 });
+            setSelectedFilters: (filters) => {
+                set({ selectedFilters: filters, currentPage: 1 });
             },
 
-            toggleCategory: (category) => {
-                const { selectedCategories } = get();
-                const newCategories = selectedCategories.includes(category)
-                    ? selectedCategories.filter((c) => c !== category)
-                    : [...selectedCategories, category];
-                set({ selectedCategories: newCategories, currentPage: 1 });
-            },
-
-            setSelectedSubcategories: (subcategories) => {
-                set({ selectedSubcategories: subcategories, currentPage: 1 });
-            },
-
-            toggleSubcategory: (subcategory) => {
-                const { selectedSubcategories } = get();
-                const newSubcategories = selectedSubcategories.includes(subcategory)
-                    ? selectedSubcategories.filter((s) => s !== subcategory)
-                    : [...selectedSubcategories, subcategory];
-                set({ selectedSubcategories: newSubcategories, currentPage: 1 });
-            },
-
-            // Hierarchical toggle for categories (toggles children too)
-            toggleCategoryHierarchical: (categorySlug, childSlugs = [], checked) => {
-                const { selectedCategories, selectedSubcategories } = get();
-                let newCats = [...selectedCategories];
-                let newSubs = [...selectedSubcategories];
-
-                if (checked) {
-                    if (!newCats.includes(categorySlug)) newCats.push(categorySlug);
-                    childSlugs.forEach(slug => {
-                        if (!newSubs.includes(slug)) newSubs.push(slug);
-                    });
-                } else {
-                    newCats = newCats.filter(c => c !== categorySlug);
-                    newSubs = newSubs.filter(s => !childSlugs.includes(s));
-                }
-
-                set({
-                    selectedCategories: newCats,
-                    selectedSubcategories: newSubs,
-                    currentPage: 1
-                });
-            },
-
-            // Hierarchical toggle for subcategories
-            toggleSubcategoryHierarchical: (subcategorySlug, checked) => {
-                const { selectedSubcategories } = get();
-                let newSubs = [...selectedSubcategories];
-
-                if (checked) {
-                    if (!newSubs.includes(subcategorySlug)) newSubs.push(subcategorySlug);
-                } else {
-                    newSubs = newSubs.filter(s => s !== subcategorySlug);
-                }
-
-                set({ selectedSubcategories: newSubs, currentPage: 1 });
+            toggleFilter: (filterSlug) => {
+                const { selectedFilters } = get();
+                const newFilters = selectedFilters.includes(filterSlug)
+                    ? selectedFilters.filter((c) => c !== filterSlug)
+                    : [...selectedFilters, filterSlug];
+                set({ selectedFilters: newFilters, currentPage: 1 });
             },
 
             setPriceRange: (range) => {
@@ -115,8 +65,7 @@ const useUIStore = create(
 
             resetFilters: () => {
                 set({
-                    selectedCategories: [],
-                    selectedSubcategories: [],
+                    selectedFilters: [],
                     priceRange: [0, 1000],
                     isSetFilter: null,
                     currentPage: 1,
@@ -164,8 +113,8 @@ const useUIStore = create(
 
             // Get active filter count
             getActiveFilterCount: () => {
-                const { selectedCategories, selectedSubcategories, priceRange } = get();
-                let count = selectedCategories.length + selectedSubcategories.length;
+                const { selectedFilters, priceRange } = get();
+                let count = selectedFilters.length;
                 if (priceRange[0] > 0 || priceRange[1] < 1000) count++;
                 return count;
             },

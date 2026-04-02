@@ -96,20 +96,34 @@ const Navbar = () => {
     setUISearchQuery("");
   };
 
+  const isHome = pathname === "/";
+  const showTransparent = isHome && !isScrolled && !isMenuOpen && !isSearchOpen;
+
   return (
-    <nav className="bg-white border-b border-border/40 sticky top-0 z-50">
+    <nav className={cn(
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+      showTransparent 
+        ? "bg-transparent border-transparent" 
+        : "bg-white  border-b border-border/40 shadow-xs"
+    )}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Bar - Elegant & Minimal */}
         {activePromo && (
           <div
-            className={`hidden lg:block border-b border-border/30 transition-all duration-500 ease-in-out overflow-hidden ${isScrolled ? "h-0 opacity-0" : "h-9 opacity-100"
-              }`}
+            className={cn(
+              "hidden lg:block border-b transition-all duration-500 ease-in-out overflow-hidden",
+              showTransparent ? "border-white/10" : "border-border/30",
+              isScrolled ? "h-0 opacity-0" : "h-9 opacity-100"
+            )}
           >
-            <div className="flex items-center justify-center h-full text-[10px] uppercase tracking-[0.2em] font-medium text-muted-foreground/80">
+            <div className={cn(
+              "flex items-center justify-center h-full text-[10px] uppercase tracking-[0.2em] font-medium",
+              showTransparent ? "text-white/70" : "text-muted-foreground/80"
+            )}>
               {activePromo.link ? (
                 <Link
                   href={activePromo.link}
-                  className="hover:text-foreground transition-colors"
+                  className={cn("transition-colors", showTransparent ? "hover:text-white" : "hover:text-foreground")}
                 >
                   {activePromo.text}
                 </Link>
@@ -121,12 +135,15 @@ const Navbar = () => {
         )}
 
         {/* Main Navigation */}
-        <div className="flex h-16 md:h-20 items-center justify-between gap-8">
+        <div className="flex h-16 md:h-20 items-center justify-between gap-8 text-foreground transition-colors">
           {/* Logo - Centered alignment feel */}
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="text-2xl font-serif font-bold text-foreground tracking-tighter"
+              className={cn(
+                "text-2xl font-serif font-bold tracking-tighter transition-colors",
+                showTransparent ? "text-white" : "text-foreground"
+              )}
             >
               Clearcast
             </Link>
@@ -136,61 +153,26 @@ const Navbar = () => {
           <div className="hidden lg:flex lg:items-center lg:space-x-8">
             {!isSearchOpen && (
               <>
-                <Link
-                  href="/"
-                  className={cn(
-                    "text-[11px] font-bold tracking-[0.2em] transition-colors",
-                    isActive("/")
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  HOME
-                </Link>
-                <Link
-                  href="/fly-sets"
-                  className={cn(
-                    "text-[11px] font-bold tracking-[0.2em] transition-colors",
-                    isActive("/fly-sets")
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  FLY SET
-                </Link>
-                <Link
-                  href="/fly-bars"
-                  className={cn(
-                    "text-[11px] font-bold tracking-[0.2em] transition-colors",
-                    isActive("/fly-bars")
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  FLY BARS
-                </Link>
-                <Link
-                  href="/about"
-                  className={cn(
-                    "text-[11px] font-bold tracking-[0.2em] transition-colors",
-                    isActive("/about")
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  ABOUT
-                </Link>
-                <Link
-                  href="/contact"
-                  className={cn(
-                    "text-[11px] font-bold tracking-[0.2em] transition-colors",
-                    isActive("/contact")
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  CONTACT
-                </Link>
+                {[
+                  { name: "HOME", path: "/" },
+                  { name: "FLY SET", path: "/fly-sets" },
+                  { name: "FLY BARS", path: "/fly-bars" },
+                  { name: "ABOUT", path: "/about" },
+                  { name: "CONTACT", path: "/contact" },
+                ].map((item) => (
+                  <Link
+                    key={item.path}
+                    href={item.path}
+                    className={cn(
+                      "text-[11px] font-bold tracking-[0.2em] transition-colors",
+                      isActive(item.path)
+                        ? (showTransparent ? "text-white" : "text-primary")
+                        : (showTransparent ? "text-white/60 hover:text-white" : "text-muted-foreground hover:text-foreground")
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               </>
             )}
           </div>
@@ -200,10 +182,11 @@ const Navbar = () => {
             {/* Inline Search Bar - Unified Desktop/Mobile */}
             <div
               className={cn(
-                "flex items-center bg-[#F9F9F7] transition-all duration-700 ease-in-out border border-transparent overflow-hidden h-9 md:h-10",
+                "flex items-center transition-all duration-700 ease-in-out border overflow-hidden h-9 md:h-10",
                 isSearchOpen
-                  ? "flex-1 md:w-80 border-border/40 px-3 ml-4"
-                  : "w-9 md:w-10 px-0 justify-center cursor-pointer",
+                  ? "flex-1 md:w-80 border-border/40 px-3 ml-4 bg-[#F9F9F7]"
+                  : "w-9 md:w-10 px-0 justify-center cursor-pointer border-transparent",
+                !isSearchOpen && showTransparent ? "bg-white/10 hover:bg-white/20" : (!isSearchOpen && "bg-[#F9F9F7]")
               )}
               onClick={() => !isSearchOpen && setIsSearchOpen(true)}
             >
@@ -212,7 +195,7 @@ const Navbar = () => {
                   "h-[18px] w-[18px] shrink-0 transition-colors",
                   isSearchOpen
                     ? "text-primary"
-                    : "text-foreground hover:text-primary",
+                    : (showTransparent ? "text-white" : "text-foreground hover:text-primary")
                 )}
               />
               {isSearchOpen && (
@@ -246,14 +229,16 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Other Icons - Always show Cart, hide Profile/Menu when search is open only if space is tight */}
+            {/* Other Icons */}
             <div className="flex items-center space-x-1 md:space-x-2">
-              {/* Profile Dropdown (Desktop Only) - Hidden when search is open for focus */}
               {!isSearchOpen &&
                 (user ? (
                   <div className="hidden lg:block">
                     <DropdownMenu>
-                      <DropdownMenuTrigger className="flex items-center text-foreground hover:text-primary h-10 px-2 gap-1 transition-colors outline-none shrink-0">
+                      <DropdownMenuTrigger className={cn(
+                        "flex items-center h-10 px-2 gap-1 transition-colors outline-none shrink-0",
+                        showTransparent ? "text-white/80 hover:text-white" : "text-foreground hover:text-primary"
+                      )}>
                         <User className="h-[18px] w-[18px]" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
@@ -270,26 +255,11 @@ const Navbar = () => {
                         </div>
                         {[
                           { label: "Profile", path: "/profile", icon: User },
-                          {
-                            label: "Orders",
-                            path: "/profile/orders",
-                            icon: Package,
-                          },
-                          {
-                            label: "Wishlist",
-                            path: "/profile/wishlist",
-                            icon: Heart,
-                            count: wishlistCount,
-                          },
-                          {
-                            label: "Settings",
-                            path: "/profile/settings",
-                            icon: Settings,
-                          },
+                          { label: "Orders", path: "/profile/orders", icon: Package },
+                          { label: "Wishlist", path: "/profile/wishlist", icon: Heart, count: wishlistCount },
+                          { label: "Settings", path: "/profile/settings", icon: Settings },
                         ].map((item) => (
-                          <DropdownMenuItem
-                            key={item.path}
-                          >
+                          <DropdownMenuItem key={item.path}>
                             <Link
                               href={item.path}
                               className="flex items-center w-full cursor-pointer py-2.5 px-4 outline-none focus:bg-muted"
@@ -299,10 +269,7 @@ const Navbar = () => {
                                 {item.label}
                               </span>
                               {item.count > 0 && (
-                                <span
-                                  className="ml-auto bg-primary text-primary-foreground text-[9px] font-black px-1.5 py-0.5"
-                                  style={{ borderRadius: 0 }}
-                                >
+                                <span className="ml-auto bg-primary text-primary-foreground text-[9px] font-black px-1.5 py-0.5" style={{ borderRadius: 0 }}>
                                   {item.count}
                                 </span>
                               )}
@@ -310,55 +277,48 @@ const Navbar = () => {
                           </DropdownMenuItem>
                         ))}
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          onClick={handleLogout}
-                          className="flex items-center cursor-pointer text-destructive focus:text-destructive py-2.5 px-4"
-                        >
+                        <DropdownMenuItem onClick={handleLogout} className="flex items-center cursor-pointer text-destructive focus:text-destructive py-2.5 px-4">
                           <LogOut className="h-4 w-4 mr-3" />
-                          <span className="text-xs font-semibold uppercase tracking-wider">
-                            Log Out
-                          </span>
+                          <span className="text-xs font-semibold uppercase tracking-wider">Log Out</span>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
                 ) : (
-                  <Link
-                    href="/auth/login"
-                    className="flex items-center w-full cursor-pointer py-2.5 px-4 outline-none focus:bg-muted"
-                  >
-                    {" "}
+                  <Link href="/auth/login" className={cn(
+                    "flex items-center h-10 px-2 transition-colors",
+                    showTransparent ? "text-white/80 hover:text-white" : "text-foreground hover:text-primary"
+                  )}>
                     <User className="h-[18px] w-[18px]" />
                   </Link>
                 ))}
 
-              {/* Cart - Always visible */}
+              {/* Cart */}
               <Link
                 href="/cart"
-                className="text-foreground hover:text-primary relative h-10 px-2 flex items-center transition-colors shrink-0"
+                className={cn(
+                  "relative h-10 px-2 flex items-center transition-colors shrink-0",
+                  showTransparent ? "text-white/80 hover:text-white" : "text-foreground hover:text-primary"
+                )}
               >
-                <ShoppingCart className="h-[18px] md:h-[18px] w-[18px] md:w-[18px]" />
+                <ShoppingCart className="h-[18px] w-[18px]" />
                 {cartItemCount > 0 && (
-                  <span
-                    className="absolute top-1 md:top-1 -right-0.5 md:-right-0.5 bg-primary text-primary-foreground text-[9px] font-black min-w-[16px] h-4 flex items-center justify-center px-1"
-                    style={{ borderRadius: "50%" }}
-                  >
+                  <span className="absolute top-1 -right-0.5 bg-primary text-primary-foreground text-[9px] font-black min-w-[16px] h-4 flex items-center justify-center px-1" style={{ borderRadius: "50%" }}>
                     {cartItemCount}
                   </span>
                 )}
               </Link>
 
-              {/* Mobile Menu Trigger - Hidden when search is open for space */}
+              {/* Mobile Menu */}
               {!isSearchOpen && (
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-2 text-foreground lg:hidden"
-                >
-                  {isMenuOpen ? (
-                    <X className="h-6 w-6" />
-                  ) : (
-                    <Menu className="h-6 w-6" />
+                  className={cn(
+                    "p-2 lg:hidden transition-colors",
+                    showTransparent ? "text-white" : "text-foreground"
                   )}
+                >
+                  {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
               )}
             </div>

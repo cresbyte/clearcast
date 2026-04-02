@@ -162,19 +162,15 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                 <nav className="flex items-center space-x-3 text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/60">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <span>/</span>
-                    {product.is_set ? (
-                        <Link href="/fly-sets" className="hover:text-primary transition-colors">Fly Set</Link>
-                    ) : (
-                        <Link href="/fly-bars" className="hover:text-primary transition-colors">Fly Bars</Link>
-                    )}
-                    {product.category && (
+                    <Link href="/shop" className="hover:text-primary transition-colors">Shop</Link>
+                    {product.filters?.[0] && (
                         <>
                             <span>/</span>
                             <Link
-                                href={`/${product.is_set ? 'fly-sets' : 'fly-bars'}?category=${product.category.slug}`}
+                                href={`/shop?filter=${product.filters[0].slug}`}
                                 className="hover:text-primary transition-colors truncate max-w-[100px]"
                             >
-                                {product.category.name}
+                                {product.filters[0].name}
                             </Link>
                         </>
                     )}
@@ -237,9 +233,9 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                     <div className="lg:col-span-5 flex flex-col pt-4">
                         <div className="space-y-6 mb-12">
                             <div className="space-y-2">
-                                {product.category && (
+                                {product.filters?.length > 0 && (
                                     <p className="text-[10px] uppercase tracking-[0.3em] font-black text-primary">
-                                        {product.category.name}
+                                        {product.filters.map((f: any) => f.name).join(' • ')}
                                     </p>
                                 )}
                                 <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground leading-[1.1] tracking-tighter">
@@ -277,8 +273,8 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                             {availableVariants.length > 0 && (
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-center">
-                                        <span className="text-[10px] uppercase tracking-widest font-black text-foreground">Size / Style</span>
-                                        {selectedVariant && <span className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60">{selectedVariant.name}</span>}
+                                        <span className="text-[10px] uppercase tracking-widest font-black text-foreground">Select Size</span>
+                                        {selectedVariant && <span className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60">{selectedVariant.size}</span>}
                                     </div>
                                     <div className="flex flex-wrap gap-2">
                                         {availableVariants.map((variant: any) => (
@@ -290,7 +286,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                                                     : 'border-border hover:border-foreground text-foreground'
                                                     }`}
                                             >
-                                                {variant.name}
+                                                {variant.size}
                                             </button>
                                         ))}
                                     </div>

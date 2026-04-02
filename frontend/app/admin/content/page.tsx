@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Plus, Pencil, Trash2, Loader2, Image as ImageIcon, Save } from 'lucide-react';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
-import { useCategories } from '@/api/productQueries';
+import { useFilters } from '@/api/filterQueries';
 import { Badge } from '@/components/ui/badge';
 import {
     Dialog,
@@ -44,8 +44,12 @@ export default function ContentManagement() {
     const contentSections = (sectionsData as any)?.results || sectionsData || [];
     const shopBySections = (shopByData as any)?.results || shopByData || [];
 
-    const { data: categoriesData = [] } = useCategories();
-    const categories = Array.isArray(categoriesData) ? categoriesData : (categoriesData as any).results || [];
+    const { data: filtersData = [] } = useFilters();
+    const filterGroups = Array.isArray(filtersData) ? filtersData : (filtersData as any).results || [];
+    // Flatten filter options for the selection list
+    const allFilterOptions = filterGroups.flatMap((group: any) => 
+        (group.options || []).map((opt: any) => ({ ...opt, groupName: group.name }))
+    );
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editType, setEditType] = useState<string | null>(null); // 'hero', 'promo', 'content', 'shopByCatalog'
@@ -57,11 +61,32 @@ export default function ContentManagement() {
         setEditType(type);
         setEditItem(null);
         if (type === 'hero') {
-            setFormData({ title: '', subtitle: '', button_text: 'Shop Now', button_link: '/shop', order: 0, is_active: true });
+            setFormData({ 
+                title: '', 
+                subtitle: '', 
+                button_text: 'Shop Now', 
+                button_link: '/shop', 
+                button_text_2: '',
+                button_link_2: '',
+                content_alignment: 'center',
+                order: 0, 
+                is_active: true 
+            });
         } else if (type === 'promo') {
             setFormData({ text: '', link: '', order: 0, is_active: true });
         } else if (type === 'content') {
-            setFormData({ title: '', subtitle: '', description: '', section_type: 'banner', button_text: '', button_link: '', badge_text: '', order: 0, is_active: true });
+            setFormData({ 
+                title: '', 
+                subtitle: '', 
+                description: '', 
+                section_type: 'banner', 
+                button_text: '', 
+                button_link: '', 
+                badge_text: '', 
+                featured_filter: '',
+                order: 0, 
+                is_active: true 
+            });
         } else if (type === 'shopByCatalog') {
             setFormData({
                 title: 'Shop by Collection',
@@ -69,7 +94,7 @@ export default function ContentManagement() {
                 description: '',
                 order: 0,
                 is_active: true,
-                category_ids: [],
+                filter_ids: [],
             });
         }
         setDialogOpen(true);
@@ -80,10 +105,10 @@ export default function ContentManagement() {
         setEditItem(item);
 
         if (type === 'shopByCatalog') {
-            const categoryIds = (item.categories || []).map((c: any) => c.id);
+            const filterIds = (item.filters || []).map((f: any) => f.id);
             setFormData({
                 ...item,
-                category_ids: categoryIds,
+                filter_ids: filterIds,
             });
         } else {
             setFormData({ ...item, image: null });
@@ -105,9 +130,9 @@ export default function ContentManagement() {
             const formDataWithFiles = new FormData();
             Object.keys(formData).forEach(key => {
                 if (formData[key] !== null && formData[key] !== undefined) {
-                    if (key === 'category_ids' && Array.isArray(formData[key])) {
+                    if (key === 'filter_ids' && Array.isArray(formData[key])) {
                         formData[key].forEach((id: number) => {
-                            formDataWithFiles.append('category_ids', id.toString());
+                            formDataWithFiles.append('filter_ids', id.toString());
                         });
                     } else {
                         formDataWithFiles.append(key, formData[key]);
@@ -384,21 +409,21 @@ export default function ContentManagement() {
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead className="text-[10px] uppercase tracking-widest font-bold">Title</TableHead>
-                                        <TableHead className="text-[10px] uppercase tracking-widest font-bold">Categories</TableHead>
-                                        <TableHead className="text-[10px] uppercase tracking-widest font-bold">Order</TableHead>
-                                        <TableHead className="text-[10px] uppercase tracking-widest font-bold">Status</TableHead>
-                                        <TableHead className="text-right text-[10px] uppercase tracking-widest font-bold">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {shopBySections.map((section: any) => (
-                                        <TableRow key={section.id}>
-                                            <TableCell className="font-medium text-sm font-serif">{section.title}</TableCell>
-                                            <TableCell className="max-w-xs text-xs text-muted-foreground italic">
-                                                {(section.categories || []).length > 0
-                                                    ? section.categories.map((c: any) => c.name).join(', ')
-                                                    : 'No categories selected'}
-                                            </TableCell>
+                                            <TableHead className="text-[10px] uppercase tracking-widest font-bold">Featured Filters</TableHead>
+                                            <TableHead className="text-[10px] uppercase tracking-widest font-bold">Order</TableHead>
+                                            <TableHead className="text-[10px] uppercase tracking-widest font-bold">Status</TableHead>
+                                            <TableHead className="text-right text-[10px] uppercase tracking-widest font-bold">Actions</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {shopBySections.map((section: any) => (
+                                            <TableRow key={section.id}>
+                                                <TableCell className="font-medium text-sm font-serif">{section.title}</TableCell>
+                                                <TableCell className="max-w-xs text-xs text-muted-foreground italic">
+                                                    {(section.filters || []).length > 0
+                                                        ? section.filters.map((f: any) => f.name).join(', ')
+                                                        : 'No filters selected'}
+                                                </TableCell>
                                             <TableCell className="text-xs">{section.order}</TableCell>
                                             <TableCell>
                                                 <Badge variant={section.is_active ? 'default' : 'secondary'} className="rounded-none text-[10px] uppercase tracking-widest font-bold">
@@ -474,13 +499,35 @@ export default function ContentManagement() {
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="grid gap-2">
-                                            <Label htmlFor="btn_text" className="text-[10px] uppercase tracking-widest font-bold">Button Text</Label>
+                                            <Label htmlFor="btn_text" className="text-[10px] uppercase tracking-widest font-bold">Button 1 Text</Label>
                                             <Input id="btn_text" value={formData.button_text} onChange={(e) => setFormData({ ...formData, button_text: e.target.value })} className="rounded-none" />
                                         </div>
                                         <div className="grid gap-2">
-                                            <Label htmlFor="btn_link" className="text-[10px] uppercase tracking-widest font-bold">Button Link</Label>
+                                            <Label htmlFor="btn_link" className="text-[10px] uppercase tracking-widest font-bold">Button 1 Link</Label>
                                             <Input id="btn_link" value={formData.button_link} onChange={(e) => setFormData({ ...formData, button_link: e.target.value })} className="rounded-none" />
                                         </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="btn_text_2" className="text-[10px] uppercase tracking-widest font-bold">Button 2 Text (Optional)</Label>
+                                            <Input id="btn_text_2" value={formData.button_text_2} onChange={(e) => setFormData({ ...formData, button_text_2: e.target.value })} className="rounded-none" />
+                                        </div>
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="btn_link_2" className="text-[10px] uppercase tracking-widest font-bold">Button 2 Link (Optional)</Label>
+                                            <Input id="btn_link_2" value={formData.button_link_2} onChange={(e) => setFormData({ ...formData, button_link_2: e.target.value })} className="rounded-none" />
+                                        </div>
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="alignment" className="text-[10px] uppercase tracking-widest font-bold">Content Alignment</Label>
+                                        <Select value={formData.content_alignment} onValueChange={(val) => setFormData({ ...formData, content_alignment: val })}>
+                                            <SelectTrigger className="rounded-none">
+                                                <SelectValue placeholder="Select alignment" />
+                                            </SelectTrigger>
+                                            <SelectContent className="rounded-none">
+                                                <SelectItem value="center">Center</SelectItem>
+                                                <SelectItem value="left">Left</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </>
                             )}
@@ -542,6 +589,35 @@ export default function ContentManagement() {
                                             <Input id="btn_link" value={formData.button_link} onChange={(e) => setFormData({ ...formData, button_link: e.target.value })} className="rounded-none" />
                                         </div>
                                     </div>
+                                    {formData.section_type === 'featured' && (
+                                        <div className="grid gap-2 border-t pt-4 mt-2">
+                                            <Label htmlFor="featured_filter" className="text-[10px] uppercase tracking-widest font-bold text-primary">Target Filter for Product Grid</Label>
+                                            <Select 
+                                                value={formData.featured_filter?.toString() || ""} 
+                                                onValueChange={(val) => setFormData({ ...formData, featured_filter: val })}
+                                            >
+                                                <SelectTrigger className="rounded-none border-primary/20">
+                                                    <SelectValue placeholder="Select filter to feature products from..." />
+                                                </SelectTrigger>
+                                                <SelectContent className="rounded-none max-h-60">
+                                                    <SelectItem value="">No Filter (Editorial Only)</SelectItem>
+                                                    {filterGroups.map((group: any) => (
+                                                        <React.Fragment key={group.id}>
+                                                            <div className="px-2 py-1.5 text-[10px] font-black uppercase tracking-widest text-muted-foreground bg-muted/30">{group.name}</div>
+                                                            {(group.options || []).map((opt: any) => (
+                                                                <SelectItem key={opt.id} value={opt.id.toString()} className="pl-6">
+                                                                    {opt.name}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </React.Fragment>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                            <p className="text-[10px] text-muted-foreground italic">
+                                                Choosing a filter will automatically display a grid of products matching that tag on the landing page.
+                                            </p>
+                                        </div>
+                                    )}
                                 </>
                             )}
 
@@ -559,50 +635,52 @@ export default function ContentManagement() {
                                         />
                                     </div>
                                     <div className="grid gap-2">
-                                        <Label>Featured Categories</Label>
-                                        <div className="border rounded-none p-3 space-y-2 max-h-64 overflow-y-auto bg-muted/20">
-                                            {categories.length === 0 && (
+                                        <Label>Featured Filter Options</Label>
+                                        <div className="border rounded-none p-3 space-y-2 max-h-64 overflow-y-auto bg-muted/20 text-xs">
+                                            {filterGroups.length === 0 && (
                                                 <p className="text-xs text-muted-foreground italic">
-                                                    No categories found. Create some categories first.
+                                                    No filters found. Create some filters first.
                                                 </p>
                                             )}
-                                            {categories.map((cat: any) => {
-                                                const selectedIds = formData.category_ids || [];
-                                                const isChecked = selectedIds.includes(cat.id);
-                                                return (
-                                                    <div
-                                                        key={cat.id}
-                                                        className="flex items-center justify-between gap-2 border-b border-border/50 pb-2 last:border-0"
-                                                    >
-                                                        <div className="flex items-center gap-2">
-                                                            <Checkbox
-                                                                id={`cat-${cat.id}`}
-                                                                checked={isChecked}
-                                                                onCheckedChange={() => {
-                                                                    const current = formData.category_ids || [];
-                                                                    const next = isChecked
-                                                                        ? current.filter((id: number) => id !== cat.id)
-                                                                        : [...current, cat.id];
-                                                                    setFormData({
-                                                                        ...formData,
-                                                                        category_ids: next,
-                                                                    });
-                                                                }}
-                                                                className="rounded-none"
-                                                            />
-                                                            <Label
-                                                                htmlFor={`cat-${cat.id}`}
-                                                                className="text-xs cursor-pointer font-serif"
-                                                            >
-                                                                {cat.name}
-                                                            </Label>
-                                                        </div>
+                                            {filterGroups.map((group: any) => (
+                                                <div key={group.id} className="space-y-1 mb-4">
+                                                    <h4 className="text-[10px] uppercase tracking-widest font-bold bg-muted/50 px-2 py-1">{group.name}</h4>
+                                                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 px-2">
+                                                        {(group.options || []).map((opt: any) => {
+                                                            const selectedIds = formData.filter_ids || [];
+                                                            const isChecked = selectedIds.includes(opt.id);
+                                                            return (
+                                                                <div key={opt.id} className="flex items-center gap-2 py-1">
+                                                                    <Checkbox
+                                                                        id={`opt-${opt.id}`}
+                                                                        checked={isChecked}
+                                                                        onCheckedChange={() => {
+                                                                            const current = formData.filter_ids || [];
+                                                                            const next = isChecked
+                                                                                ? current.filter((id: number) => id !== opt.id)
+                                                                                : [...current, opt.id];
+                                                                            setFormData({
+                                                                                ...formData,
+                                                                                filter_ids: next,
+                                                                            });
+                                                                        }}
+                                                                        className="rounded-none"
+                                                                    />
+                                                                    <Label
+                                                                        htmlFor={`opt-${opt.id}`}
+                                                                        className="text-[11px] cursor-pointer"
+                                                                    >
+                                                                        {opt.name}
+                                                                    </Label>
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
-                                                );
-                                            })}
+                                                </div>
+                                            ))}
                                         </div>
                                         <p className="text-[10px] text-muted-foreground italic">
-                                            Select key collections to highlight on the homepage.
+                                            Select specific filter options (e.g. Trout, Bass) to highlight on the homepage.
                                         </p>
                                     </div>
                                 </>

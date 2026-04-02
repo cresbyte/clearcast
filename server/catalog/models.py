@@ -1,23 +1,33 @@
 from django.db import models
 from django.utils.text import slugify
 
-class Category(models.Model):
+class FilterGroup(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, help_text="Used for the URL")
-    parent = models.ForeignKey(
-        'self', on_delete=models.CASCADE, null=True, blank=True, related_name='children'
-    )
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='categories/%Y/%m/%d/', null=True, blank=True)
+    image = models.ImageField(upload_to='filters/groups/', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = "Categories"
+        verbose_name_plural = "Filter Groups"
 
     def __str__(self):
         return self.name
 
+class FilterOption(models.Model):
+    group = models.ForeignKey(FilterGroup, on_delete=models.CASCADE, related_name='options')
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, help_text="Used for the URL")
+    image = models.ImageField(upload_to='filters/options/', blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = "Filter Options"
+        unique_together = ('group', 'slug')
+
+    def __str__(self):
+        return f"{self.group.name}: {self.name}"
+
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
+    filters = models.ManyToManyField(FilterOption, blank=True, related_name='products')
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -75,7 +85,7 @@ class ProductImage(models.Model):
 
 class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants')
-    name = models.CharField(max_length=255) # e.g. "XL / Red"
+    size = models.CharField(max_length=255, verbose_name="Size", default="Default") # e.g. "Hook 12"
     sku = models.CharField(max_length=50, unique=True, blank=True, null=True)
     price_override = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     stock_quantity = models.PositiveIntegerField(default=0)
@@ -98,9 +108,9 @@ class ProductVariant(models.Model):
         """Autogenerate SKU if empty"""
         if not self.sku and self.product.sku:
             # Generate SKU: PRODUCTSKU-OPTION1-OPTION2
-            variant_slug = slugify(self.name).upper()
+            variant_slug = slugify(self.size).upper()
             self.sku = f"{self.product.sku}-{variant_slug}"
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.product.name} - {self.name}"
+        return f"{self.product.name} - Size: {self.size}"

@@ -1,32 +1,30 @@
 from rest_framework import serializers
 from django.utils.text import slugify
-from .models import Category, Product, ProductImage, ProductVariant
+from .models import FilterGroup, FilterOption, Product, ProductImage, ProductVariant
+from django.db.models import ProtectedError
 
 # ============================================================================
 # Read-Only Serializers (for GET requests)
 # ============================================================================
 
-class CategorySerializer(serializers.ModelSerializer):
-    """Read-only serializer for Category listing and retrieval"""
-    children = serializers.SerializerMethodField()
-    image_url = serializers.SerializerMethodField()
-    
-    class Meta:
-        model = Category
-        fields = ['id', 'name', 'slug', 'description', 'parent', 'children', 'image', 'image_url']
-    
-    def get_children(self, obj):
-        if obj.children.exists():
-            return CategorySerializer(obj.children.all(), many=True, context=self.context).data
-        return []
+class FilterOptionSerializer(serializers.ModelSerializer):
+    """Read-only serializer for FilterOption"""
+    group_name = serializers.CharField(source='group.name', read_only=True)
+    group_slug = serializers.CharField(source='group.slug', read_only=True)
 
-    def get_image_url(self, obj):
-        request = self.context.get('request')
-        if obj.image and hasattr(obj.image, 'url'):
-            if request:
-                return request.build_absolute_uri(obj.image.url)
-            return obj.image.url
-        return None
+    class Meta:
+        model = FilterOption
+        fields = ['id', 'name', 'slug', 'image', 'group', 'group_name', 'group_slug']
+
+
+class FilterGroupSerializer(serializers.ModelSerializer):
+    """Read-only serializer for FilterGroup with its options"""
+    options = FilterOptionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = FilterGroup
+        fields = ['id', 'name', 'slug', 'description', 'image', 'options']
+
 
 class ProductImageSerializer(serializers.ModelSerializer):
     """Read-only serializer for ProductImage"""
@@ -48,14 +46,15 @@ class ProductVariantSerializer(serializers.ModelSerializer):
     """Read-only serializer for ProductVariant"""
     price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     current_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+    name = serializers.CharField(source='size', read_only=True) # Compatibility for frontend
 
     class Meta:
         model = ProductVariant
-        fields = ['id', 'name', 'sku', 'price_override', 'price', 'current_price', 'stock_quantity']
+        fields = ['id', 'size', 'name', 'sku', 'price_override', 'price', 'current_price', 'stock_quantity']
 
 class ProductSerializer(serializers.ModelSerializer):
     """Read-only serializer for Product listing and retrieval"""
-    category = CategorySerializer(read_only=True)
+    filters = FilterOptionSerializer(many=True, read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     variants = ProductVariantSerializer(many=True, read_only=True)
     price = serializers.DecimalField(source='base_price', max_digits=10, decimal_places=2, read_only=True)
@@ -71,7 +70,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'category', 'name', 'slug', 'description', 'details', 
+            'id', 'filters', 'name', 'slug', 'description', 'details', 
             'base_price', 'price', 'discount_percentage', 'sale_price', 'current_price', 'has_discount',
             'sku', 'metadata', 'is_set', 'stock_quantity', 'is_active', 
             'created_at', 'updated_at', 'images', 'primary_image', 'variants',
@@ -87,15 +86,12 @@ class ProductSerializer(serializers.ModelSerializer):
         return round(avg, 1) if avg else 0.0
     
     def get_current_price(self, obj):
-        """Return sale_price if available, otherwise base_price"""
         return obj.sale_price if obj.sale_price else obj.base_price
     
     def get_has_discount(self, obj):
-        """Check if product has an active discount"""
         return obj.discount_percentage > 0 if obj.discount_percentage else False
         
     def get_primary_image(self, obj):
-        """Return URL of the primary image (feature=True or first one)"""
         image = obj.images.filter(is_feature=True).first()
         if not image:
             image = obj.images.first()
@@ -108,7 +104,6 @@ class ProductSerializer(serializers.ModelSerializer):
         return None
 
     def get_price_range(self, obj):
-        """Return the min and max price of variants, or the product price if no variants"""
         variants = obj.variants.all()
         if not variants:
             current_price = obj.sale_price if obj.sale_price else obj.base_price
@@ -121,128 +116,99 @@ class ProductSerializer(serializers.ModelSerializer):
 # Write Serializers (for POST, PUT, PATCH requests)
 # ============================================================================
 
-class CategoryWriteSerializer(serializers.ModelSerializer):
-    """Writable serializer for creating/updating categories"""
-    
+class FilterGroupWriteSerializer(serializers.ModelSerializer):
+    """Writable serializer for FilterGroup"""
     class Meta:
-        model = Category
-        fields = ['id', 'name', 'slug', 'description', 'parent', 'image']
+        model = FilterGroup
+        fields = ['id', 'name', 'slug', 'description', 'image']
         read_only_fields = ['id']
-        extra_kwargs = {
-            'slug': {'required': False, 'allow_blank': True}
-        }
-    
-    def _get_category_depth(self, obj):
-        """Calculate the current depth of a category (1-based)"""
-        depth = 1
-        curr = obj.parent
-        while curr:
-            depth += 1
-            curr = curr.parent
-        return depth
-
-    def _get_max_subtree_depth(self, obj):
-        """Calculate the max depth of the subtree starting from obj"""
-        max_d = 1
-        for child in obj.children.all():
-            max_d = max(max_d, 1 + self._get_max_subtree_depth(child))
-        return max_d
-
-    def validate_parent(self, value):
-        """Ensure the category structure does not exceed 3 levels total"""
-        if value:
-            # 1. Check parent depth
-            parent_depth = self._get_category_depth(value)
-            
-            # 2. Check subtree depth (of the category being moved/created)
-            subtree_depth = 1
-            if self.instance:
-                subtree_depth = self._get_max_subtree_depth(self.instance)
-            
-            if parent_depth + subtree_depth > 3:
-                raise serializers.ValidationError(
-                    f"Maximum category depth exceeded. Total depth would be {parent_depth + subtree_depth}, "
-                    "but only 3 levels are allowed (Root -> Sub -> Sub-sub)."
-                )
-        return value
+        extra_kwargs = {'slug': {'required': False, 'allow_blank': True}}
 
     def validate_slug(self, value):
-        """Ensure slug is unique"""
-        instance = self.instance
-        if instance:
-            # If updating, check if slug is unique among other categories
-            if Category.objects.filter(slug=value).exclude(id=instance.id).exists():
-                raise serializers.ValidationError("A category with this slug already exists.")
+        if self.instance:
+            if FilterGroup.objects.filter(slug=value).exclude(id=self.instance.id).exists():
+                raise serializers.ValidationError("A group with this slug already exists.")
         else:
-            # If creating, check if slug is unique
-            if Category.objects.filter(slug=value).exists():
-                raise serializers.ValidationError("A category with this slug already exists.")
+            if FilterGroup.objects.filter(slug=value).exists():
+                raise serializers.ValidationError("A group with this slug already exists.")
         return value
     
     def create(self, validated_data):
-        # Auto-generate slug if not provided
         if 'slug' not in validated_data or not validated_data['slug']:
             validated_data['slug'] = slugify(validated_data['name'])
         return super().create(validated_data)
     
     def update(self, instance, validated_data):
-        # Auto-generate slug if name changed and slug not provided
         if 'name' in validated_data and 'slug' not in validated_data:
             validated_data['slug'] = slugify(validated_data['name'])
         return super().update(instance, validated_data)
 
-class ProductImageWriteSerializer(serializers.ModelSerializer):
-    """Writable serializer for product images"""
+class FilterOptionWriteSerializer(serializers.ModelSerializer):
+    """Writable serializer for FilterOption"""
+    class Meta:
+        model = FilterOption
+        fields = ['id', 'group', 'name', 'slug', 'image']
+        read_only_fields = ['id']
+        extra_kwargs = {'slug': {'required': False, 'allow_blank': True}}
+
+    def create(self, validated_data):
+        if 'slug' not in validated_data or not validated_data['slug']:
+            validated_data['slug'] = slugify(validated_data['name'])
+        return super().create(validated_data)
     
+    def update(self, instance, validated_data):
+        if 'name' in validated_data and 'slug' not in validated_data:
+            validated_data['slug'] = slugify(validated_data['name'])
+        return super().update(instance, validated_data)
+
+
+class ProductImageWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
         fields = ['id', 'image', 'alt_text', 'is_feature']
         read_only_fields = ['id']
 
+
 class ProductVariantWriteSerializer(serializers.ModelSerializer):
-    """Writable serializer for product variants"""
-    
+    name = serializers.CharField(source='size', required=False) # Frontend compat
+
     class Meta:
         model = ProductVariant
-        fields = ['id', 'name', 'sku', 'price_override', 'stock_quantity']
+        fields = ['id', 'size', 'name', 'sku', 'price_override', 'stock_quantity']
         read_only_fields = ['id']
         extra_kwargs = {
             'sku': {'validators': []}
         }
     
     def validate_sku(self, value):
-        """Ensure variant SKU is unique if provided"""
         if not value:
             return value
         
         instance = self.instance
-        # Check if we are updating a Product (nested via ProductWriteSerializer)
         root_instance = getattr(self.root, 'instance', None)
         
         queryset = ProductVariant.objects.filter(sku=value)
         
         if instance:
-            # Updating individual variant directly
             queryset = queryset.exclude(id=instance.id)
         elif root_instance and isinstance(root_instance, Product):
-            # Updating product (variants are usually replaced)
-            # Allow SKU if it either doesn't exist OR belongs to the product being updated
             queryset = queryset.exclude(product=root_instance)
         
         if queryset.exists():
             raise serializers.ValidationError("A variant with this SKU already exists.")
         return value
 
-from django.db.models import ProtectedError
 
 class ProductWriteSerializer(serializers.ModelSerializer):
     """Writable serializer for creating/updating products"""
-    category_id = serializers.IntegerField(write_only=True)
+    filter_ids = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )
     images_data = ProductImageWriteSerializer(many=True, required=False, write_only=True)
     variants_data = ProductVariantWriteSerializer(many=True, required=False, write_only=True)
     
     # Include read-only nested data in response
-    category = CategorySerializer(read_only=True)
+    filters = FilterOptionSerializer(many=True, read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     variants = ProductVariantSerializer(many=True, read_only=True)
     
@@ -252,7 +218,7 @@ class ProductWriteSerializer(serializers.ModelSerializer):
             'id', 'name', 'slug', 'description', 'details', 'base_price', 
             'discount_percentage', 'sale_price',
             'sku', 'metadata', 'is_set', 'stock_quantity', 'is_active',
-            'category_id', 'category', 
+            'filter_ids', 'filters', 
             'images_data', 'images',
             'variants_data', 'variants',
             'created_at', 'updated_at'
@@ -264,17 +230,15 @@ class ProductWriteSerializer(serializers.ModelSerializer):
             'sku': {'validators': []}
         }
     
-    def validate_category_id(self, value):
-        """Ensure category exists"""
-        if not Category.objects.filter(id=value).exists():
-            raise serializers.ValidationError("Category does not exist.")
+    def validate_filter_ids(self, value):
+        valid_ids = FilterOption.objects.filter(id__in=value).values_list('id', flat=True)
+        if len(valid_ids) != len(value):
+            raise serializers.ValidationError("One or more filter options do not exist.")
         return value
     
     def validate_sku(self, value):
-        """Ensure product SKU is unique"""
-        instance = self.instance
-        if instance:
-            if Product.objects.filter(sku=value).exclude(id=instance.id).exists():
+        if self.instance:
+            if Product.objects.filter(sku=value).exclude(id=self.instance.id).exists():
                 raise serializers.ValidationError("A product with this SKU already exists.")
         else:
             if Product.objects.filter(sku=value).exists():
@@ -282,97 +246,82 @@ class ProductWriteSerializer(serializers.ModelSerializer):
         return value
     
     def validate_discount_percentage(self, value):
-        """Ensure discount percentage is between 0 and 100"""
         if value < 0 or value > 100:
             raise serializers.ValidationError("Discount percentage must be between 0 and 100.")
         return value
     
     def create(self, validated_data):
-        # Extract nested data
         images_data = validated_data.pop('images_data', [])
         variants_data = validated_data.pop('variants_data', [])
-        category_id = validated_data.pop('category_id')
+        filter_ids = validated_data.pop('filter_ids', [])
         
-        # Auto-generate slug if not provided
         if 'slug' not in validated_data or not validated_data['slug']:
             validated_data['slug'] = slugify(validated_data['name'])
         
-        # Set category
-        validated_data['category_id'] = category_id
-        
-        # Create product
         product = Product.objects.create(**validated_data)
         
-        # Create images
+        if filter_ids:
+            product.filters.set(filter_ids)
+        
         for image_data in images_data:
             ProductImage.objects.create(product=product, **image_data)
         
-        # Create variants
         for variant_data in variants_data:
-            ProductVariant.objects.create(product=product, **variant_data)
+            size = variant_data.pop('size', variant_data.pop('name', '')) # Get size or fallback to name
+            ProductVariant.objects.create(product=product, size=size, **variant_data)
         
         return product
     
     def update(self, instance, validated_data):
-        # Extract nested data
         images_data = validated_data.pop('images_data', None)
         variants_data = validated_data.pop('variants_data', None)
-        category_id = validated_data.pop('category_id', None)
+        filter_ids = validated_data.pop('filter_ids', None)
         
-        # Auto-generate slug if name changed and slug not provided
         if 'name' in validated_data and 'slug' not in validated_data:
             validated_data['slug'] = slugify(validated_data['name'])
         
-        # Update category if provided
-        if category_id is not None:
-            validated_data['category_id'] = category_id
+        if filter_ids is not None:
+            instance.filters.set(filter_ids)
         
-        # Update product fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
         
-        # Update images if provided (smart update)
         if images_data is not None:
             keep_image_ids = []
             for img_data in images_data:
-                # Note: images from admin are often re-uploaded, but we can try to match by name/is_feature
-                # This is less critical than variants but good for stability.
                 image = ProductImage.objects.create(product=instance, **img_data)
                 keep_image_ids.append(image.id)
-            
-            # Delete old images that weren't just created
             instance.images.exclude(id__in=keep_image_ids).delete()
         
-        # Update variants if provided (smart update to avoid ProtectedError)
         if variants_data is not None:
             keep_variant_ids = []
             for variant_data in variants_data:
                 sku = variant_data.get('sku')
-                name = variant_data.get('name')
+                size = variant_data.pop('size', variant_data.pop('name', None))
                 
                 variant = None
                 if sku:
                     variant = instance.variants.filter(sku=sku).first()
-                if not variant and name:
-                    variant = instance.variants.filter(name=name).first()
+                if not variant and size:
+                    variant = instance.variants.filter(size=size).first()
                 
                 if variant:
+                    if size:
+                        variant.size = size
                     for attr, value in variant_data.items():
                         setattr(variant, attr, value)
                     variant.save()
                     keep_variant_ids.append(variant.id)
                 else:
-                    new_variant = ProductVariant.objects.create(product=instance, **variant_data)
+                    new_variant = ProductVariant.objects.create(product=instance, size=size or 'Default', **variant_data)
                     keep_variant_ids.append(new_variant.id)
             
-            # Delete old variants that weren't in the update list
             to_delete = instance.variants.exclude(id__in=keep_variant_ids)
             for v in to_delete:
                 try:
                     v.delete()
                 except ProtectedError:
-                    # Keep it if it's protected (referenced in an order)
                     pass
         
         return instance

@@ -36,7 +36,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useAdminProduct, useCreateProduct, useUpdateProduct, useDeleteProduct, useUploadProductImages, useDeleteProductImage } from '@/api/adminProductApi';
-import { useCategories, useCreateCategory } from '@/api/categoryQueries';
+import { useFilters } from '@/api/filterQueries';
 import { toast } from 'sonner';
 
 const RichTextEditor = dynamic(() => import('./RichTextEditor'), { ssr: false });
@@ -51,9 +51,8 @@ export default function ProductForm() {
     // Fetch data
     const { data: product, isLoading: isLoadingProduct } = useAdminProduct(isEditMode ? slug : null);
 
-    // Using `any` casting since the React query might return list or direct array based on backend.
-    const { data: categoriesDataResponse = [], isLoading: isLoadingCategories } = useCategories();
-    const categoriesData: any[] = Array.isArray(categoriesDataResponse) ? categoriesDataResponse : (categoriesDataResponse as any).results || [];
+    const { data: filtersDataResponse = [], isLoading: isLoadingFilters } = useFilters();
+    const filterGroups: any[] = Array.isArray(filtersDataResponse) ? filtersDataResponse : (filtersDataResponse as any).results || [];
 
     // Mutations
     const createProductMutation = useCreateProduct();
@@ -61,7 +60,6 @@ export default function ProductForm() {
     const deleteProductMutation = useDeleteProduct();
     const uploadImagesMutation = useUploadProductImages();
     const deleteImageMutation = useDeleteProductImage();
-    const createCategoryMutation = useCreateCategory();
 
     // Basic product info
     const [name, setName] = useState('');
@@ -76,25 +74,18 @@ export default function ProductForm() {
     const [sku, setSku] = useState('');
     const [quantity, setQuantity] = useState('');
 
-    // Categories
-    const [selectedCategory, setSelectedCategory] = useState('');
-
-    // Category dialog
-    const [showCategoryDialog, setShowCategoryDialog] = useState(false);
-    const [newCategoryName, setNewCategoryName] = useState('');
-    const [newCategoryParent, setNewCategoryParent] = useState('');
+    // Filters
+    const [selectedFilters, setSelectedFilters] = useState<number[]>([]);
 
     // Media
     const [images, setImages] = useState<any[]>([]);
     const [imageFiles, setImageFiles] = useState<any[]>([]);
     const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
 
-    // Variants
-    const [options, setOptions] = useState<any[]>([]);
+    // Variants (Sizes only)
     const [variants, setVariants] = useState<any[]>([]);
     const [showOptionDialog, setShowOptionDialog] = useState(false);
-    const [newOptionName, setNewOptionName] = useState('');
-    const [newOptionValues, setNewOptionValues] = useState('');
+    const [newVariantSize, setNewVariantSize] = useState('');
 
     // Submission state
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -110,8 +101,11 @@ export default function ProductForm() {
             setStatus(product.is_active ? 'active' : 'draft');
             setSku(product.sku || '');
             setQuantity(product.stock_quantity || '');
-            setSelectedCategory(product.category?.id?.toString() || '');
             setIsSet(product.is_set || false);
+
+            if (product.filters && product.filters.length > 0) {
+                setSelectedFilters(product.filters.map((f: any) => f.id));
+            }
 
             // Load images
             if (product.images && product.images.length > 0) {
@@ -129,17 +123,14 @@ export default function ProductForm() {
             if (product.variants && product.variants.length > 0) {
                 const loadedVariants = product.variants.map((v: any) => ({
                     id: v.id,
-                    name: v.name,
+                    size: v.size || v.name || '',
                     sku: v.sku || '',
                     price: v.price_override !== null && v.price_override !== undefined ? v.price_override : product.base_price,
                     quantity: v.stock_quantity || 0,
+                    isAutoSynced: false,
+                    isSkuAutoSynced: false
                 }));
                 setVariants(loadedVariants);
-            }
-
-            // Load options from metadata if present
-            if (product.metadata?.options) {
-                setOptions(product.metadata.options);
             }
         }
     }, [product, isEditMode]);
@@ -148,8 +139,6 @@ export default function ProductForm() {
     useEffect(() => {
         if (variants.length > 0 && price) {
             setVariants(prev => prev.map(v => {
-                // Only propagate if the variant price is empty or was previously synced with base price
-                // This is a simplified check - in a real app we might track 'isManualOverride'
                 if (!v.price || v.isAutoSynced) {
                     return { ...v, price: price, isAutoSynced: true };
                 }
@@ -172,8 +161,7 @@ export default function ProductForm() {
     useEffect(() => {
         if (variants.length > 0 && sku) {
             setVariants(prev => prev.map(v => {
-                // If the SKU is empty or seems to be auto-generated from previous base SKU
-                const variantSlug = slugify(v.name).toUpperCase();
+                const variantSlug = slugify(v.size || '').toUpperCase();
                 const expectedAutoSku = sku ? `${sku}-${variantSlug}` : '';
 
                 if (!v.sku || v.isSkuAutoSynced) {
@@ -184,85 +172,26 @@ export default function ProductForm() {
         }
     }, [sku]);
 
-    const getFlatCategories = () => {
-        let result: any[] = [];
-        const flatten = (items: any[], level = 0) => {
-            items.forEach((cat) => {
-                result.push({ ...cat, level });
-                if (cat.children && cat.children.length > 0) {
-                    flatten(cat.children, level + 1);
-                }
-            });
-        };
-        flatten(categoriesData || []);
-        return result;
-    };
+    const handleAddVariant = () => {
+        if (!newVariantSize) return;
 
-    const generateVariants = (opts: any[]) => {
-        if (opts.length === 0) {
-            setVariants([]);
-            return;
-        }
-
-        const combinations = opts.reduce((acc, option) => {
-            if (acc.length === 0) {
-                return option.values.map((value: string) => [{ option: option.name, value }]);
-            }
-
-            const newCombinations: any[] = [];
-            acc.forEach((combination: any) => {
-                option.values.forEach((value: string) => {
-                    newCombinations.push([...combination, { option: option.name, value }]);
-                });
-            });
-            return newCombinations;
-        }, []);
-
-        const newVariants = combinations.map((combination: any, index: number) => {
-            const variantName = combination.map((c: any) => c.value).join(' / ');
-            const existingVariant = variants.find(v => v.name === variantName);
-
-            const variantSlug = slugify(variantName).toUpperCase();
-            const generatedSku = sku ? `${sku}-${variantSlug}` : '';
-
-            return {
-                id: existingVariant?.id || Date.now() + index,
-                name: variantName,
-                options: combination,
-                sku: existingVariant?.sku || generatedSku,
-                price: existingVariant?.price || price,
-                quantity: existingVariant?.quantity || '',
-                isAutoSynced: existingVariant ? existingVariant.isAutoSynced : true,
-                isSkuAutoSynced: existingVariant ? existingVariant.isSkuAutoSynced : true,
-            };
-        });
-
-        setVariants(newVariants);
-    };
-
-    const handleAddOption = () => {
-        if (!newOptionName || !newOptionValues) return;
-
-        const values = newOptionValues.split(',').map(v => v.trim()).filter(v => v);
-        const newOption = {
+        const newVariant = {
             id: Date.now(),
-            name: newOptionName,
-            values,
+            size: newVariantSize,
+            sku: sku ? `${sku}-${slugify(newVariantSize).toUpperCase()}` : '',
+            price: price || '0',
+            quantity: '0',
+            isAutoSynced: true,
+            isSkuAutoSynced: true
         };
 
-        const updatedOptions = [...options, newOption];
-        setOptions(updatedOptions);
-        generateVariants(updatedOptions);
-
-        setNewOptionName('');
-        setNewOptionValues('');
+        setVariants([...variants, newVariant]);
+        setNewVariantSize('');
         setShowOptionDialog(false);
     };
 
-    const handleRemoveOption = (optionId: number) => {
-        const updatedOptions = options.filter(opt => opt.id !== optionId);
-        setOptions(updatedOptions);
-        generateVariants(updatedOptions);
+    const handleRemoveVariant = (variantId: number) => {
+        setVariants(variants.filter(v => v.id !== variantId));
     };
 
     const handleVariantChange = (variantId: number, field: string, value: string) => {
@@ -278,26 +207,12 @@ export default function ProductForm() {
         ));
     };
 
-    const handleAddCategory = () => {
-        if (!newCategoryName) return;
-
-        const categoryData = {
-            name: newCategoryName,
-            parent: newCategoryParent || null,
-        };
-
-        createCategoryMutation.mutate(categoryData, {
-            onSuccess: (data: any) => {
-                toast.success(`Category ${data.name} has been created successfully.`);
-                setNewCategoryName('');
-                setNewCategoryParent('');
-                setShowCategoryDialog(false);
-                setSelectedCategory(data.id.toString());
-            },
-            onError: (error: any) => {
-                toast.error(error.response?.data?.message || "Failed to create category");
-            },
-        });
+    const handleToggleFilter = (filterId: number) => {
+        setSelectedFilters(prev => 
+            prev.includes(filterId)
+                ? prev.filter(id => id !== filterId)
+                : [...prev, filterId]
+        );
     };
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -334,7 +249,6 @@ export default function ProductForm() {
         } else {
             const imageIndex = images.findIndex(img => img.id === imageId);
             if (imageIndex !== -1) {
-                // Find all previous non-existing images to get the correct file index
                 const nonExistingBefore = images.slice(0, imageIndex).filter(img => !img.isExisting).length;
                 setImageFiles(prev => prev.filter((_, idx) => idx !== nonExistingBefore));
             }
@@ -343,8 +257,8 @@ export default function ProductForm() {
     };
 
     const handleSave = async () => {
-        if (!name || !price || !sku || !selectedCategory) {
-            toast.error("Please fill in all required fields (Name, Price, SKU, Category).");
+        if (!name || !price || !sku) {
+            toast.error("Please fill in all required fields (Name, Price, SKU).");
             return;
         }
 
@@ -360,26 +274,16 @@ export default function ProductForm() {
             stock_quantity: parseInt(quantity) || 0,
             is_active: status === 'active',
             is_set: isSet,
-            category_id: parseInt(selectedCategory),
-            metadata: {
-                options: options.map(opt => ({ name: opt.name, values: opt.values })),
-            },
+            filter_ids: selectedFilters,
         };
 
         if (variants.length > 0) {
-            productData.variants_data = variants.map(v => {
-                const variantData: any = {
-                    name: v.name,
-                    sku: v.sku,
-                    price_override: parseFloat(v.price) !== parseFloat(price) ? parseFloat(v.price) : null,
-                    stock_quantity: parseInt(v.quantity) || 0,
-                };
-
-                // If the ID is a real database ID (smaller integer usually, or at least we know it's not a timestamp-based temp ID)
-                // In our case, loaded variants have their real IDs.
-                // However, our backend matches by SKU/Name, so this is mostly for completeness.
-                return variantData;
-            });
+            productData.variants_data = variants.map(v => ({
+                size: v.size,
+                sku: v.sku,
+                price_override: parseFloat(v.price) !== parseFloat(price) ? parseFloat(v.price) : null,
+                stock_quantity: parseInt(v.quantity) || 0,
+            }));
         }
 
         const mutation = isEditMode ? updateProductMutation : createProductMutation;
@@ -503,25 +407,29 @@ export default function ProductForm() {
                                 <Label htmlFor="name" className="text-[10px] uppercase tracking-widest font-bold">Product Name *</Label>
                                 <Input
                                     id="name"
-                                    placeholder="e.g., Silk Maxi Dress"
+                                    placeholder="Adams Parachute"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className="rounded-none"
+                                    className="rounded-none text-lg py-6"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="description" className="text-[10px] uppercase tracking-widest font-bold">Description</Label>
+                                <Label htmlFor="description" className="text-[10px] uppercase tracking-widest font-bold">Short Description</Label>
                                 <Textarea
                                     id="description"
-                                    placeholder="Describe the product..."
-                                    className="min-h-[120px] rounded-none"
+                                    placeholder="A brief description for the listing."
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
+                                    className="rounded-none resize-none min-h-[100px]"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label className="text-[10px] uppercase tracking-widest font-bold">Extended Details</Label>
-                                <RichTextEditor value={details} onChange={setDetails} />
+                                <Label className="text-[10px] uppercase tracking-widest font-bold">Detailed Description</Label>
+                                <RichTextEditor
+                                    value={details}
+                                    onChange={setDetails}
+                                    placeholder="Full details about the fly..."
+                                />
                             </div>
                         </CardContent>
                     </Card>
@@ -530,54 +438,53 @@ export default function ProductForm() {
                     <Card className="rounded-none border-border/50">
                         <CardHeader>
                             <CardTitle className="font-serif italic">Media</CardTitle>
-                            <CardDescription>Product images.</CardDescription>
+                            <CardDescription>Add images representing the product.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-4">
-                            <input
-                                type="file"
-                                id="imageUpload"
-                                multiple
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                                className="hidden"
-                            />
-                            <label
-                                htmlFor="imageUpload"
-                                className="border-2 border-dashed border-border rounded-none p-10 flex flex-col items-center justify-center text-center hover:bg-muted/50 transition-colors cursor-pointer block"
-                            >
-                                <div className="h-10 w-10 bg-muted flex items-center justify-center mb-3">
-                                    <Upload className="h-5 w-5 text-muted-foreground" />
-                                </div>
-                                <p className="font-medium text-[10px] uppercase tracking-widest font-bold">Click to upload or drag and drop</p>
-                                <p className="text-xs text-muted-foreground mt-1 italic">PNG, JPG or GIF (max. 800x400px)</p>
-                            </label>
-
-                            {images.length > 0 && (
-                                <div className="grid grid-cols-4 gap-4">
-                                    {images.map((image, index) => (
-                                        <div key={image.id} className="relative group">
-                                            <img
-                                                src={image.url}
-                                                alt={image.name}
-                                                className="w-full h-24 object-cover rounded-none border"
-                                            />
+                        <CardContent>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                {images.map((img, idx) => (
+                                    <div key={img.id} className="relative group aspect-square border border-border/50 rounded-none overflow-hidden bg-muted/20">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={img.url}
+                                            alt={img.name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                             <Button
                                                 variant="destructive"
                                                 size="icon"
-                                                className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity rounded-none"
-                                                onClick={() => handleRemoveImage(image.id)}
+                                                onClick={() => handleRemoveImage(img.id)}
+                                                className="rounded-none h-8 w-8"
                                             >
-                                                <X className="h-3 w-3" />
+                                                <X className="h-4 w-4" />
                                             </Button>
-                                            {index === 0 && (
-                                                <div className="absolute bottom-1 left-1 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold px-2 py-0.5">
-                                                    Featured
-                                                </div>
-                                            )}
                                         </div>
-                                    ))}
+                                        {idx === 0 && (
+                                            <div className="absolute top-2 left-2 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold px-2 py-1">
+                                                Main
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                                <div>
+                                    <Label
+                                        htmlFor="image-upload"
+                                        className="flex flex-col items-center justify-center w-full aspect-square border-2 border-dashed border-border/50 rounded-none cursor-pointer hover:bg-muted/50 transition-colors"
+                                    >
+                                        <Upload className="h-6 w-6 text-muted-foreground mb-2" />
+                                        <span className="text-[10px] uppercase tracking-widest font-bold text-muted-foreground text-center">Add<br />Images</span>
+                                        <input
+                                            id="image-upload"
+                                            type="file"
+                                            multiple
+                                            accept="image/*"
+                                            onChange={handleImageUpload}
+                                            className="hidden"
+                                        />
+                                    </Label>
                                 </div>
-                            )}
+                            </div>
                         </CardContent>
                     </Card>
 
@@ -585,6 +492,7 @@ export default function ProductForm() {
                     <Card className="rounded-none border-border/50">
                         <CardHeader>
                             <CardTitle className="font-serif italic">Pricing</CardTitle>
+                            <CardDescription>Set base price and optional discount.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
@@ -595,7 +503,7 @@ export default function ProductForm() {
                                         <Input
                                             id="price"
                                             placeholder="0.00"
-                                            className="pl-7 rounded-none"
+                                            className="pl-8 rounded-none"
                                             value={price}
                                             onChange={(e) => setPrice(e.target.value)}
                                             type="number"
@@ -676,61 +584,30 @@ export default function ProductForm() {
                     {/* Variants */}
                     <Card className="rounded-none border-border/50">
                         <CardHeader>
-                            <CardTitle className="font-serif italic">Variants</CardTitle>
-                            <CardDescription>Add options like size or color to create product variants.</CardDescription>
+                            <CardTitle className="font-serif italic">Variants (Sizes)</CardTitle>
+                            <CardDescription>Add specific sizes for this fishing fly.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            {options.length > 0 && (
-                                <div className="space-y-2">
-                                    {options.map((option, idx) => (
-                                        <div key={idx} className="flex items-center justify-between p-3 border rounded-none bg-muted/20">
-                                            <div>
-                                                <p className="font-medium text-sm">{option.name}</p>
-                                                <p className="text-xs text-muted-foreground mt-1">{option.values.join(', ')}</p>
-                                            </div>
-                                            <Button
-                                                variant="ghost"
-                                                size="icon"
-                                                onClick={() => handleRemoveOption(option.id)}
-                                                className="rounded-none"
-                                            >
-                                                <X className="h-4 w-4" />
-                                            </Button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
                             <Dialog open={showOptionDialog} onOpenChange={setShowOptionDialog}>
                                 <DialogTrigger render={<Button variant="outline" className="w-full rounded-none border-dashed border-2 py-6" />}>
                                     <Plus className="h-4 w-4 mr-2" />
-                                    <span className="text-[10px] uppercase tracking-widest font-bold">Add Option</span>
+                                    <span className="text-[10px] uppercase tracking-widest font-bold">Add Size</span>
                                 </DialogTrigger>
                                 <DialogContent className="rounded-none">
                                     <DialogHeader>
-                                        <DialogTitle className="font-serif italic">Add Option</DialogTitle>
+                                        <DialogTitle className="font-serif italic">Add Size</DialogTitle>
                                         <DialogDescription>
-                                            Create a new option like Size or Color.
+                                            Enter the hook size or dimension for this variant.
                                         </DialogDescription>
                                     </DialogHeader>
                                     <div className="space-y-4 py-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="optionName" className="text-[10px] uppercase tracking-widest font-bold">Option Name</Label>
+                                            <Label htmlFor="newVariantSize" className="text-[10px] uppercase tracking-widest font-bold">Size Label</Label>
                                             <Input
-                                                id="optionName"
-                                                placeholder="e.g., Size, Color"
-                                                value={newOptionName}
-                                                onChange={(e) => setNewOptionName(e.target.value)}
-                                                className="rounded-none"
-                                            />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="optionValues" className="text-[10px] uppercase tracking-widest font-bold">Values (comma-separated)</Label>
-                                            <Input
-                                                id="optionValues"
-                                                placeholder="e.g., S, M, L, XL"
-                                                value={newOptionValues}
-                                                onChange={(e) => setNewOptionValues(e.target.value)}
+                                                id="newVariantSize"
+                                                placeholder="e.g., Size 12, Medium"
+                                                value={newVariantSize}
+                                                onChange={(e) => setNewVariantSize(e.target.value)}
                                                 className="rounded-none"
                                             />
                                         </div>
@@ -739,7 +616,7 @@ export default function ProductForm() {
                                         <Button variant="outline" onClick={() => setShowOptionDialog(false)} className="rounded-none text-[10px] uppercase tracking-widest font-bold">
                                             Cancel
                                         </Button>
-                                        <Button onClick={handleAddOption} className="rounded-none text-[10px] uppercase tracking-widest font-bold">Add Option</Button>
+                                        <Button onClick={handleAddVariant} className="rounded-none text-[10px] uppercase tracking-widest font-bold">Add Size</Button>
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
@@ -751,10 +628,11 @@ export default function ProductForm() {
                                         <Table>
                                             <TableHeader>
                                                 <TableRow>
-                                                    <TableHead className="text-[10px] uppercase tracking-widest font-bold">Variant</TableHead>
+                                                    <TableHead className="text-[10px] uppercase tracking-widest font-bold">Size</TableHead>
                                                     <TableHead className="text-[10px] uppercase tracking-widest font-bold">Price</TableHead>
                                                     <TableHead className="text-[10px] uppercase tracking-widest font-bold">Qty</TableHead>
                                                     <TableHead className="text-[10px] uppercase tracking-widest font-bold">SKU</TableHead>
+                                                    <TableHead className="text-[10px] uppercase tracking-widest font-bold w-12"></TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
@@ -764,7 +642,7 @@ export default function ProductForm() {
                                                         <TableRow key={variant.id}>
                                                             <TableCell className="font-medium text-sm whitespace-nowrap">
                                                                 <div className="flex items-center gap-2">
-                                                                    {variant.name}
+                                                                    {variant.size}
                                                                     {isOverridden && (
                                                                         <div className="h-2 w-2 rounded-full bg-amber-500" title="Custom Price" />
                                                                     )}
@@ -800,6 +678,16 @@ export default function ProductForm() {
                                                                     className="w-32 rounded-none h-8 text-xs font-mono"
                                                                 />
                                                             </TableCell>
+                                                            <TableCell>
+                                                                <Button 
+                                                                    variant="ghost" 
+                                                                    size="icon" 
+                                                                    onClick={() => handleRemoveVariant(variant.id)}
+                                                                    className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive rounded-none"
+                                                                >
+                                                                    <X className="h-4 w-4" />
+                                                                </Button>
+                                                            </TableCell>
                                                         </TableRow>
                                                     );
                                                 })}
@@ -831,12 +719,12 @@ export default function ProductForm() {
                         </CardContent>
                     </Card>
 
-                    {/* Organization */}
+                    {/* Organization / Filters */}
                     <Card className="rounded-none border-border/50">
                         <CardHeader>
                             <CardTitle className="font-serif italic">Organization</CardTitle>
                         </CardHeader>
-                        <CardContent className="space-y-4">
+                        <CardContent className="space-y-6">
                             <div className="flex items-center space-x-2 border border-border/50 bg-muted/20 p-4">
                                 <Label htmlFor="is-set-toggle" className="flex-1 text-[10px] uppercase tracking-widest font-bold cursor-pointer">
                                     Is Fly Set
@@ -849,97 +737,43 @@ export default function ProductForm() {
                                     style={{ borderRadius: 0 }}
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <Label className="text-[10px] uppercase tracking-widest font-bold">Category *</Label>
-                                {isLoadingCategories ? (
+
+                            <div className="space-y-4">
+                                <Label className="text-[10px] uppercase tracking-widest font-bold">Filters</Label>
+                                
+                                {isLoadingFilters ? (
                                     <div className="flex items-center gap-2 text-muted-foreground text-sm italic">
                                         <Loader2 className="h-4 w-4 animate-spin" />
-                                        Loading categories...
+                                        Loading filters...
                                     </div>
                                 ) : (
-                                    <Select value={selectedCategory} onValueChange={(val) => setSelectedCategory(val || '')}>
-                                        <SelectTrigger className="rounded-none">
-                                            <SelectValue>
-                                                {selectedCategory
-                                                    ? (getFlatCategories().find(
-                                                        (cat) => cat.id.toString() === selectedCategory
-                                                    )?.name ?? "Selected Category")
-                                                    : "Select category"}
-                                            </SelectValue>
-                                        </SelectTrigger>
-                                        <SelectContent className="rounded-none">
-                                            {getFlatCategories().map((cat) => (
-                                                <SelectItem key={cat.id} value={cat.id.toString()}>
-                                                    {'\u00A0\u00A0'.repeat(cat.level)}
-                                                    {cat.level > 0 ? `↳ ${cat.name}` : cat.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                    <div className="space-y-6">
+                                        {filterGroups.map((group) => (
+                                            <div key={group.id} className="space-y-2">
+                                                <h4 className="font-medium text-sm border-b pb-1">{group.name}</h4>
+                                                <div className="flex flex-wrap gap-3 mt-2">
+                                                    {group.options.map((option: any) => (
+                                                        <div key={option.id} className="flex items-center space-x-2">
+                                                            <Checkbox 
+                                                                id={`filter-${option.id}`} 
+                                                                checked={selectedFilters.includes(option.id)}
+                                                                onCheckedChange={() => handleToggleFilter(option.id)}
+                                                                className="rounded-none"
+                                                            />
+                                                            <label 
+                                                                htmlFor={`filter-${option.id}`}
+                                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                                                            >
+                                                                {option.name}
+                                                            </label>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                 )}
                             </div>
-
-                            <Dialog open={showCategoryDialog} onOpenChange={setShowCategoryDialog}>
-                                <DialogTrigger render={<Button variant="outline" className="w-full rounded-none text-[10px] uppercase tracking-widest font-bold" />}>
-                                    <div className="flex items-center justify-center">
-                                        <Plus className="h-4 w-4 mr-2" />
-                                        Add Category
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent className="rounded-none">
-                                    <DialogHeader>
-                                        <DialogTitle className="font-serif italic">Add Category</DialogTitle>
-                                        <DialogDescription>
-                                            Create a new category or subcategory.
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="space-y-4 py-4">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="newCategory" className="text-[10px] uppercase tracking-widest font-bold">Category Name</Label>
-                                            <Input
-                                                id="newCategory"
-                                                placeholder="e.g., Jewelry"
-                                                value={newCategoryName}
-                                                onChange={(e) => setNewCategoryName(e.target.value)}
-                                                className="rounded-none"
-                                            />
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <Label className="text-[10px] uppercase tracking-widest font-bold">Parent Category (Optional)</Label>
-                                            <Select value={newCategoryParent} onValueChange={(val) => setNewCategoryParent(val || '')}>
-                                                <SelectTrigger className="rounded-none">
-                                                    <SelectValue placeholder="None (root category)" />
-                                                </SelectTrigger>
-                                                <SelectContent className="rounded-none">
-                                                    <SelectItem value="none">None (root category)</SelectItem>
-                                                    {getFlatCategories()
-                                                        .filter(cat => cat.level < 2)
-                                                        .map(cat => (
-                                                            <SelectItem key={cat.id} value={cat.id.toString()}>
-                                                                {'\u00A0\u00A0'.repeat(cat.level)}
-                                                                {cat.level > 0 ? `↳ ${cat.name}` : cat.name}
-                                                            </SelectItem>
-                                                        ))}
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
-                                    </div>
-                                    <DialogFooter>
-                                        <Button variant="outline" onClick={() => setShowCategoryDialog(false)} className="rounded-none text-[10px] uppercase tracking-widest font-bold">
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            onClick={handleAddCategory}
-                                            disabled={createCategoryMutation.isPending}
-                                            className="rounded-none text-[10px] uppercase tracking-widest font-bold"
-                                        >
-                                            {createCategoryMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                            Add
-                                        </Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
                         </CardContent>
                     </Card>
 

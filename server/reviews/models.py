@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from catalog.models import Product, Category
+from catalog.models import Product, FilterOption
 
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -17,11 +17,18 @@ class Review(models.Model):
         return f"Review by {self.user} on {self.product}"
 
 class HeroSection(models.Model):
+    ALIGNMENT_CHOICES = (
+        ('left', 'Left'),
+        ('center', 'Center'),
+    )
     title = models.CharField(max_length=255)
     subtitle = models.TextField()
     image = models.ImageField(upload_to='hero/')
     button_text = models.CharField(max_length=50, default="Shop Now")
     button_link = models.CharField(max_length=255, default="/shop")
+    button_text_2 = models.CharField(max_length=50, blank=True)
+    button_link_2 = models.CharField(max_length=255, blank=True)
+    content_alignment = models.CharField(max_length=10, choices=ALIGNMENT_CHOICES, default='center')
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
 
@@ -56,6 +63,13 @@ class ContentSection(models.Model):
     button_text = models.CharField(max_length=50, blank=True)
     button_link = models.CharField(max_length=255, blank=True)
     badge_text = models.CharField(max_length=50, blank=True) # e.g. "Limited Edition"
+    featured_filter = models.ForeignKey(
+        FilterOption, 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        related_name='featured_sections'
+    )
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
 
@@ -76,8 +90,8 @@ class ShopByCatalogSection(models.Model):
     description = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
-    categories = models.ManyToManyField(
-        Category,
+    filters = models.ManyToManyField(
+        FilterOption,
         related_name='shop_by_catalog_sections',
         blank=True,
     )

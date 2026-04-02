@@ -167,8 +167,7 @@ class Command(BaseCommand):
 
         for product in products:
             n_reviews = reviews_per_product[product.id]
-            cat_name = product.category.parent.name if product.category and product.category.parent else (product.category.name if product.category else "")
-            product_type = self.CATEGORY_TYPES.get(cat_name, "product")
+            product_type = "fly"
 
             # Generate ratings that average >= 3.5
             # Strategy: mostly 4s and 5s, occasional 3s

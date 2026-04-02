@@ -6,8 +6,8 @@ from .models import (
     ContentSection,
     ShopByCatalogSection,
 )
-from catalog.models import Category
-from catalog.serializers import ProductSerializer, CategorySerializer
+from catalog.models import FilterOption
+from catalog.serializers import ProductSerializer, FilterOptionSerializer
 from base.serializers import UserSerializer
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -43,23 +43,29 @@ class NavbarPromoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ContentSectionSerializer(serializers.ModelSerializer):
+    featured_filter_details = FilterOptionSerializer(source='featured_filter', read_only=True)
+    
     class Meta:
         model = ContentSection
-        fields = '__all__'
+        fields = [
+            'id', 'title', 'subtitle', 'description', 'image', 'section_type',
+            'button_text', 'button_link', 'badge_text', 'featured_filter',
+            'featured_filter_details', 'is_active', 'order'
+        ]
 
 
 class ShopByCatalogSectionSerializer(serializers.ModelSerializer):
     """
     Serializer for the 'Shop by Catalog' homepage section.
-    - `categories` is read-only, fully expanded category data.
-    - `category_ids` is write-only, used to set the M2M relation.
+    - `filters` is read-only, fully expanded filter options data.
+    - `filter_ids` is write-only, used to set the M2M relation.
     """
-    categories = CategorySerializer(many=True, read_only=True)
-    category_ids = serializers.PrimaryKeyRelatedField(
+    filters = FilterOptionSerializer(many=True, read_only=True)
+    filter_ids = serializers.PrimaryKeyRelatedField(
         many=True,
         write_only=True,
-        source='categories',
-        queryset=Category.objects.all(),
+        source='filters',
+        queryset=FilterOption.objects.all(),
     )
 
     class Meta:
@@ -71,8 +77,8 @@ class ShopByCatalogSectionSerializer(serializers.ModelSerializer):
             'description',
             'is_active',
             'order',
-            'categories',
-            'category_ids',
+            'filters',
+            'filter_ids',
         ]
 
 class DashboardSerializer(serializers.Serializer):

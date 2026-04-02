@@ -10,8 +10,7 @@ import { useQuery, useInfiniteQuery, useQueryClient } from '@tanstack/react-quer
  */
 export const fetchProducts = async ({
     searchQuery = '',
-    categories = [],
-    subcategories = [],
+    filters = [],
     priceRange = [0, 1000],
     sortBy = 'featured',
     page = 1,
@@ -23,9 +22,8 @@ export const fetchProducts = async ({
     if (page) params.append('page', page);
     if (isSet !== null && isSet !== undefined) params.append('is_set', isSet.toString());
 
-    // Categories and subcategories are expected to be valid slugs already
-    categories.forEach((slug) => params.append('category__slug', slug));
-    subcategories.forEach((slug) => params.append('category__slug', slug));
+    // Filters are an array of option slugs
+    filters.forEach((slug) => params.append('filters__slug', slug));
 
     // Price range
     if (priceRange && priceRange.length === 2) {
@@ -52,7 +50,7 @@ export const fetchProducts = async ({
     const results = data.results || data || [];
 
     const products = results.map(p => {
-        const categoryName = p.category?.name || 'Uncategorized';
+        const filterNames = p.filters?.map(f => f.name).join(', ') || 'Uncategorized';
         return {
             ...p,
             title: p.name,
@@ -60,7 +58,7 @@ export const fetchProducts = async ({
             sale_price: p.sale_price ? parseFloat(p.sale_price) : null,
             primary_image: p.primary_image,
             images: p.images?.map(img => img.image_url || img.image) || [],
-            categoryName: categoryName,
+            categoryName: filterNames,
         };
     });
 
@@ -72,14 +70,7 @@ export const fetchProducts = async ({
     };
 };
 
-/**
- * Fetch all categories (hierarchical)
- */
-export const fetchCategories = async () => {
-    // ?all=false (default) fetches only roots, but serializer includes children
-    const response = await api.get('catalog/categories/');
-    return response.data || [];
-};
+
 
 /**
  * Fetch a single product by Slug
@@ -130,10 +121,10 @@ export const searchProducts = async (query) => {
 };
 
 /**
- * Fetch products by category
+ * Fetch products by filter
  */
-export const fetchProductsByCategory = async (categorySlug) => {
-    const response = await api.get(`catalog/products/?category__slug=${categorySlug}`);
+export const fetchProductsByFilter = async (filterSlug) => {
+    const response = await api.get(`catalog/products/?filters__slug=${filterSlug}`);
     // Transform
     const results = response.data.results || response.data;
     return results.map(p => ({
@@ -154,9 +145,9 @@ export const fetchInfiniteProducts = async ({ pageParam = 1, filters = {} }) => 
 
     if (filters.searchQuery) params.append('search', filters.searchQuery);
 
-    // Categories
-    if (filters.categories && filters.categories.length > 0) {
-        filters.categories.forEach((slug) => params.append('category__slug', slug));
+    // Filters
+    if (filters.filters && filters.filters.length > 0) {
+        filters.filters.forEach((slug) => params.append('filters__slug', slug));
     }
 
     // Sort
@@ -231,28 +222,14 @@ export const useProductSearch = (query) => {
 };
 
 /**
- * Hook to fetch products by category
+ * Hook to fetch products by filter
  */
-/**
- * Hook to fetch products by category
- */
-export const useProductsByCategory = (category) => {
+export const useProductsByFilter = (filterSlug) => {
     return useQuery({
-        queryKey: ['products', 'category', category],
-        queryFn: () => fetchProductsByCategory(category),
-        enabled: !!category,
+        queryKey: ['products', 'filter', filterSlug],
+        queryFn: () => fetchProductsByFilter(filterSlug),
+        enabled: !!filterSlug,
         staleTime: 5 * 60 * 1000,
-    });
-};
-
-/**
- * Hook to fetch categories
- */
-export const useCategories = () => {
-    return useQuery({
-        queryKey: ['categories'],
-        queryFn: fetchCategories,
-        staleTime: 60 * 60 * 1000, // 1 hour (categories change rarely)
     });
 };
 

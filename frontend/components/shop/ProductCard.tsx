@@ -122,10 +122,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </h3>
             </Link>
 
-            {/* Category / Sub-label */}
-            {product.category && (
-              <p className="text-[11px] uppercase tracking-wider text-muted-foreground transition-all duration-300">
-                {typeof product.category === 'object' ? product.category.name : product.category}
+            {/* Filters / Sub-label */}
+            {(product.categoryName || product.filters) && (
+              <p className="text-[11px] uppercase tracking-wider text-muted-foreground transition-all duration-300 truncate">
+                {product.categoryName || (Array.isArray(product.filters) ? product.filters.map((f: any) => f.name).join(', ') : 'Uncategorized')}
               </p>
             )}
           </div>

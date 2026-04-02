@@ -46,7 +46,7 @@ const navGroups = [
         icon: Package,
         items: [
             { icon: Package, label: 'Products', href: '/admin/products' },
-            { icon: FolderTree, label: 'Catalogs', href: '/admin/catalogs' },
+            { icon: FolderTree, label: 'Filters', href: '/admin/filters' },
         ]
     },
     {
@@ -97,7 +97,7 @@ export default function AdminLayout({
         <RouteGuard requireAdmin>
             <div className="min-h-screen bg-muted/20 flex flex-col">
                 {/* Header */}
-                <header className="h-16 border-b border-border bg-card sticky top-0 z-20 px-4 md:px-6 flex items-center justify-between gap-4">
+                <header className="h-16 border-b border-border bg-card sticky top-0 z-20 px-4 md:px-6  flex items-center justify-between gap-4">
                     <div className="flex items-center gap-6">
                         <Link href="/admin" className="text-2xl font-bold font-serif tracking-tighter text-primary shrink-0">
                             Clearcast

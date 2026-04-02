@@ -1,6 +1,7 @@
 "use client";
 
-import { useCategories, useProducts } from '@/api/productQueries';
+import { useFilters } from '@/api/filterQueries';
+import { useProducts } from '@/api/productQueries';
 import ProductCard from '@/components/shop/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -28,16 +29,13 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
 
     const {
         searchQuery,
-        selectedCategories,
-        selectedSubcategories,
-        toggleCategoryHierarchical,
-        toggleSubcategoryHierarchical,
+        selectedFilters,
+        toggleFilter,
         resetFilters,
         getActiveFilterCount,
         sortBy,
         setSortBy,
-        setSelectedCategories,
-        setSelectedSubcategories,
+        setSelectedFilters,
         priceRange,
         setPriceRange,
         isSetFilter,
@@ -68,47 +66,32 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
     // Reset page when filters change
     React.useEffect(() => {
         setPage(1);
-    }, [debouncedSearchQuery, selectedCategories, selectedSubcategories, sortBy, priceRange]);
+    }, [debouncedSearchQuery, selectedFilters, sortBy, priceRange]);
 
-    // Fetch categories for filters
-    const { data: categoriesData = [] } = useCategories();
-    const categories = Array.isArray(categoriesData) ? categoriesData : categoriesData.results || [];
+    // Fetch filters
+    const { data: filtersDataResponse = [] } = useFilters();
+    const filterGroups = Array.isArray(filtersDataResponse) ? filtersDataResponse : (filtersDataResponse as any).results || [];
 
-    // Build sets of valid slugs (categories + subcategories) to guard against any stale/invalid values in UI state
-    const { validCategorySlugs, validSubcategorySlugs } = useMemo(() => {
-        const categorySlugs = new Set();
-        const subSlugs = new Set();
-
-        if (Array.isArray(categories)) {
-            categories.forEach((cat: any) => {
-                if (cat.slug) categorySlugs.add(cat.slug);
-                (cat.children || []).forEach((child: any) => {
-                    if (child.slug) subSlugs.add(child.slug);
-                });
+    // Build sets of valid filter slugs to guard against stale UI state
+    const validFilterSlugs = useMemo(() => {
+        const slugs = new Set();
+        filterGroups.forEach((group: any) => {
+            (group.options || []).forEach((opt: any) => {
+                if (opt.slug) slugs.add(opt.slug);
             });
-        }
+        });
+        return slugs;
+    }, [filterGroups]);
 
-        return {
-            validCategorySlugs: categorySlugs,
-            validSubcategorySlugs: subSlugs,
-        };
-    }, [categories]);
-
-    const safeSelectedCategories = useMemo(
-        () => selectedCategories.filter((slug: string) => validCategorySlugs.has(slug)),
-        [selectedCategories, validCategorySlugs]
+    const safeSelectedFilters = useMemo(
+        () => selectedFilters.filter((slug: string) => validFilterSlugs.has(slug)),
+        [selectedFilters, validFilterSlugs]
     );
 
-    const safeSelectedSubcategories = useMemo(
-        () => selectedSubcategories.filter((slug: string) => validSubcategorySlugs.has(slug)),
-        [selectedSubcategories, validSubcategorySlugs]
-    );
-
-    // Fetch products with filters (using only valid slugs)
+    // Fetch products with filters
     const { data, isLoading, isError, error } = useProducts({
         searchQuery: debouncedSearchQuery,
-        categories: safeSelectedCategories,
-        subcategories: safeSelectedSubcategories,
+        filters: safeSelectedFilters,
         sortBy,
         page,
         priceRange: priceRange,
@@ -149,81 +132,37 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
         return rangeWithDots;
     }, [page, totalPages]);
 
-    // Transform categories into the structure expected by the filter UI.
-    const categoryStructure = useMemo(() => {
-        const structure: Record<string, any> = {};
-
-        if (Array.isArray(categories)) {
-            categories.forEach((cat: any) => {
-                const subcategories =
-                    (cat.children || [])
-                        .map((child: any) => ({
-                            id: child.id,
-                            name: child.name,
-                            slug: child.slug,
-                        }))
-                        .sort((a: any, b: any) => a.name.localeCompare(b.name)) || [];
-
-                structure[cat.slug] = {
-                    id: cat.id,
-                    name: cat.name,
-                    slug: cat.slug,
-                    subcategories,
-                };
-            });
-        }
-
-        return structure;
-    }, [categories]);
-
     // Map from slug to display name for active filter chips
     const slugToNameMap = useMemo(() => {
         const map: Record<string, string> = {};
-        if (Array.isArray(categories)) {
-            categories.forEach((cat: any) => {
-                map[cat.slug] = cat.name;
-                (cat.children || []).forEach((child: any) => {
-                    map[child.slug] = child.name;
-                });
+        filterGroups.forEach((group: any) => {
+            (group.options || []).forEach((opt: any) => {
+                map[opt.slug] = opt.name;
             });
-        }
+        });
         return map;
-    }, [categories]);
+    }, [filterGroups]);
 
-    const allSelectedSlugs = useMemo(() => [
-        ...selectedCategories,
-        ...selectedSubcategories
-    ], [selectedCategories, selectedSubcategories]);
+    const [openGroups, setOpenGroups] = React.useState<Record<string, boolean>>({});
 
-    const [openCategories, setOpenCategories] = React.useState<Record<string, boolean>>({});
-
-    // Initialize filters from URL (e.g. /shop?category=slug)
+    // Initialize filters from URL (e.g. /shop?filter=slug)
     React.useEffect(() => {
         if (initializedFromUrl) return;
 
-        const categorySlug = searchParams.get('category');
-        if (!categorySlug) {
+        const filterSlug = searchParams.get('category') || searchParams.get('filter');
+        if (!filterSlug) {
             setInitializedFromUrl(true);
             return;
         }
 
-        const allCategories = Array.isArray(categoriesData)
-            ? categoriesData
-            : categoriesData.results || [];
-
-        const matchedCategory = allCategories.find((cat: any) => cat.slug === categorySlug);
-
-        if (matchedCategory) {
-            setSelectedCategories([matchedCategory.slug]);
-        }
-
+        setSelectedFilters([filterSlug]);
         setInitializedFromUrl(true);
-    }, [initializedFromUrl, searchParams, categoriesData, setSelectedCategories]);
+    }, [initializedFromUrl, searchParams, setSelectedFilters]);
 
-    const toggleCategoryOpen = (category: string) => {
-        setOpenCategories((prev: Record<string, boolean>) => ({
+    const toggleGroupOpen = (group: string) => {
+        setOpenGroups((prev: Record<string, boolean>) => ({
             ...prev,
-            [category]: !prev[category]
+            [group]: !prev[group]
         }));
     };
 
@@ -256,36 +195,22 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
             )}
 
             <div className="space-y-6">
-                <h3 className={cn("text-xs uppercase tracking-[0.2em] font-bold text-foreground mb-6", !isMobile && "hidden")}>Categories</h3>
-                {Object.values(categoryStructure).map((cat: any) => (
+                <h3 className={cn("text-xs uppercase tracking-[0.2em] font-bold text-foreground mb-6", !isMobile && "hidden")}>Filters</h3>
+                {filterGroups.map((group: any) => (
                     <Collapsible
-                        key={cat.slug}
-                        open={openCategories[cat.slug] !== false}
-                        onOpenChange={() => toggleCategoryOpen(cat.slug)}
+                        key={group.id}
+                        open={openGroups[group.name] !== false}
+                        onOpenChange={() => toggleGroupOpen(group.name)}
                     >
-                        <div className="space-y-4">
+                        <div className="space-y-4 shadow-sm border border-border/20 p-2 bg-muted/5">
                             <div className="flex items-center justify-between group">
-                                <div className="flex items-center space-x-3">
-                                    <Checkbox
-                                        id={`${isMobile ? 'mobile-' : ''}${cat.slug}`}
-                                        checked={selectedCategories.includes(cat.slug)}
-                                        onCheckedChange={(checked) =>
-                                            toggleCategoryHierarchical(cat.slug, cat.subcategories.map((s: any) => s.slug), !!checked)
-                                        }
-                                        style={{ borderRadius: 0 }}
-                                        className="h-4 w-4"
-                                    />
-                                    <Label
-                                        htmlFor={`${isMobile ? 'mobile-' : ''}${cat.slug}`}
-                                        className="text-[11px] font-bold uppercase tracking-widest cursor-pointer text-muted-foreground group-hover:text-foreground transition-colors"
-                                    >
-                                        {cat.name}
-                                    </Label>
-                                </div>
+                                <Label className="text-[11px] font-bold uppercase tracking-widest cursor-pointer text-muted-foreground group-hover:text-foreground transition-colors ml-1">
+                                    {group.name}
+                                </Label>
                                 <CollapsibleTrigger
                                     render={
                                         <Button variant="ghost" size="sm" className="h-6 w-6 p-0 bg-transparent hover:bg-transparent" style={{ borderRadius: 0 }}>
-                                            {openCategories[cat.slug] !== false ? (
+                                            {openGroups[group.name] !== false ? (
                                                 <ChevronDown className="h-3 w-3 opacity-30" />
                                             ) : (
                                                 <ChevronRight className="h-3 w-3 opacity-30" />
@@ -294,21 +219,21 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                     }
                                 />
                             </div>
-                            <CollapsibleContent className="pl-7 space-y-3 pt-1">
-                                {cat.subcategories.map((subcategory: any) => (
-                                    <div key={subcategory.slug} className="flex items-center space-x-3 group cursor-pointer">
+                            <CollapsibleContent className="space-y-3 pt-1">
+                                {group.options.map((option: any) => (
+                                    <div key={option.slug} className="flex items-center space-x-3 group cursor-pointer ml-1">
                                         <Checkbox
-                                            id={`${isMobile ? 'mobile-' : ''}${subcategory.slug}`}
-                                            checked={selectedSubcategories.includes(subcategory.slug)}
-                                            onCheckedChange={(checked) => toggleSubcategoryHierarchical(subcategory.slug, !!checked)}
+                                            id={`${isMobile ? 'mobile-' : ''}${option.slug}`}
+                                            checked={selectedFilters.includes(option.slug)}
+                                            onCheckedChange={() => toggleFilter(option.slug)}
                                             style={{ borderRadius: 0 }}
                                             className="h-3.5 w-3.5"
                                         />
                                         <Label
-                                            htmlFor={`${isMobile ? 'mobile-' : ''}${subcategory.slug}`}
-                                            className="cursor-pointer text-[10px] uppercase tracking-wider text-muted-foreground/70 group-hover:text-foreground transition-colors"
+                                            htmlFor={`${isMobile ? 'mobile-' : ''}${option.slug}`}
+                                            className="cursor-pointer text-[10px] uppercase tracking-wider text-muted-foreground/80 group-hover:text-foreground group-hover:font-semibold transition-all pt-0.5"
                                         >
-                                            {subcategory.name}
+                                            {option.name}
                                         </Label>
                                     </div>
                                 ))}
@@ -328,7 +253,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                 {/* Page Title */}
                 <div className="mb-10 text-center md:text-left">
                     <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tight text-foreground">
-                        {isSetFilter === true ? "Fly Set" : isSetFilter === false ? "Fly Bars" : "Shop"}
+                        {isSetFilter === true ? "Fly Set" : isSetFilter === false ? "Fly Bars" : fallbackTitle}
                     </h1>
                 </div>
 
@@ -409,28 +334,12 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                 {/* Active Filters Bar */}
                 {activeFilterCount > 0 && (
                     <div className="flex flex-wrap items-center gap-3 mb-10">
-                        {selectedCategories.map((slug: string) => {
-                            const label = slugToNameMap[slug] || slug;
-                            const cat = categoryStructure[slug];
-                            const childSlugs = cat ? cat.subcategories.map((s: any) => s.slug) : [];
-                            return (
-                                <button
-                                    key={slug}
-                                    onClick={() => toggleCategoryHierarchical(slug, childSlugs, false)}
-                                    className="inline-flex items-center gap-2 px-4 py-2 bg-muted/50 hover:bg-muted text-[11px] font-medium uppercase tracking-wider transition-colors border border-border/30"
-                                    style={{ borderRadius: 0 }}
-                                >
-                                    {label}
-                                    <X className="h-3 w-3 opacity-50" />
-                                </button>
-                            )
-                        })}
-                        {selectedSubcategories.map((slug: string) => {
+                        {selectedFilters.map((slug: string) => {
                             const label = slugToNameMap[slug] || slug;
                             return (
                                 <button
                                     key={slug}
-                                    onClick={() => toggleSubcategoryHierarchical(slug, false)}
+                                    onClick={() => toggleFilter(slug)}
                                     className="inline-flex items-center gap-2 px-4 py-2 bg-muted/50 hover:bg-muted text-[11px] font-medium uppercase tracking-wider transition-colors border border-border/30"
                                     style={{ borderRadius: 0 }}
                                 >
@@ -509,7 +418,6 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                             </div>
 
                             <div>
-                                <h3 className="text-xs uppercase tracking-[0.2em] font-bold text-foreground mb-8">Product Type</h3>
                                 <FilterContent />
                             </div>
 
@@ -534,7 +442,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                         ) : isError ? (
                             <div className="text-center py-32 border-2 border-dashed border-destructive/50 bg-destructive/5" style={{ borderRadius: 0 }}>
                                 <p className="text-destructive font-semibold text-lg mb-2">Error Loading Products</p>
-                                <p className="text-muted-foreground">{error?.message}</p>
+                                <p className="text-muted-foreground">{(error as Error)?.message || 'Something went wrong.'}</p>
                             </div>
                         ) : products.length === 0 ? (
                             <div className="text-center py-32 border-2 border-dashed border-border" style={{ borderRadius: 0 }}>
