@@ -4,10 +4,13 @@ import { useContentSections, useHeroSections, useShopByCatalogSections } from '@
 import { useProducts } from '@/api/productQueries';
 import ProductCard from '@/components/shop/ProductCard';
 import FeaturedFilterSection from '@/components/shop/FeaturedFilterSection';
+import QualityStandards from '@/components/shop/QualityStandards';
+import FishingFlyConvo from '@/components/shop/FishingFlyConvo';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 const Home = () => {
   const router = useRouter();
@@ -25,8 +28,9 @@ const Home = () => {
   const contentSections = sectionsData?.results || sectionsData || [];
   const shopBySections = shopByData?.results || shopByData || [];
 
-  // Use first active hero section if available
-  const activeHero = heroSections.length > 0 ? heroSections[0] : null;
+  // Hero Slider State
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const activeHero = heroSections.length > 0 ? heroSections[activeHeroIndex] : null;
 
   // Use first active shop-by-catalog section
   const activeShopBySection = shopBySections.length > 0 ? shopBySections[0] : null;
@@ -52,6 +56,9 @@ const Home = () => {
             activeHero?.content_alignment === 'left' ? 'text-left' : 'text-center max-w-5xl mx-auto'
           )}>
             <div className="space-y-6">
+              <span className="text-[10px] uppercase tracking-[0.4em] font-black text-secondary animate-in fade-in slide-in-from-bottom-4 duration-700">
+                {activeHero?.badge_text || "Spring Collection 2026"}
+              </span>
               <h1 className="text-6xl md:text-8xl lg:text-[100px] font-serif font-bold text-white tracking-tighter leading-[0.82] slide-in-from-bottom-12 transition-all">
                 {activeHero?.title || "Master the Drift"}
               </h1>
@@ -67,23 +74,38 @@ const Home = () => {
               "flex flex-col sm:flex-row gap-5 pt-8 slide-in-from-bottom-8 delay-500 transition-all",
               activeHero?.content_alignment === 'left' ? "justify-start" : "justify-center"
             )}>
-              <Link href={activeHero?.button_link || "/fly-bars"}>
-                <Button size="lg" className="h-16 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none bg-[#012D50] text-white hover:bg-white hover:text-[#012D50] transition-all duration-500 shadow-2xl group">
-                  {activeHero?.button_text || "Shop the Fly Bar"}
+              <Link href={activeHero?.button_link || "/shop"}>
+                <Button size="lg" className="h-16 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none bg-secondary text-white hover:bg-white hover:text-secondary transition-all duration-500 shadow-2xl shadow-secondary/20 group">
+                  {activeHero?.button_text || "Explore Series"}
                   <span className="ml-2 transition-transform duration-500 group-hover:translate-x-2">→</span>
                 </Button>
               </Link>
 
-              {(activeHero?.button_text_2 || !activeHero) && (
+              {activeHero?.button_text_2 && (
                 <Link href={activeHero?.button_link_2 || "/about"}>
-                  <Button size="lg" className="h-16 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none bg-[#7bc233] text-white hover:bg-white hover:text-[#7bc233] transition-all duration-500 shadow-2xl backdrop-blur-md">
-                    {activeHero?.button_text_2 || "Our Story"}
+                  <Button size="lg" className="h-16 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none border-white text-white hover:bg-white hover:text-primary transition-all duration-500 shadow-2xl backdrop-blur-md">
+                    {activeHero?.button_text_2}
                   </Button>
                 </Link>
               )}
             </div>
           </div>
         </div>
+
+        {heroSections.length > 1 && (
+          <div className="absolute top-1/2 -translate-y-1/2 right-12 z-20 flex flex-col gap-4">
+            {heroSections.map((_: any, idx: number) => (
+              <button
+                key={idx}
+                onClick={() => setActiveHeroIndex(idx)}
+                className={cn(
+                  "w-1 h-8 transition-all duration-500",
+                  activeHeroIndex === idx ? "bg-secondary" : "bg-white/20 hover:bg-white/40"
+                )}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Shop by Collection - Horizontal Cards */}
@@ -97,7 +119,7 @@ const Home = () => {
                   {activeShopBySection.title || 'Curated Essentials'}
                 </h2>
               </div>
-              <Link href="/fly-bars" className="text-[11px] font-black uppercase tracking-widest border-b border-foreground pb-1 hover:text-primary hover:border-primary transition-all">
+              <Link href="/fly-bars" className="text-[11px] font-black uppercase tracking-widest border-b border-foreground pb-1 hover:text-secondary hover:border-secondary transition-all">
                 View All Collections
               </Link>
             </div>
@@ -137,7 +159,7 @@ const Home = () => {
                       <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
                     </div>
                     <div className="mt-6 flex justify-between items-center group">
-                      <h3 className="text-sm font-bold uppercase tracking-[0.15em] border-b border-transparent group-hover:border-primary transition-all">
+                      <h3 className="text-sm font-bold uppercase tracking-[0.15em] border-b border-transparent group-hover:border-secondary transition-all">
                         {filter.name}
                       </h3>
                       <span className="text-[11px] font-medium text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">Explore</span>
@@ -156,7 +178,7 @@ const Home = () => {
           <div className="text-center mb-20 space-y-4">
             <span className="text-[10px] uppercase tracking-[0.3em] font-black text-muted-foreground/60">Featured</span>
             <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground tracking-tighter">Featured Patterns</h2>
-            <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
+            <div className="w-12 h-[1px] bg-secondary mx-auto mt-6" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
@@ -221,7 +243,7 @@ const Home = () => {
                   <div className="w-full md:w-2/5 space-y-8 text-center md:text-left">
                     <div className="space-y-4">
                       {section.badge_text && (
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">{section.badge_text}</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-secondary">{section.badge_text}</span>
                       )}
                       <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground leading-tight tracking-tighter">
                         {section.title}
@@ -237,10 +259,10 @@ const Home = () => {
                     </p>
                     {section.button_text && (
                       <div className="pt-4">
-                        <Link href={section.button_link || "#"}>
-                          <Button className="h-12 px-10 text-[10px] font-black uppercase tracking-[0.2em] rounded-none transition-all duration-500">
-                            {section.button_text}
-                          </Button>
+                        <Link href="/shop">
+                            <Button className="h-16 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none bg-secondary text-white hover:bg-secondary/90 transition-all duration-500">
+                                Secure Your Patterns
+                            </Button>
                         </Link>
                       </div>
                     )}
@@ -262,22 +284,30 @@ const Home = () => {
               </div>
               <div className="w-full md:w-2/5 space-y-8 text-center md:text-left">
                 <div className="space-y-4">
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Limited Release</span>
-                  <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground leading-tight tracking-tighter">
-                    The Clearcast Collection
-                  </h2>
-                </div>
-                <p className="text-[15px] text-muted-foreground/80 leading-loose max-w-sm mx-auto md:mx-0">
-                  An uncompromising approach to craftsmanship. Discover our latest editorial showcasing the intersection of traditional artistry and modern design.
-                </p>
-                <div className="pt-4">
-                  <Button className="h-12 px-10 text-[10px] font-black uppercase tracking-[0.2em] rounded-none transition-all duration-500">Discover More</Button>
+                    <span className="text-[10px] uppercase tracking-[0.4em] font-black text-secondary">Our Legacy</span>
+                    <h2 className="text-4xl md:text-6xl font-serif font-black tracking-tighter leading-tight text-foreground group-hover:tracking-tight transition-all duration-700">
+                        Crafting the <br /> <span className="italic font-normal">ultimate</span> connection.
+                    </h2>
+                    <p className="text-muted-foreground/60 text-lg font-serif italic max-w-md leading-relaxed">
+                        Every pattern is a result of years on the water, observing the hatch and perfecting the drift. We don't just tie flies; we build precision instruments.
+                    </p>
+                    <div className="pt-8">
+                        <Button variant="outline" className="h-14 px-10 text-[11px] font-black uppercase tracking-[0.3em] rounded-none border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-500">
+                            The Clearcast Story
+                        </Button>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
       )}
+
+      {/* Quality Standards - FAQ Section */}
+      <QualityStandards />
+
+      {/* Fishing Fly Conversation Section */}
+      <FishingFlyConvo />
 
     </div>
   );

@@ -85,7 +85,7 @@ const Cart = () => {
                                 href={`/product/${item.handle}`}
                                 className="block"
                               >
-                                <h3 className="text-lg font-bold uppercase tracking-wider text-foreground hover:text-primary transition-colors">
+                                <h3 className="text-lg font-bold uppercase tracking-wider text-foreground hover:text-secondary transition-colors">
                                   {item.name}
                                 </h3>
                               </Link>
@@ -111,7 +111,7 @@ const Cart = () => {
                             <div className="flex items-center border border-border/60 h-10 w-32">
                               <button
                                 onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                className="w-10 h-full flex items-center justify-center hover:bg-[#F9F9F7] transition-colors disabled:opacity-20"
+                                className="w-10 h-full flex items-center justify-center hover:bg-secondary/5 hover:text-secondary transition-colors disabled:opacity-20"
                                 disabled={item.quantity <= 1}
                               >
                                 <Minus className="h-3 w-3" />
@@ -121,7 +121,7 @@ const Cart = () => {
                               </div>
                               <button
                                 onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                className="w-10 h-full flex items-center justify-center hover:bg-[#F9F9F7] transition-colors disabled:opacity-20"
+                                className="w-10 h-full flex items-center justify-center hover:bg-secondary/5 hover:text-secondary transition-colors disabled:opacity-20"
                                 disabled={item.quantity >= (item.stockLimit || 99)}
                               >
                                 <Plus className="h-3 w-3" />
@@ -137,7 +137,7 @@ const Cart = () => {
                           </div>
 
                           {item.quantity >= item.stockLimit && (
-                            <p className="text-[9px] text-primary/60 font-black uppercase tracking-widest pt-2">
+                            <p className="text-[9px] text-secondary font-black uppercase tracking-widest pt-2">
                               Maximum Allocation Reached
                             </p>
                           )}
@@ -151,7 +151,7 @@ const Cart = () => {
                 <div className="pt-12 border-t border-border/40">
                   <Link
                     href="/shop"
-                    className="group inline-flex items-center text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 hover:text-primary transition-all pb-1 border-b border-transparent hover:border-primary"
+                    className="group inline-flex items-center text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 hover:text-secondary transition-all pb-1 border-b border-transparent hover:border-secondary"
                   >
                     <span className="mr-2 transform group-hover:-translate-x-1 transition-transform">←</span> Return to Curatels
                   </Link>
@@ -186,7 +186,7 @@ const Cart = () => {
             </div>
 
             <Link href="/shop">
-              <Button size="lg" className="h-14 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none hover:translate-y-[-2px] transition-all duration-500 shadow-xl shadow-primary/10">
+              <Button size="lg" className="h-14 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none hover:translate-y-[-2px] transition-all duration-500 shadow-xl shadow-secondary/10 bg-secondary text-white hover:bg-secondary/90 border-none">
                 Begin Curation
               </Button>
             </Link>

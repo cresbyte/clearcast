@@ -1,5 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
+import aboutImg1 from './about-us-1.webp';
+import aboutImg2 from './about-us-2.webp';
+import aboutImg3 from './about-us-3.webp';
 
 const AboutPage = () => {
     return (
@@ -8,7 +10,7 @@ const AboutPage = () => {
             <section className="relative h-[60vh] flex items-center justify-center bg-[#F9F9F7] overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img
-                        src="/angler_in_river_sulfur_hatch_1774511734337.png"
+                        src={aboutImg1.src}
                         alt="Angler in River"
                         className="w-full h-full object-cover grayscale-[0.1]"
                     />
@@ -22,10 +24,10 @@ const AboutPage = () => {
             </section>
 
             {/* Editorial Content - The Narrative */}
-            <section className="py-24 md:py-32 container mx-auto px-4 max-w-5xl">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
-                    <div className="space-y-8">
-                        <span className="text-[10px] items-center uppercase tracking-[0.3em] font-black text-primary/60">Born on Water</span>
+            <section className="py-24 md:py-32 container mx-auto px-4 sm:px-6 lg:px-8 max-w-8xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+                    <div className="space-y-8 flex flex-col justify-center">
+                        <span className="text-[10px] items-center uppercase tracking-[0.3em] font-black text-secondary/60">Born on Water</span>
                         <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tighter leading-tight">
                             Clearcast Fly Ltd
                         </h2>
@@ -36,11 +38,11 @@ const AboutPage = () => {
                             Every fly we craft is born from countless hours on the water, testing, refining, and perfecting. We understand that serious anglers demand more than just aesthetics—they demand performance, durability, and patterns that actually work when it matters most. Our commitment to excellence means we never compromise on materials or technique, ensuring that each pattern in our collection represents the pinnacle of fly-tying craftsmanship and real-world effectiveness.
                         </p>
                     </div>
-                    <div className="aspect-[4/5] overflow-hidden bg-[#F5F5F3]">
+                    <div className="relative overflow-hidden bg-[#F5F5F3] border border-secondary/10 min-h-[400px]">
                         <img
-                            src="/fly_fishing_fly_box_1774511527085.png"
+                            src={aboutImg2.src}
                             alt="Fly Tying Craftsmanship"
-                            className="w-full h-full object-cover"
+                            className="absolute inset-0 w-full h-full object-cover"
                         />
                     </div>
                 </div>
@@ -49,17 +51,17 @@ const AboutPage = () => {
             {/* Philosophy - Minimalist Grid */}
             <section className="py-24 md:py-32 bg-[#F9F9F7]">
                 <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 max-w-7xl mx-auto">
                         <div className="space-y-4">
                             <h3 className="text-xl font-serif font-bold tracking-tight text-foreground">The Anatomy of a Better Cast</h3>
-                            <div className="w-8 h-[1px] bg-primary" />
+                            <div className="w-8 h-[1px] bg-secondary" />
                             <p className="text-sm text-muted-foreground/70 leading-relaxed">
                                 We believe a fly is only as good as its weakest component. That’s why we obsess over the details that most people never see. From the gauge of the wire to the specific buoyancy of our CDC, every material is chosen for its performance under pressure.
                             </p>
                         </div>
                         <div className="space-y-4 pt-12">
                             <h3 className="text-xl font-serif font-bold tracking-tight text-foreground">A Lifetime Promise</h3>
-                            <div className="w-8 h-[1px] bg-primary" />
+                            <div className="w-8 h-[1px] bg-secondary" />
                             <p className="text-sm italic font-serif text-muted-foreground/70 leading-relaxed">
                                 "Every fly must cast true, float perfectly, and catch fish consistently."
                             </p>
@@ -69,7 +71,7 @@ const AboutPage = () => {
                         </div>
                         <div className="space-y-4">
                             <h3 className="text-xl font-serif font-bold tracking-tight text-foreground">Field Tested</h3>
-                            <div className="w-8 h-[1px] bg-primary" />
+                            <div className="w-8 h-[1px] bg-secondary" />
                             <p className="text-sm text-muted-foreground/70 leading-relaxed">
                                 We don’t just sell flies; we provide the confidence to make that one cast count. Whether you're chasing wild browns in a hidden creek or technical rainbows on a tailwater, our gear is designed to enhance your time on the water.
                             </p>
@@ -79,20 +81,23 @@ const AboutPage = () => {
             </section>
 
             {/* Final Editorial - Large Image & Text Overlay */}
-            <section className="py-24 md:py-40 container mx-auto px-4">
+            <section className="py-24 md:py-40 container mx-auto px-4 sm:px-6 lg:px-8 ">
                 <div className="relative aspect-[21/9] flex items-center justify-center overflow-hidden">
                     <img
-                        src="https://images.unsplash.com/photo-1544551763-47a18411c126?w=1600&auto=format&fit=crop&q=80"
+                        src={aboutImg3.src}
                         alt="Serene Lake"
-                        className="absolute inset-0 w-full h-full object-cover grayscale-[0.05]"
+                        className="absolute inset-0 w-full h-full object-cover grayscale-[0.05] "
+
                     />
                     <div className="absolute inset-0 bg-black/40" />
-                    <div className="relative z-10 text-center max-w-2xl px-6 space-y-6">
+                    <div className="relative z-10 text-center  px-8 space-y-8">
                         <h2 className="text-3xl md:text-5xl font-serif font-bold text-white tracking-tighter leading-tight">
-                            Make your next cast count.
+                            We don’t just sell flies; we provide the confidence to make that one cast count. Whether you're chasing wild browns in a hidden creek or technical rainbows on a tailwater, our gear is designed to enhance your time on the water.
+
+
                         </h2>
                         <div className="pt-4">
-                            <Link href="/shop" className="text-[11px] font-black uppercase tracking-widest text-white border-b border-white pb-1 hover:text-white/80 hover:border-white/80 transition-all">
+                            <Link href="/shop" className="text-[11px] font-black uppercase tracking-widest text-white border-b border-secondary pb-1 hover:text-white/80 hover:border-secondary/80 transition-all">
                                 Explore the Collection
                             </Link>
                         </div>
@@ -103,4 +108,4 @@ const AboutPage = () => {
     );
 };
 
-export default AboutPage;
+export default AboutPage;

@@ -7,7 +7,7 @@ export default function NotFound() {
         <div className="flex flex-col min-h-screen">
             <Navbar />
 
-            <main className="flex-grow flex flex-col items-center justify-center px-4 py-32 text-center">
+            <main className="flex-grow flex flex-col items-center justify-center px-4 py-32 text-center min-h-[80vh]">
                 <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
                     404 - Page Not Found
                 </h1>
@@ -15,7 +15,7 @@ export default function NotFound() {
                     The page you are looking for does not exist or has been moved.
                 </p>
                 <Link
-                    href="/shop"
+                    href="/fly-bars"
                     className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground font-medium transition-all hover:opacity-90 active:scale-95"
                 >
                     Continue Shopping

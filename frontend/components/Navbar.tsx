@@ -104,7 +104,7 @@ const Navbar = () => {
       "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
       showTransparent 
         ? "bg-transparent border-transparent" 
-        : "bg-white  border-b border-border/40 shadow-xs"
+        : "bg-primary border-b border-white/10 shadow-lg shadow-black/10"
     )}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Bar - Elegant & Minimal */}
@@ -118,12 +118,12 @@ const Navbar = () => {
           >
             <div className={cn(
               "flex items-center justify-center h-full text-[10px] uppercase tracking-[0.2em] font-medium",
-              showTransparent ? "text-white/70" : "text-muted-foreground/80"
+              showTransparent ? "text-white/70" : "text-white/80"
             )}>
               {activePromo.link ? (
                 <Link
                   href={activePromo.link}
-                  className={cn("transition-colors", showTransparent ? "hover:text-white" : "hover:text-foreground")}
+                  className={cn("transition-colors", showTransparent ? "hover:text-white" : "hover:text-secondary")}
                 >
                   {activePromo.text}
                 </Link>
@@ -135,14 +135,14 @@ const Navbar = () => {
         )}
 
         {/* Main Navigation */}
-        <div className="flex h-16 md:h-20 items-center justify-between gap-8 text-foreground transition-colors">
+        <div className="flex h-14 md:h-16 items-center justify-between gap-8 text-foreground transition-colors">
           {/* Logo - Centered alignment feel */}
           <div className="flex-shrink-0">
             <Link
               href="/"
               className={cn(
                 "text-2xl font-serif font-bold tracking-tighter transition-colors",
-                showTransparent ? "text-white" : "text-foreground"
+                showTransparent || !showTransparent ? "text-white" : "text-foreground"
               )}
             >
               Clearcast
@@ -166,8 +166,8 @@ const Navbar = () => {
                     className={cn(
                       "text-[11px] font-bold tracking-[0.2em] transition-colors",
                       isActive(item.path)
-                        ? (showTransparent ? "text-white" : "text-primary")
-                        : (showTransparent ? "text-white/60 hover:text-white" : "text-muted-foreground hover:text-foreground")
+                        ? (showTransparent ? "text-white underlining decoration-secondary decoration-2 underline-offset-8" : "text-secondary")
+                        : (showTransparent ? "text-white/60 hover:text-white" : "text-white/70 hover:text-white")
                     )}
                   >
                     {item.name}
@@ -182,11 +182,11 @@ const Navbar = () => {
             {/* Inline Search Bar - Unified Desktop/Mobile */}
             <div
               className={cn(
-                "flex items-center transition-all duration-700 ease-in-out border overflow-hidden h-9 md:h-10",
+                "flex items-center transition-all duration-700 ease-in-out border overflow-hidden h-8 md:h-9",
                 isSearchOpen
-                  ? "flex-1 md:w-80 border-border/40 px-3 ml-4 bg-[#F9F9F7]"
+                  ? "flex-1 md:w-80 border-white/20 px-3 ml-4 bg-white/10"
                   : "w-9 md:w-10 px-0 justify-center cursor-pointer border-transparent",
-                !isSearchOpen && showTransparent ? "bg-white/10 hover:bg-white/20" : (!isSearchOpen && "bg-[#F9F9F7]")
+                !isSearchOpen && showTransparent ? "bg-white/10 hover:bg-white/20" : (!isSearchOpen && "bg-white/10 hover:bg-white/20")
               )}
               onClick={() => !isSearchOpen && setIsSearchOpen(true)}
             >
@@ -194,8 +194,8 @@ const Navbar = () => {
                 className={cn(
                   "h-[18px] w-[18px] shrink-0 transition-colors",
                   isSearchOpen
-                    ? "text-primary"
-                    : (showTransparent ? "text-white" : "text-foreground hover:text-primary")
+                    ? "text-secondary"
+                    : (showTransparent ? "text-white" : "text-white/80 hover:text-white")
                 )}
               />
               {isSearchOpen && (
@@ -209,7 +209,7 @@ const Navbar = () => {
                     placeholder="SEARCH OUR COLLECTION"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-transparent border-none outline-none text-[10px] font-black tracking-[0.2em] placeholder:text-muted-foreground/30"
+                    className="w-full bg-transparent border-none outline-none text-[10px] font-black tracking-[0.2em] placeholder:text-white/30 text-white"
                   />
                   <div className="flex items-center gap-2 pr-1">
                     <button
@@ -236,8 +236,8 @@ const Navbar = () => {
                   <div className="hidden lg:block">
                     <DropdownMenu>
                       <DropdownMenuTrigger className={cn(
-                        "flex items-center h-10 px-2 gap-1 transition-colors outline-none shrink-0",
-                        showTransparent ? "text-white/80 hover:text-white" : "text-foreground hover:text-primary"
+                        "flex items-center h-8 px-2 gap-1 transition-colors outline-none shrink-0",
+                        showTransparent ? "text-white/80 hover:text-white" : "text-white/80 hover:text-white"
                       )}>
                         <User className="h-[18px] w-[18px]" />
                       </DropdownMenuTrigger>
@@ -286,8 +286,8 @@ const Navbar = () => {
                   </div>
                 ) : (
                   <Link href="/auth/login" className={cn(
-                    "flex items-center h-10 px-2 transition-colors",
-                    showTransparent ? "text-white/80 hover:text-white" : "text-foreground hover:text-primary"
+                    "flex items-center h-8 px-2 transition-colors",
+                    showTransparent ? "text-white/80 hover:text-white" : "text-white/80 hover:text-white"
                   )}>
                     <User className="h-[18px] w-[18px]" />
                   </Link>
@@ -297,13 +297,13 @@ const Navbar = () => {
               <Link
                 href="/cart"
                 className={cn(
-                  "relative h-10 px-2 flex items-center transition-colors shrink-0",
-                  showTransparent ? "text-white/80 hover:text-white" : "text-foreground hover:text-primary"
+                  "relative h-8 px-2 flex items-center transition-colors shrink-0",
+                  showTransparent ? "text-white/80 hover:text-white" : "text-white/80 hover:text-white"
                 )}
               >
                 <ShoppingCart className="h-[18px] w-[18px]" />
                 {cartItemCount > 0 && (
-                  <span className="absolute top-1 -right-0.5 bg-primary text-primary-foreground text-[9px] font-black min-w-[16px] h-4 flex items-center justify-center px-1" style={{ borderRadius: "50%" }}>
+                  <span className="absolute top-1 -right-0.5 bg-secondary text-white text-[9px] font-black min-w-[16px] h-4 flex items-center justify-center px-1" style={{ borderRadius: "50%" }}>
                     {cartItemCount}
                   </span>
                 )}
@@ -315,7 +315,7 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
                   className={cn(
                     "p-2 lg:hidden transition-colors",
-                    showTransparent ? "text-white" : "text-foreground"
+                    showTransparent ? "text-white" : "text-white"
                   )}
                 >
                   {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

@@ -160,11 +160,11 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
             {/* Breadcrumb - Super minimal */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <nav className="flex items-center space-x-3 text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/60">
-                    <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+                    <Link href="/" className="hover:text-secondary transition-colors">Home</Link>
                     <span>/</span>
                     <Link 
                         href={product.is_set ? "/fly-sets" : "/fly-bars"} 
-                        className="hover:text-primary transition-colors"
+                        className="hover:text-secondary transition-colors"
                     >
                         {product.is_set ? "Fly Set" : "Fly Bar"}
                     </Link>
@@ -173,7 +173,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                             <span>/</span>
                             <Link
                                 href={`${product.is_set ? "/fly-sets" : "/fly-bars"}?filter=${product.filters[0].slug}`}
-                                className="hover:text-primary transition-colors truncate max-w-[100px]"
+                                className="hover:text-secondary transition-colors truncate max-w-[100px]"
                             >
                                 {product.filters[0].name}
                             </Link>
@@ -212,7 +212,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                             )}
 
                             {hasDiscount && isAvailable && (
-                                <div className="absolute top-6 left-6 bg-primary text-primary-foreground px-3 py-1.5 text-[10px] font-black uppercase tracking-widest">
+                                <div className="absolute top-6 left-6 bg-secondary text-white px-3 py-1.5 text-[10px] font-black uppercase tracking-widest">
                                     -{discountPercent}%
                                 </div>
                             )}
@@ -225,7 +225,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                                     <button
                                         key={idx}
                                         onClick={() => { setSelectedImageIndex(idx); setImageLoaded(false); }}
-                                        className={`flex-shrink-0 w-20 aspect-[4/5] bg-muted overflow-hidden border transition-all duration-300 ${selectedImageIndex === idx ? 'border-primary' : 'border-border/30 opacity-60 hover:opacity-100'}`}
+                                        className={`flex-shrink-0 w-20 aspect-[4/5] bg-muted overflow-hidden border transition-all duration-300 ${selectedImageIndex === idx ? 'border-secondary' : 'border-border/30 opacity-60 hover:opacity-100'}`}
                                     >
                                         <img src={img} alt="th" className="w-full h-full object-cover" />
                                     </button>
@@ -239,7 +239,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                         <div className="space-y-6 mb-12">
                             <div className="space-y-2">
                                 {product.filters?.length > 0 && (
-                                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-primary">
+                                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-secondary">
                                         {product.filters.map((f: any) => f.name).join(' • ')}
                                     </p>
                                 )}
@@ -302,13 +302,13 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                             <div className="space-y-4">
                                 <div className="flex gap-2">
                                     <div className="flex items-center border border-border h-14 w-32">
-                                        <button onClick={decrement} className="w-10 h-full flex items-center justify-center hover:text-primary transition-colors disabled:opacity-30"><Minus className="h-3 w-3" /></button>
+                                        <button onClick={decrement} className="w-10 h-full flex items-center justify-center hover:text-secondary transition-colors disabled:opacity-30"><Minus className="h-3 w-3" /></button>
                                         <div className="flex-1 h-full flex items-center justify-center text-xs font-black tracking-widest">{quantity}</div>
-                                        <button onClick={increment} className="w-10 h-full flex items-center justify-center hover:text-primary transition-colors disabled:opacity-30"><Plus className="h-3 w-3" /></button>
+                                        <button onClick={increment} className="w-10 h-full flex items-center justify-center hover:text-secondary transition-colors disabled:opacity-30"><Plus className="h-3 w-3" /></button>
                                     </div>
 
                                     <Button
-                                        className="h-14 flex-1 text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-500 rounded-none shadow-lg shadow-primary/5"
+                                        className="h-14 flex-1 text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-500 rounded-none shadow-lg shadow-secondary/5"
                                         disabled={!isAvailable || isAdding || (!selectedVariant && product.variants?.length > 0)}
                                         onClick={handleAddToCart}
                                     >
@@ -317,14 +317,14 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
 
                                     <button
                                         onClick={handleToggleWishlist}
-                                        className={`h-14 w-14 flex items-center justify-center border border-border hover:border-primary transition-all duration-300 group ${inWishlist ? 'bg-primary/5 border-primary' : ''}`}
+                                        className={`h-14 w-14 flex items-center justify-center border border-border hover:border-secondary transition-all duration-300 group ${inWishlist ? 'bg-secondary/5 border-secondary' : ''}`}
                                     >
-                                        <Heart className={`h-5 w-5 transition-all duration-500 ${inWishlist ? 'fill-primary text-primary' : 'text-muted-foreground/40 group-hover:text-primary'}`} />
+                                        <Heart className={`h-5 w-5 transition-all duration-500 ${inWishlist ? 'fill-secondary text-secondary' : 'text-muted-foreground/40 group-hover:text-secondary'}`} />
                                     </button>
                                 </div>
 
                                 {isAvailable && (
-                                    <p className={`text-[10px] font-black uppercase tracking-widest text-center py-2 ${availableStock < 10 ? 'text-primary animate-pulse' : 'text-muted-foreground/40'}`}>
+                                    <p className={`text-[10px] font-black uppercase tracking-widest text-center py-2 ${availableStock < 10 ? 'text-secondary animate-pulse' : 'text-muted-foreground/40'}`}>
                                         {availableStock < 10 ? `Extremely Limited: Only ${availableStock} Remaining` : `Current Availability: ${availableStock} Pieces`}
                                     </p>
                                 )}
@@ -338,7 +338,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                                     { icon: Shield, label: 'Secured Checkout' }
                                 ].map((feat, i) => (
                                     <div key={i} className="flex flex-col items-center gap-3 text-center">
-                                        <feat.icon className="h-4 w-4 text-primary/60" />
+                                        <feat.icon className="h-4 w-4 text-secondary/60" />
                                         <span className="text-[9px] uppercase tracking-[0.2em] font-black text-muted-foreground/60">{feat.label}</span>
                                     </div>
                                 ))}
@@ -358,7 +358,7 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                                             <span className="font-medium text-foreground tracking-wider">{spec.value}</span>
                                         </div>
                                     ))}
-                                    <button onClick={handleShare} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary pt-4 hover:opacity-50 transition-opacity">
+                                    <button onClick={handleShare} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-secondary pt-4 hover:opacity-50 transition-opacity">
                                         <Share2 className="h-3 w-3" /> Share Piece
                                     </button>
                                 </div>
@@ -437,9 +437,9 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
 
                                     {totalPages > 1 && (
                                         <div className="flex items-center justify-center gap-8 pt-12">
-                                            <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1} className="text-[10px] font-black uppercase tracking-widest disabled:opacity-20 hover:text-primary transition-colors">Previous</button>
+                                            <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1} className="text-[10px] font-black uppercase tracking-widest disabled:opacity-20 hover:text-secondary transition-colors">Previous</button>
                                             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/40">{currentPage} / {totalPages}</span>
-                                            <button onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))} disabled={currentPage === totalPages} className="text-[10px] font-black uppercase tracking-widest disabled:opacity-20 hover:text-primary transition-colors">Next</button>
+                                            <button onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))} disabled={currentPage === totalPages} className="text-[10px] font-black uppercase tracking-widest disabled:opacity-20 hover:text-secondary transition-colors">Next</button>
                                         </div>
                                     )}
                                 </>

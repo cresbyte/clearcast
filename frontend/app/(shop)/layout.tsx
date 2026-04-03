@@ -18,7 +18,7 @@ export default function ShopLayout({
             <Navbar />
             <main className={cn(
                 "flex-grow min-h-screen",
-                !isHome && "pt-16 md:pt-20"
+                !isHome && "pt-14 md:pt-16"
             )}>
                 {children}
             </main>

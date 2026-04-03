@@ -62,9 +62,9 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
     React.useEffect(() => {
         // Only update the store if the debounced value has "caught up" to the local value
         // and it actually differs from what's currently in the store.
-        const isStable = debouncedLocalPriceRange[0] === localPriceRange[0] && 
+        const isStable = debouncedLocalPriceRange[0] === localPriceRange[0] &&
                         debouncedLocalPriceRange[1] === localPriceRange[1];
-        
+
         if (isStable) {
             if (debouncedLocalPriceRange[0] !== priceRange[0] || debouncedLocalPriceRange[1] !== priceRange[1]) {
                 setPriceRange(debouncedLocalPriceRange);
@@ -149,9 +149,9 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
 
         return rangeWithDots;
     }, [page, totalPages]);
-    
+
     // Grid mode state
-    const [isCompact, setIsCompact] = React.useState(false);
+    const [isCompact, setIsCompact] = React.useState(true);
 
     // Map from slug to display name for active filter chips
     const slugToNameMap = useMemo(() => {
@@ -207,7 +207,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                 className="absolute w-full h-full opacity-0 cursor-pointer z-10"
                             />
                             <div
-                                className="absolute top-0 left-0 h-full bg-primary rounded-full"
+                                className="absolute top-0 left-0 h-full bg-secondary rounded-full"
                                 style={{ width: `${(localPriceRange[1] / 100) * 100}%` }}
                             />
                         </div>
@@ -256,7 +256,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                         >
                                             {option.name}
                                             {filterCounts && filterCounts[option.slug] !== undefined && (
-                                                <span className="ml-auto text-[9px] opacity-40 font-mono">
+                                                <span className="ml-auto text-[9px] font-black font-mono text-secondary">
                                                     {filterCounts[option.slug]}
                                                 </span>
                                             )}
@@ -298,21 +298,21 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
 
                         {/* View Toggles */}
                         <div className="hidden sm:flex items-center gap-4 border-l border-border/50 pl-6">
-                            <button 
+                            <button
                                 onClick={() => setIsCompact(false)}
                                 className={cn(
-                                    "transition-all duration-300", 
-                                    !isCompact ? "text-primary scale-110" : "text-muted-foreground hover:text-primary"
+                                    "transition-all duration-300",
+                                    !isCompact ? "text-secondary scale-110" : "text-muted-foreground hover:text-secondary"
                                 )}
                                 title="Standard View"
                             >
                                 <LayoutGrid className="h-4 w-4" />
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setIsCompact(true)}
                                 className={cn(
-                                    "transition-all duration-300", 
-                                    isCompact ? "text-primary scale-110" : "text-muted-foreground hover:text-primary"
+                                    "transition-all duration-300",
+                                    isCompact ? "text-secondary scale-110" : "text-muted-foreground hover:text-secondary"
                                 )}
                                 title="Compact View"
                             >
@@ -363,7 +363,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                     <FilterContent isMobile={true} />
                                     {activeFilterCount > 0 && (
                                         <button
-                                            className="w-full mt-12 text-[11px] uppercase tracking-widest font-bold text-primary hover:opacity-70 transition-opacity border-t border-border/50 pt-8"
+                                            className="w-full mt-12 text-[11px] uppercase tracking-widest font-bold text-secondary hover:opacity-70 transition-opacity border-t border-border/50 pt-8"
                                             onClick={handleReset}
                                         >
                                             Clear all filters
@@ -392,9 +392,9 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                 </button>
                             )
                         })}
-                        <button 
+                        <button
                             onClick={handleReset}
-                            className="text-[11px] font-bold uppercase tracking-widest text-primary hover:underline underline-offset-4 ml-2"
+                            className="text-[11px] font-bold uppercase tracking-widest text-secondary hover:underline underline-offset-4 ml-2"
                         >
                             Clear All
                         </button>
@@ -422,11 +422,11 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                             className="absolute w-full h-full opacity-0 cursor-pointer z-10"
                                         />
                                         <div
-                                            className="absolute top-0 left-0 h-full bg-primary rounded-full transition-all duration-300"
+                                            className="absolute top-0 left-0 h-full bg-secondary rounded-full transition-all duration-300"
                                             style={{ width: `${(localPriceRange[1] / 100) * 100}%` }}
                                         />
                                         <div
-                                            className="absolute top-1/2 -mt-2.5 h-5 w-5 bg-white border-2 border-primary rounded-full shadow-md z-20 pointer-events-none transition-all duration-300"
+                                            className="absolute top-1/2 -mt-2.5 h-5 w-5 bg-white border-2 border-secondary rounded-full shadow-md z-20 pointer-events-none transition-all duration-300"
                                             style={{ left: `calc(${(localPriceRange[1] / 100) * 100}% - 10px)` }}
                                         />
                                     </div>
@@ -467,7 +467,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
 
                             {activeFilterCount > 0 && (
                                 <button
-                                    className="text-[10px] uppercase tracking-widest font-black text-primary hover:opacity-70 transition-opacity border-t border-border/50 pt-8 w-full text-left"
+                                    className="text-[10px] uppercase tracking-widest font-black text-secondary hover:opacity-70 transition-opacity border-t border-border/50 pt-8 w-full text-left"
                                     onClick={handleReset}
                                 >
                                     Clear all filters
@@ -519,8 +519,8 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                 {/* Product Grid */}
                                 <div className={cn(
                                     "grid grid-cols-2 gap-y-16 transition-all duration-500",
-                                    isCompact 
-                                        ? "sm:grid-cols-2 lg:grid-cols-5 gap-x-4" 
+                                    isCompact
+                                        ? "sm:grid-cols-2 lg:grid-cols-5 gap-x-4"
                                         : "sm:grid-cols-2 lg:grid-cols-4 gap-x-8"
                                 )}>
                                     {products.map((product: any) => (
