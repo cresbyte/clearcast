@@ -156,18 +156,23 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
     );
 
     return (
-        <div className="min-h-screen bg-white pb-20">
+        <div className="min-h-screen bg-white py-20">
             {/* Breadcrumb - Super minimal */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <nav className="flex items-center space-x-3 text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/60">
                     <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                     <span>/</span>
-                    <Link href="/shop" className="hover:text-primary transition-colors">Shop</Link>
+                    <Link 
+                        href={product.is_set ? "/fly-sets" : "/fly-bars"} 
+                        className="hover:text-primary transition-colors"
+                    >
+                        {product.is_set ? "Fly Set" : "Fly Bar"}
+                    </Link>
                     {product.filters?.[0] && (
                         <>
                             <span>/</span>
                             <Link
-                                href={`/shop?filter=${product.filters[0].slug}`}
+                                href={`${product.is_set ? "/fly-sets" : "/fly-bars"}?filter=${product.filters[0].slug}`}
                                 className="hover:text-primary transition-colors truncate max-w-[100px]"
                             >
                                 {product.filters[0].name}

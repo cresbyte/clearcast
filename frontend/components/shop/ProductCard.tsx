@@ -58,7 +58,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       className="group relative bg-white transition-all duration-500"
       onMouseEnter={handleMouseEnter}
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-muted mb-4">
+      <div className="relative aspect-4/4 overflow-hidden  mb-4">
         {/* Skeleton Loader */}
         {!imageLoaded && (
           <div className="absolute inset-0 bg-muted animate-pulse" />
@@ -70,7 +70,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             src={product.primary_image || product.images?.[0] || null}
             alt={product.name || product.title}
             className={cn(
-              "w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110",
+              "w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-110",
               imageLoaded ? 'opacity-100' : 'opacity-0'
             )}
             onLoad={() => setImageLoaded(true)}

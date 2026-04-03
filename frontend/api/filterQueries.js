@@ -10,6 +10,12 @@ export const fetchFilterGroups = async () => {
     return response.data;
 };
 
+export const fetchFilterCounts = async (isSet = null) => {
+    const params = isSet !== null ? { is_set: isSet } : {};
+    const response = await api.get('catalog/filter-groups/option_counts/', { params });
+    return response.data;
+};
+
 export const createFilterGroup = async (groupData) => {
     const response = await api.post('catalog/filter-groups/', groupData);
     return response.data;
@@ -55,6 +61,15 @@ export const useFilters = () => {
         queryKey: ['filter-groups'],
         queryFn: fetchFilterGroups,
         staleTime: 10 * 60 * 1000, 
+    });
+};
+
+export const useFilterCounts = (isSet = null) => {
+    return useQuery({
+        queryKey: ['filter-counts', isSet],
+        queryFn: () => fetchFilterCounts(isSet),
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
     });
 };
 

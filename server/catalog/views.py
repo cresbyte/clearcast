@@ -34,6 +34,27 @@ class FilterGroupViewSet(viewsets.ModelViewSet):
     lookup_field = "slug"
     pagination_class = None
 
+    @action(detail=False, methods=['get'])
+    def option_counts(self, request):
+        """
+        Returns a mapping of filter option slugs to the number of active products.
+        Accepts ?is_set=true/false to filter counts by product type.
+        """
+        from django.db.models import Count, Q
+        
+        is_set_param = request.query_params.get('is_set')
+        product_filter = Q(products__is_active=True)
+        if is_set_param is not None:
+            is_set_bool = is_set_param.lower() == 'true'
+            product_filter &= Q(products__is_set=is_set_bool)
+            
+        options = FilterOption.objects.annotate(
+            product_count=Count('products', filter=product_filter)
+        )
+        
+        counts = {opt.slug: opt.product_count for opt in options}
+        return Response(counts)
+
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
             return FilterGroupWriteSerializer

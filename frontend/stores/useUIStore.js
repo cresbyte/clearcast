@@ -10,7 +10,7 @@ const useUIStore = create(
 
             // Filter state
             selectedFilters: [],
-            priceRange: [0, 1000],
+            priceRange: [0, 100],
             isSetFilter: null, // null means all, true means is_set=True, false means is_set=False
 
             // Sort state
@@ -66,7 +66,7 @@ const useUIStore = create(
             resetFilters: () => {
                 set({
                     selectedFilters: [],
-                    priceRange: [0, 1000],
+                    priceRange: [0, 100],
                     isSetFilter: null,
                     currentPage: 1,
                 });
@@ -115,7 +115,7 @@ const useUIStore = create(
             getActiveFilterCount: () => {
                 const { selectedFilters, priceRange } = get();
                 let count = selectedFilters.length;
-                if (priceRange[0] > 0 || priceRange[1] < 1000) count++;
+                if (priceRange[0] > 0 || priceRange[1] < 100) count++;
                 return count;
             },
         }),

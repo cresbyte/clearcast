@@ -1,6 +1,6 @@
 "use client";
 
-import { useFilters } from '@/api/filterQueries';
+import { useFilters, useFilterCounts } from '@/api/filterQueries';
 import { useProducts } from '@/api/productQueries';
 import ProductCard from '@/components/shop/ProductCard';
 import { Button } from '@/components/ui/button';
@@ -25,7 +25,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
     const [page, setPage] = React.useState(1);
     const searchParams = useSearchParams();
     const [initializedFromUrl, setInitializedFromUrl] = React.useState(false);
-    const [localPriceRange, setLocalPriceRange] = React.useState<[number, number]>([0, 2000]);
+    const [localPriceRange, setLocalPriceRange] = React.useState<[number, number]>([0, 100]);
 
     const {
         searchQuery,
@@ -42,6 +42,11 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
         setIsSetFilter,
     } = useUIStore();
 
+    const handleReset = () => {
+        resetFilters();
+        setLocalPriceRange([0, 100]);
+    };
+
     // Set the filter natively on mount/prop change based on route
     React.useEffect(() => {
         setIsSetFilter(isSet);
@@ -55,10 +60,17 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
     // Debounce price range update to store
     const debouncedLocalPriceRange = useDebounce(localPriceRange, 500);
     React.useEffect(() => {
-        if (debouncedLocalPriceRange[0] !== priceRange[0] || debouncedLocalPriceRange[1] !== priceRange[1]) {
-            setPriceRange(debouncedLocalPriceRange);
+        // Only update the store if the debounced value has "caught up" to the local value
+        // and it actually differs from what's currently in the store.
+        const isStable = debouncedLocalPriceRange[0] === localPriceRange[0] && 
+                        debouncedLocalPriceRange[1] === localPriceRange[1];
+        
+        if (isStable) {
+            if (debouncedLocalPriceRange[0] !== priceRange[0] || debouncedLocalPriceRange[1] !== priceRange[1]) {
+                setPriceRange(debouncedLocalPriceRange);
+            }
         }
-    }, [debouncedLocalPriceRange, priceRange, setPriceRange]);
+    }, [debouncedLocalPriceRange, priceRange, localPriceRange, setPriceRange]);
 
     // Debounce search query for better performance
     const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -68,8 +80,14 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
         setPage(1);
     }, [debouncedSearchQuery, selectedFilters, sortBy, priceRange]);
 
+    // Smooth scroll to top on page/filter change
+    React.useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [page, debouncedSearchQuery, selectedFilters, sortBy, priceRange]);
+
     // Fetch filters
     const { data: filtersDataResponse = [] } = useFilters();
+    const { data: filterCounts = {} } = useFilterCounts(isSetFilter);
     const filterGroups = Array.isArray(filtersDataResponse) ? filtersDataResponse : (filtersDataResponse as any).results || [];
 
     // Build sets of valid filter slugs to guard against stale UI state
@@ -106,7 +124,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
 
     // Pagination Range helper
     const paginationRange = useMemo(() => {
-        const delta = 2;
+        const delta = 1; // More compact delta
         const range = [];
         const rangeWithDots = [];
         let l;
@@ -131,6 +149,9 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
 
         return rangeWithDots;
     }, [page, totalPages]);
+    
+    // Grid mode state
+    const [isCompact, setIsCompact] = React.useState(false);
 
     // Map from slug to display name for active filter chips
     const slugToNameMap = useMemo(() => {
@@ -180,14 +201,14 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                             <input
                                 type="range"
                                 min="0"
-                                max="2000"
+                                max="100"
                                 value={localPriceRange[1]}
                                 onChange={(e) => setLocalPriceRange([localPriceRange[0], parseInt(e.target.value)])}
                                 className="absolute w-full h-full opacity-0 cursor-pointer z-10"
                             />
                             <div
                                 className="absolute top-0 left-0 h-full bg-primary rounded-full"
-                                style={{ width: `${(localPriceRange[1] / 2000) * 100}%` }}
+                                style={{ width: `${(localPriceRange[1] / 100) * 100}%` }}
                             />
                         </div>
                     </div>
@@ -195,14 +216,14 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
             )}
 
             <div className="space-y-6">
-                <h3 className={cn("text-xs uppercase tracking-[0.2em] font-bold text-foreground mb-6", !isMobile && "hidden")}>Filters</h3>
+                <h3 className={cn("text-xs uppercase tracking-[0.2em] font-bold text-foreground mb-3", !isMobile && "hidden")}>Filters</h3>
                 {filterGroups.map((group: any) => (
                     <Collapsible
                         key={group.id}
                         open={openGroups[group.name] !== false}
                         onOpenChange={() => toggleGroupOpen(group.name)}
                     >
-                        <div className="space-y-4 shadow-sm border border-border/20 p-2 bg-muted/5">
+                        <div className="space-y-4 p-2 bg-muted/5">
                             <div className="flex items-center justify-between group">
                                 <Label className="text-[11px] font-bold uppercase tracking-widest cursor-pointer text-muted-foreground group-hover:text-foreground transition-colors ml-1">
                                     {group.name}
@@ -231,9 +252,14 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                         />
                                         <Label
                                             htmlFor={`${isMobile ? 'mobile-' : ''}${option.slug}`}
-                                            className="cursor-pointer text-[10px] uppercase tracking-wider text-muted-foreground/80 group-hover:text-foreground group-hover:font-semibold transition-all pt-0.5"
+                                            className="flex-1 flex items-center justify-between cursor-pointer text-[10px] uppercase tracking-wider text-muted-foreground/80 group-hover:text-foreground group-hover:font-semibold transition-all pt-0.5"
                                         >
                                             {option.name}
+                                            {filterCounts && filterCounts[option.slug] !== undefined && (
+                                                <span className="ml-auto text-[9px] opacity-40 font-mono">
+                                                    {filterCounts[option.slug]}
+                                                </span>
+                                            )}
                                         </Label>
                                     </div>
                                 ))}
@@ -270,13 +296,31 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                             )}
                         </span>
 
-                        {/* View Toggles (Minimal) */}
+                        {/* View Toggles */}
                         <div className="hidden sm:flex items-center gap-4 border-l border-border/50 pl-6">
-                            <button className="text-primary hover:opacity-70 transition-opacity">
+                            <button 
+                                onClick={() => setIsCompact(false)}
+                                className={cn(
+                                    "transition-all duration-300", 
+                                    !isCompact ? "text-primary scale-110" : "text-muted-foreground hover:text-primary"
+                                )}
+                                title="Standard View"
+                            >
                                 <LayoutGrid className="h-4 w-4" />
                             </button>
-                            <button className="text-muted-foreground hover:text-primary transition-colors">
-                                <List className="h-4 w-4" />
+                            <button 
+                                onClick={() => setIsCompact(true)}
+                                className={cn(
+                                    "transition-all duration-300", 
+                                    isCompact ? "text-primary scale-110" : "text-muted-foreground hover:text-primary"
+                                )}
+                                title="Compact View"
+                            >
+                                <div className="grid grid-cols-3 gap-0.5 w-4 h-4 items-center justify-center">
+                                    <div className="w-1 h-3.5 bg-current opacity-70" />
+                                    <div className="w-1 h-3.5 bg-current opacity-70" />
+                                    <div className="w-1 h-3.5 bg-current opacity-70" />
+                                </div>
                             </button>
                         </div>
                     </div>
@@ -320,7 +364,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                     {activeFilterCount > 0 && (
                                         <button
                                             className="w-full mt-12 text-[11px] uppercase tracking-widest font-bold text-primary hover:opacity-70 transition-opacity border-t border-border/50 pt-8"
-                                            onClick={resetFilters}
+                                            onClick={handleReset}
                                         >
                                             Clear all filters
                                         </button>
@@ -348,8 +392,8 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                 </button>
                             )
                         })}
-                        <button
-                            onClick={resetFilters}
+                        <button 
+                            onClick={handleReset}
                             className="text-[11px] font-bold uppercase tracking-widest text-primary hover:underline underline-offset-4 ml-2"
                         >
                             Clear All
@@ -359,7 +403,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
 
                 <div className="flex gap-16 lg:gap-12">
                     {/* Desktop Sidebar Filters */}
-                    <aside className="hidden md:block w-52 flex-shrink-0 sticky top-10 self-start">
+                    <aside className="hidden md:block w-52 flex-shrink-0 sticky top-10 self-start max-h-[calc(100vh-80px)] overflow-y-auto pr-6 scrollbar-hide transition-all duration-500 pb-10">
                         <div className="space-y-12">
                             <div>
                                 <h3 className="text-xs uppercase tracking-[0.2em] font-bold text-foreground mb-8">Price Range</h3>
@@ -372,18 +416,18 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                         <input
                                             type="range"
                                             min="0"
-                                            max="2000"
+                                            max="100"
                                             value={localPriceRange[1]}
                                             onChange={(e) => setLocalPriceRange([localPriceRange[0], parseInt(e.target.value)])}
                                             className="absolute w-full h-full opacity-0 cursor-pointer z-10"
                                         />
                                         <div
                                             className="absolute top-0 left-0 h-full bg-primary rounded-full transition-all duration-300"
-                                            style={{ width: `${(localPriceRange[1] / 2000) * 100}%` }}
+                                            style={{ width: `${(localPriceRange[1] / 100) * 100}%` }}
                                         />
                                         <div
                                             className="absolute top-1/2 -mt-2.5 h-5 w-5 bg-white border-2 border-primary rounded-full shadow-md z-20 pointer-events-none transition-all duration-300"
-                                            style={{ left: `calc(${(localPriceRange[1] / 2000) * 100}% - 10px)` }}
+                                            style={{ left: `calc(${(localPriceRange[1] / 100) * 100}% - 10px)` }}
                                         />
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
@@ -424,7 +468,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                             {activeFilterCount > 0 && (
                                 <button
                                     className="text-[10px] uppercase tracking-widest font-black text-primary hover:opacity-70 transition-opacity border-t border-border/50 pt-8 w-full text-left"
-                                    onClick={resetFilters}
+                                    onClick={handleReset}
                                 >
                                     Clear all filters
                                 </button>
@@ -455,7 +499,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                     <Button
                                         variant="outline"
                                         style={{ borderRadius: 0 }}
-                                        onClick={resetFilters}
+                                        onClick={handleReset}
                                     >
                                         <X className="mr-2 h-4 w-4" />
                                         Clear All Filters
@@ -473,7 +517,12 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                                 </div>
 
                                 {/* Product Grid */}
-                                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+                                <div className={cn(
+                                    "grid grid-cols-2 gap-y-16 transition-all duration-500",
+                                    isCompact 
+                                        ? "sm:grid-cols-2 lg:grid-cols-5 gap-x-4" 
+                                        : "sm:grid-cols-2 lg:grid-cols-4 gap-x-8"
+                                )}>
                                     {products.map((product: any) => (
                                         <ProductCard key={product.id} product={product} />
                                     ))}
