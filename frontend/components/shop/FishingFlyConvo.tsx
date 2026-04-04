@@ -5,13 +5,11 @@ import image from './fishing-fly-convo.webp';
 
 export default function FishingFlyConvo() {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-[#F9F9F7]">
-      <div className="absolute inset-0 z-0">
-        <img
-          src={image.src}
-          alt="Fishing Fly Close-up"
-          className="w-full h-full object-cover"
-        />
+    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-[#F9F9F7]">
+      <div 
+        className="absolute inset-0 z-0 bg-fixed bg-center bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url(${image.src})` }}
+      >
         <div className="absolute inset-0 bg-black/40" />
       </div>
 

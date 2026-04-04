@@ -12,17 +12,19 @@ export default function ShopLayout({
 }>) {
     const pathname = usePathname();
     const isHome = pathname === "/";
+    const isCheckout = pathname === "/checkout";
 
     return (
         <>
-            <Navbar />
+ <Navbar />
+
             <main className={cn(
                 "flex-grow min-h-screen",
                 !isHome && "pt-14 md:pt-16"
             )}>
                 {children}
             </main>
-            <Footer />
+            {!isCheckout && <Footer />}
         </>
     );
 }

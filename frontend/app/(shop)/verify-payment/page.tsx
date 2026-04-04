@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { Loader2, CheckCircle2, XCircle } from "lucide-react";
-import useCartStore from "@/stores/useCartStore";
+import useCartStore from "@/hooks/useCartStore";
+import { CheckCircle2, Loader2, XCircle } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const VerifyPaymentPage = () => {
     const searchParams = useSearchParams();
@@ -82,7 +81,7 @@ const VerifyPaymentPage = () => {
 
                 {status !== "verifying" && (
                     <button
-                        onClick={() => router.push("/shop")}
+                        onClick={() => router.push("/fly-bars")}
                         className="mt-8 text-[10px] font-black uppercase tracking-[0.3em] text-black border-b border-black pb-1 hover:text-muted-foreground hover:border-muted-foreground transition-all"
                     >
                         Return to Collection

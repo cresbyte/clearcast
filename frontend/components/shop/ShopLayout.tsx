@@ -1,6 +1,6 @@
 "use client";
 
-import { useFilters, useFilterCounts } from '@/api/filterQueries';
+import { useFilterCounts, useFilters } from '@/api/filterQueries';
 import { useProducts } from '@/api/productQueries';
 import ProductCard from '@/components/shop/ProductCard';
 import { Button } from '@/components/ui/button';
@@ -10,9 +10,9 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import useDebounce from '@/hooks/useDebounce';
+import useUIStore from '@/hooks/useUIStore';
 import { cn } from '@/lib/utils';
-import useUIStore from '@/stores/useUIStore';
-import { ChevronDown, ChevronRight, Filter, LayoutGrid, List, Loader2, SlidersHorizontal, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, Filter, LayoutGrid, Loader2, SlidersHorizontal, X } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 

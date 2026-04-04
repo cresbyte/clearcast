@@ -89,7 +89,7 @@ const FeaturedFilterSection: React.FC<FeaturedFilterSectionProps> = ({
                     {/* Product Grid Column */}
                     <div className="w-full lg:w-2/3">
                         {isLoading ? (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-2 sm:grid-cols-2 gap-8">
                                 {[...Array(4)].map((_, i) => (
                                     <div key={i} className="space-y-4 animate-pulse">
                                         <div className="aspect-[4/5] bg-muted rounded-none" />
@@ -99,7 +99,7 @@ const FeaturedFilterSection: React.FC<FeaturedFilterSectionProps> = ({
                                 ))}
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-16">
+                            <div className="grid grid-cols-2 sm:grid-cols-2 gap-x-8 gap-y-16">
                                 {products?.slice(0, 4).map((product: any) => (
                                     <ProductCard key={product.id} product={product} />
                                 ))}

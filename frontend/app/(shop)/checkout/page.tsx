@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
-import useCartStore from "@/stores/useCartStore";
+import useCartStore from "@/hooks/useCartStore";
 import PaystackPop from "@paystack/inline-js";
 import {
   Check,
@@ -279,17 +279,17 @@ const Checkout = () => {
       <div className="min-h-[80vh] bg-white flex flex-col items-center justify-center text-center px-4">
         <div className="space-y-8 max-w-md">
           <div className="flex justify-center">
-            <div className="h-32 w-32 bg-[#F9F9F7] flex items-center justify-center border border-secondary/20 relative">
-              <ShoppingBag className="h-12 w-12 text-secondary/20" />
-              <div className="absolute -inset-4 border border-secondary/10 -z-10" />
+            <div className="h-32 w-32 bg-[#F9F9F7] flex items-center justify-center border border-primary/10 relative">
+              <ShoppingBag className="h-12 w-12 text-primary/10" />
+              <div className="absolute -inset-4 border border-primary/5 -z-10" />
             </div>
           </div>
           <div className="space-y-4">
             <h2 className="text-4xl font-serif font-bold tracking-tight">Checkout Occupied</h2>
             <p className="text-muted-foreground text-sm font-serif italic">Your selection is currently empty. Please return to our collection to proceed.</p>
           </div>
-          <Link href="/shop">
-            <Button className="h-14 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none bg-secondary text-white hover:bg-secondary/90 transition-all duration-500">
+          <Link href="/fly-bars">
+            <Button className="h-14 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none bg-primary text-white hover:bg-primary/90 transition-all duration-500">
               Return to Curation
             </Button>
           </Link>
@@ -313,8 +313,8 @@ const Checkout = () => {
               {/* Contact Info */}
               <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <div className="flex items-center gap-4">
-                  <span className="flex-none h-8 w-8 bg-secondary text-white text-[11px] flex items-center justify-center font-black">01</span>
-                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-secondary">Contact Information</h2>
+                  <span className="flex-none h-8 w-8 bg-primary text-white text-[11px] flex items-center justify-center font-black">01</span>
+                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-primary">Contact Information</h2>
                 </div>
                 <div className="pl-12 space-y-4 max-w-md">
                   <div className="space-y-2">
@@ -336,15 +336,15 @@ const Checkout = () => {
               <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <span className="flex-none h-8 w-8 bg-secondary text-white text-[11px] flex items-center justify-center font-black">02</span>
-                    <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-secondary">Shipping Destination</h2>
+                    <span className="flex-none h-8 w-8 bg-primary text-white text-[11px] flex items-center justify-center font-black">02</span>
+                    <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-primary">Shipping Destination</h2>
                   </div>
                   <button
                     onClick={() => {
                       setNewAddressForm(initialAddressForm);
                       setShowAddressDialog(true);
                     }}
-                    className="text-[10px] font-black uppercase tracking-widest text-secondary hover:text-primary transition-colors"
+                    className="text-[10px] font-black uppercase tracking-widest text-primary hover:text-secondary transition-colors"
                   >
                     Add New Destination
                   </button>
@@ -384,8 +384,8 @@ const Checkout = () => {
                           <Label
                             htmlFor={`address-${addr.id}`}
                             className={`flex flex-col h-full p-6 border transition-all duration-500 cursor-pointer ${selectedAddress?.id === addr.id
-                              ? "border-secondary bg-secondary/5"
-                              : "border-border/60 bg-white hover:border-secondary/30"
+                              ? "border-primary bg-primary/5"
+                              : "border-border/60 bg-white hover:border-primary/30"
                               }`}
                           >
                             <div className="flex-1 space-y-6">
@@ -401,7 +401,7 @@ const Checkout = () => {
                                   )}
                                 </div>
                                 {selectedAddress?.id === addr.id && (
-                                  <div className="h-5 w-5 bg-secondary flex items-center justify-center rounded-full">
+                                  <div className="h-5 w-5 bg-primary flex items-center justify-center rounded-full">
                                     <Check className="h-3 w-3 text-white" />
                                   </div>
                                 )}
@@ -427,8 +427,8 @@ const Checkout = () => {
               {/* Payment */}
               <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
                 <div className="flex items-center gap-4">
-                  <span className="flex-none h-8 w-8 bg-secondary text-white text-[11px] flex items-center justify-center font-black">03</span>
-                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-secondary">Settlement Method</h2>
+                  <span className="flex-none h-8 w-8 bg-primary text-white text-[11px] flex items-center justify-center font-black">03</span>
+                  <h2 className="text-[13px] font-black uppercase tracking-[0.2em] text-primary">Settlement Method</h2>
                 </div>
 
                 <div className="pl-12 space-y-8">
@@ -442,7 +442,7 @@ const Checkout = () => {
                         <RadioGroupItem value={gw.name.toLowerCase()} id={gw.name} className="peer sr-only" />
                         <Label
                           htmlFor={gw.name}
-                          className={`flex flex-col items-center justify-center gap-3 p-6 border cursor-pointer transition-all duration-500 ${paymentMethod === gw.name.toLowerCase() ? "border-secondary bg-secondary/5" : "border-border/60 hover:border-secondary/30"
+                          className={`flex flex-col items-center justify-center gap-3 p-6 border cursor-pointer transition-all duration-500 ${paymentMethod === gw.name.toLowerCase() ? "border-primary bg-primary/5" : "border-border/60 hover:border-primary/30"
                             }`}
                         >
                           {(gw.name.toLowerCase() === 'mpesa' || gw.name.toLowerCase() === 'm-pesa') ? (
@@ -450,7 +450,7 @@ const Checkout = () => {
                           ) : (
                             <CreditCard className={`h-5 w-5 ${paymentMethod === gw.name.toLowerCase() ? "" : "text-muted-foreground/40"}`} />
                           )}
-                          <span className={`text-[10px] font-black uppercase tracking-widest ${paymentMethod === gw.name.toLowerCase() ? "text-secondary" : ""}`}>{gw.name}</span>
+                          <span className={`text-[10px] font-black uppercase tracking-widest ${paymentMethod === gw.name.toLowerCase() ? "text-primary" : ""}`}>{gw.name}</span>
                         </Label>
                       </div>
                     ))}
@@ -468,7 +468,7 @@ const Checkout = () => {
                           <Input
                             id="phone-number"
                             placeholder="+254 --- --- ---"
-                            className="h-12 border-none bg-white text-[12px] font-bold tracking-[0.2em] rounded-none focus-visible:ring-1 focus-visible:ring-secondary"
+                            className="h-12 border-none bg-white text-[12px] font-bold tracking-[0.2em] rounded-none focus-visible:ring-1 focus-visible:ring-primary"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                           />
@@ -479,15 +479,15 @@ const Checkout = () => {
                   </div>
 
                   <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 border-t border-border/40 pt-10">
-                    <Lock className="h-4 w-4 text-secondary/30" />
+                    <Lock className="h-4 w-4 text-primary/30" />
                     <span>Secure Encrypted Protocols Active</span>
                   </div>
                 </div>
               </section>
 
               <div className="pt-8">
-                <Link href="/shop">
-                  <button className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 hover:text-secondary transition-all border-b border-transparent hover:border-secondary pb-1">
+                <Link href="/cart">
+                  <button className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 hover:text-primary transition-all border-b border-transparent hover:border-primary pb-1">
                     ← Revisit Selection
                   </button>
                 </Link>
@@ -514,7 +514,7 @@ const Checkout = () => {
               <div className="space-y-4">
                 <h2 className="text-4xl font-serif font-bold tracking-tight">Manifest Address</h2>
                 <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/40">Define a new sanctuary for your acquisitions</p>
-                <div className="w-12 h-[1px] bg-secondary" />
+                <div className="w-12 h-[1px] bg-primary" />
               </div>
 
               <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">

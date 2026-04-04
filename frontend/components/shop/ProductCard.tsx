@@ -2,9 +2,9 @@
 
 import { usePrefetchProduct } from "@/api/productQueries";
 import { Button } from "@/components/ui/button";
+import useCartStore from "@/hooks/useCartStore";
+import useWishlistStore from "@/hooks/useWishlistStore";
 import { cn } from "@/lib/utils";
-import useCartStore from "@/stores/useCartStore";
-import useWishlistStore from "@/stores/useWishlistStore";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";

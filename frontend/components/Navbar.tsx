@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
-import useCartStore from "@/stores/useCartStore";
-import useUIStore from "@/stores/useUIStore";
-import useWishlistStore from "@/stores/useWishlistStore";
+import useCartStore from "@/hooks/useCartStore";
+import useUIStore from "@/hooks/useUIStore";
+import useWishlistStore from "@/hooks/useWishlistStore";
 import {
   Heart,
   LogOut,
@@ -86,7 +86,7 @@ const Navbar = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       setUISearchQuery(searchQuery);
-      router.push("/shop");
+      router.push("/fly-bars");
       setIsSearchOpen(false);
     }
   };
@@ -102,8 +102,8 @@ const Navbar = () => {
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-      showTransparent 
-        ? "bg-transparent border-transparent" 
+      showTransparent
+        ? "bg-transparent border-transparent"
         : "bg-primary border-b border-white/10 shadow-lg shadow-black/10"
     )}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -141,11 +141,15 @@ const Navbar = () => {
             <Link
               href="/"
               className={cn(
-                "text-2xl font-serif font-bold tracking-tighter transition-colors",
+                "flex items-center transition-opacity hover:opacity-80",
                 showTransparent || !showTransparent ? "text-white" : "text-foreground"
               )}
             >
-              Clearcast
+              <img
+                src="/clearcast-logo.webp"
+                alt="Clearcast Logo"
+                className="h-8 md:h-10 w-auto object-contain"
+              />
             </Link>
           </div>
 

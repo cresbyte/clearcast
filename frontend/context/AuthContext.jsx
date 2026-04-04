@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import api from '../api/axios';
 import { jwtDecode } from "jwt-decode";
-import useCartStore from '../stores/useCartStore';
-import useWishlistStore from '../stores/useWishlistStore';
+import useCartStore from '../hooks/useCartStore';
+import useWishlistStore from '../hooks/useWishlistStore';
 
 const AuthContext = createContext();
 
@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }) => {
             } else {
                 // If it's already within 2 minutes of expiry, refresh immediately
                 console.log("Token expiring soon, refreshing immediately");
-                // We'll let the axios interceptor or initializeAuth handle this if needed, 
+                // We'll let the axios interceptor or initializeAuth handle this if needed,
                 // but for a smooth experience we could trigger a refresh here.
             }
         } catch (error) {
@@ -245,7 +245,7 @@ export const AuthProvider = ({ children }) => {
             // Maintain other fields that might be in the token but not in the response (like user_id if not returned)
             setUser(prev => ({ ...prev, ...updatedUser }));
 
-            // Optional: If we want to persist name changes in token we'd need a new token, 
+            // Optional: If we want to persist name changes in token we'd need a new token,
             // but for now we trust the API response.
 
             return { success: true, data: updatedUser };

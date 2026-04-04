@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
+import OrderSummary from "@/components/shop/OrderSummary";
+import { Button } from "@/components/ui/button";
+import useCartStore from "@/hooks/useCartStore";
+import { Minus, Plus, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Minus, Plus, Trash2, ShoppingBag, Loader2, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
-import useCartStore from "@/stores/useCartStore";
-import OrderSummary from "@/components/shop/OrderSummary";
+import { useEffect } from "react";
 
 const Cart = () => {
   const {
@@ -150,7 +148,7 @@ const Cart = () => {
                 {/* Continue Shopping Link */}
                 <div className="pt-12 border-t border-border/40">
                   <Link
-                    href="/shop"
+                    href="/fly-bars"
                     className="group inline-flex items-center text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 hover:text-secondary transition-all pb-1 border-b border-transparent hover:border-secondary"
                   >
                     <span className="mr-2 transform group-hover:-translate-x-1 transition-transform">←</span> Return to Curatels
@@ -185,7 +183,7 @@ const Cart = () => {
               </div>
             </div>
 
-            <Link href="/shop">
+            <Link href="/fly-bars">
               <Button size="lg" className="h-14 px-12 text-[11px] font-black uppercase tracking-[0.3em] rounded-none hover:translate-y-[-2px] transition-all duration-500 shadow-xl shadow-secondary/10 bg-secondary text-white hover:bg-secondary/90 border-none">
                 Begin Curation
               </Button>

@@ -92,7 +92,7 @@ export default function Orders() {
                         <p className="text-muted-foreground mb-6">
                             When you place an order, it will appear here.
                         </p>
-                        <Link href="/shop">
+                        <Link href="/fly-bars">
                             <Button>Start Shopping</Button>
                         </Link>
                     </CardContent>

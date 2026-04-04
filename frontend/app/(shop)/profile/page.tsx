@@ -1,29 +1,29 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import {
-    Package,
-    Heart,
-    Loader2,
-    Star,
-    MessageSquare,
-    Tag,
-} from "lucide-react";
+import { fetchDiscounts } from "@/api/discountApi";
+import { fetchOrders } from "@/api/orderApi";
+import { fetchPendingReviews } from "@/api/reviewApi";
+import ReviewModal from "@/components/profile/ReviewModal";
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
+    CardDescription,
     CardHeader,
     CardTitle,
-    CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { fetchOrders } from "@/api/orderApi";
-import { fetchPendingReviews } from "@/api/reviewApi";
-import { fetchDiscounts } from "@/api/discountApi";
-import useWishlistStore from "@/stores/useWishlistStore";
+import useWishlistStore from "@/hooks/useWishlistStore";
+import {
+    Heart,
+    Loader2,
+    MessageSquare,
+    Package,
+    Star,
+    Tag,
+} from "lucide-react";
 import Link from "next/link";
-import ReviewModal from "@/components/profile/ReviewModal";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
     const { user } = useAuth();

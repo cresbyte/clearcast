@@ -2,13 +2,13 @@
 
 import { useProduct } from '@/api/productQueries';
 import { fetchProductReviews } from '@/api/reviewApi';
+import RelatedProducts from '@/components/shop/RelatedProducts';
 import { Button } from '@/components/ui/button';
-import useCartStore from '@/stores/useCartStore';
-import useWishlistStore from '@/stores/useWishlistStore';
+import useCartStore from '@/hooks/useCartStore';
+import useWishlistStore from '@/hooks/useWishlistStore';
 import { Heart, Minus, Plus, RefreshCw, Share2, Shield, ShoppingBag, Star, Truck } from 'lucide-react';
 import Link from 'next/link';
 import { use, useEffect, useState } from 'react';
-import RelatedProducts from '@/components/shop/RelatedProducts';
 
 const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
     const resolvedParams = use(params);
@@ -162,8 +162,8 @@ const ProductDetails = ({ params }: { params: Promise<{ slug: string }> }) => {
                 <nav className="flex items-center space-x-3 text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/60">
                     <Link href="/" className="hover:text-secondary transition-colors">Home</Link>
                     <span>/</span>
-                    <Link 
-                        href={product.is_set ? "/fly-sets" : "/fly-bars"} 
+                    <Link
+                        href={product.is_set ? "/fly-sets" : "/fly-bars"}
                         className="hover:text-secondary transition-colors"
                     >
                         {product.is_set ? "Fly Set" : "Fly Bar"}

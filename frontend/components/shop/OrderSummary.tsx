@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import { validateDiscount } from '@/api/discountApi';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Tag, Truck, Lock, Loader2, X } from 'lucide-react';
-import useCartStore from '@/stores/useCartStore';
-import { validateDiscount } from '@/api/discountApi';
+import useCartStore from '@/hooks/useCartStore';
+import { Loader2, Lock, Tag, Truck, X } from 'lucide-react';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
 
 interface OrderSummaryProps {

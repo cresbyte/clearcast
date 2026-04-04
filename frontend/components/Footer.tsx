@@ -14,12 +14,12 @@ const Footer = () => {
                     {/* Column 1: Identity */}
                     <div className="space-y-8">
                         <div className="space-y-4">
-                            {/* Logo Placeholder - Future Image Goes Here */}
-                            <div className="h-12 w-32 border border-white/10 flex items-center justify-center text-[10px] uppercase tracking-widest text-white/20 font-black mb-4">
-                                Logo Area
-                            </div>
-                            <Link href="/" className="text-2xl font-serif font-bold tracking-tighter text-white block">
-                                Clearcast
+                            <Link href="/" className="transition-opacity hover:opacity-80 block mb-6">
+                                <img
+                                    src="/clearcast-logo.webp"
+                                    alt="Clearcast Logo"
+                                    className="h-10 md:h-12 w-auto object-contain"
+                                />
                             </Link>
                         </div>
                         <p className="text-[13px] text-white/60 leading-relaxed max-w-xs italic font-serif">

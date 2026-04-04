@@ -97,7 +97,7 @@ const AboutPage = () => {
 
                         </h2>
                         <div className="pt-4">
-                            <Link href="/shop" className="text-[11px] font-black uppercase tracking-widest text-white border-b border-secondary pb-1 hover:text-white/80 hover:border-secondary/80 transition-all">
+                            <Link href="/fly-bars" className="text-[11px] font-black uppercase tracking-widest text-white border-b border-secondary pb-1 hover:text-white/80 hover:border-secondary/80 transition-all">
                                 Explore the Collection
                             </Link>
                         </div>

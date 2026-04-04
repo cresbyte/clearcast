@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Link from "next/link";
-import { Heart, ShoppingCart, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import useWishlistStore from "@/stores/useWishlistStore";
-import useCartStore from "@/stores/useCartStore";
+import useCartStore from "@/hooks/useCartStore";
+import useWishlistStore from "@/hooks/useWishlistStore";
+import { Heart, Loader2, ShoppingCart, Trash2 } from "lucide-react";
+import Link from "next/link";
+import React, { useEffect } from "react";
 
 export default function Wishlist() {
     const { items, removeItem, getItemsSorted, fetchWishlist, loading } =
@@ -156,7 +156,7 @@ export default function Wishlist() {
                             Save items you love for later by clicking the heart icon.
                         </p>
                     </div>
-                    <Link href="/shop">
+                    <Link href="/fly-bars">
                         <Button size="lg" className="rounded-none">Discover Products</Button>
                     </Link>
                 </div>
