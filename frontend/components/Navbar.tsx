@@ -236,7 +236,6 @@ const Navbar = () => {
 
             {/* Other Icons */}
             <div className="flex items-center space-x-1 md:space-x-2">
-            {console.log("User:", user, "Wishlist Count:", wishlistCount, "Cart Count:", cartItemCount)}
             {user.is_staff && (
               <Link
                 href="/admin"
