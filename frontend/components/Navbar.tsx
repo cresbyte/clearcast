@@ -9,10 +9,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
-import { cn } from "@/lib/utils";
 import useCartStore from "@/hooks/useCartStore";
 import useUIStore from "@/hooks/useUIStore";
 import useWishlistStore from "@/hooks/useWishlistStore";
+import { cn } from "@/lib/utils";
 import {
   Heart,
   LogOut,
@@ -20,6 +20,7 @@ import {
   Package,
   Search,
   Settings,
+  ShieldUser,
   ShoppingCart,
   User,
   X
@@ -235,6 +236,18 @@ const Navbar = () => {
 
             {/* Other Icons */}
             <div className="flex items-center space-x-1 md:space-x-2">
+            {console.log("User:", user, "Wishlist Count:", wishlistCount, "Cart Count:", cartItemCount)}
+            {user.is_staff && (
+              <Link
+                href="/admin"
+                className={cn(
+                  "flex items-center h-8 px-2 transition-colors shrink-0",
+                  showTransparent ? "text-white/80 hover:text-white" : "text-white/80 hover:text-white"
+                )}
+              >
+               <ShieldUser className="h-[18px] w-[18px]" />
+              </Link>
+            )}
               {!isSearchOpen &&
                 (user ? (
                   <div className="hidden lg:block">

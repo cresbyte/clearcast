@@ -120,7 +120,7 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
     const totalCount = data?.count || 0;
     const hasNext = !!data?.next;
     const hasPrevious = !!data?.previous;
-    const totalPages = Math.ceil(totalCount / 24);
+    const totalPages = Math.ceil(totalCount / 40);
 
     // Pagination Range helper
     const paginationRange = useMemo(() => {
@@ -509,12 +509,12 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
                         ) : (
                             <>
                                 {/* Results Count */}
-                                <div className="mb-6">
+                                {/*<div className="mb-6">
                                     <p className="text-sm text-muted-foreground">
                                         Showing <span className="font-semibold text-foreground">{products.length}</span> of{' '}
                                         <span className="font-semibold text-foreground">{totalCount.toLocaleString()}</span> products
                                     </p>
-                                </div>
+                                </div>/*}
 
                                 {/* Product Grid */}
                                 <div className={cn(
