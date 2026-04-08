@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Star, Loader2 } from 'lucide-react';
+import { submitReview } from '@/api/reviewApi';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -12,8 +11,9 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { Loader2, Star } from 'lucide-react';
+import { useState } from 'react';
 import { toast } from 'sonner';
-import { submitReview } from '@/api/reviewApi';
 
 interface ReviewModalProps {
     isOpen: boolean;
