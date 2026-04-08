@@ -135,6 +135,8 @@ const Navbar = () => {
           </div>
         )}
 
+        
+
         {/* Main Navigation */}
         <div className="flex h-14 md:h-16 items-center justify-between gap-8 text-foreground transition-colors">
           {/* Logo - Centered alignment feel */}
