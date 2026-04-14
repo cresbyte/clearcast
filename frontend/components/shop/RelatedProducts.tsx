@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useRef, useMemo } from 'react';
 import { useProducts } from '@/api/productQueries';
 import ProductCard from '@/components/shop/ProductCard';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useMemo, useRef } from 'react';
 
 interface RelatedProductsProps {
     currentProduct: any;

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
 const standards = [
   {
@@ -39,8 +39,8 @@ export default function QualityStandards() {
 
         <div className="space-y-4">
           {standards.map((item, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className={cn(
                 "border border-border/50 transition-all duration-500",
                 openIndex === idx ? "bg-[#F9F9F7] border-secondary/20" : "hover:border-secondary/20"
@@ -61,7 +61,7 @@ export default function QualityStandards() {
                   openIndex === idx && "rotate-180 text-secondary"
                 )} />
               </button>
-              
+
               <div className={cn(
                 "overflow-hidden transition-all duration-500 ease-in-out px-6 md:px-8",
                 openIndex === idx ? "max-h-[500px] pb-8 opacity-100" : "max-h-0 opacity-0"
