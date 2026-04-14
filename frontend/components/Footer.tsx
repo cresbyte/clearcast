@@ -1,10 +1,7 @@
 "use client";
 
-import React from 'react';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 const Footer = () => {
     return (
