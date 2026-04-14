@@ -1,12 +1,11 @@
 "use client";
 
-import React from 'react';
 import image from './fishing-fly-convo.webp';
 
 export default function FishingFlyConvo() {
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-[#F9F9F7]">
-      <div 
+      <div
         className="absolute inset-0 z-0 bg-fixed bg-center bg-cover bg-no-repeat"
         style={{ backgroundImage: `url(${image.src})` }}
       >

@@ -1,11 +1,10 @@
 "use client";
 
-import React from 'react';
 import { useProducts } from '@/api/productQueries';
 import ProductCard from '@/components/shop/ProductCard';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Loader2 } from 'lucide-react';
+import React from 'react';
 
 interface FeaturedFilterSectionProps {
     title: string;
