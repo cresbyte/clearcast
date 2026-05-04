@@ -149,7 +149,7 @@ const Navbar = () => {
               <img
                 src="/clearcast-logo.webp"
                 alt="Clearcast Logo"
-                className="h-8 md:h-10 w-auto object-contain"
+                className="h-8 md:h-18 w-auto object-contain"
               />
             </Link>
           </div>
@@ -162,6 +162,7 @@ const Navbar = () => {
                   { name: "HOME", path: "/" },
                   { name: "FLY SET", path: "/fly-sets" },
                   { name: "FLY BARS", path: "/fly-bars" },
+                  { name: "CATALOG", path: "/catalog" },
                   { name: "ABOUT", path: "/about" },
                   { name: "CONTACT", path: "/contact" },
                 ].map((item) => (
@@ -236,7 +237,7 @@ const Navbar = () => {
 
             {/* Other Icons */}
             <div className="flex items-center space-x-1 md:space-x-2">
-            {user.is_staff && (
+            {user?.is_staff && (
               <Link
                 href="/admin"
                 className={cn(
@@ -371,6 +372,13 @@ const Navbar = () => {
               className="block text-3xl font-serif font-bold"
             >
               Fly Bars
+            </Link>
+            <Link
+              href="/catalog"
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-3xl font-serif font-bold"
+            >
+              Catalog
             </Link>
             <Link
               href="/about"

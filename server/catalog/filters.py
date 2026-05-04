@@ -25,6 +25,16 @@ class ProductFilter(django_filters.FilterSet):
     filters_id = NumberInFilter(field_name="filters__id", lookup_expr="in")
     
     is_set = django_filters.BooleanFilter()
+    is_in_catalog = django_filters.BooleanFilter()
+    catalog_country = django_filters.CharFilter(method='filter_catalog_country')
+    
+    def filter_catalog_country(self, queryset, name, value):
+        from django.db.models import Q
+        if not value:
+            return queryset
+        return queryset.filter(
+            Q(catalog_countries__icontains=f'"{value}"') | Q(catalog_countries__icontains='"All"')
+        )
 
     # Optional: Price range filtering
     min_price = django_filters.NumberFilter(field_name="base_price", lookup_expr="gte")
@@ -32,4 +42,4 @@ class ProductFilter(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ["filters__slug", "filters_id", "is_active", "is_set"]
+        fields = ["filters__slug", "filters_id", "is_active", "is_set", "is_in_catalog", "catalog_country"]

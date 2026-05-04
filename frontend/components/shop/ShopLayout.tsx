@@ -277,10 +277,11 @@ const ShopLayout = ({ isSet, fallbackTitle = "Shop" }: ShopLayoutProps) => {
         <div className="min-h-screen bg-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Page Title */}
-                <div className="mb-10 text-center md:text-left">
-                    <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tight text-foreground">
-                        {isSetFilter === true ? "Fly Set" : isSetFilter === false ? "Fly Bars" : fallbackTitle}
+                <div className="mb-12 text-center md:text-left">
+                    <h1 className="text-5xl  font-serif italic text-[#05314a] tracking-tighter mb-4">
+                        {isSetFilter === true ? "Fly Sets" : isSetFilter === false ? "The Fly Bar" : fallbackTitle}
                     </h1>
+                    <div className="w-16 h-[2px] bg-secondary mx-auto md:mx-0"></div>
                 </div>
 
                 {/* Toolbar */}

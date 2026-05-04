@@ -11,7 +11,7 @@ const standards = [
   },
   {
     question: "How long until these hit my fly box?",
-    answer: "We know you have a trip coming up. In-stock flies from the Fly Bar typically ship within 72 hours via tracked mail. For Custom Orders, please allow a 2-3 weeks lead time; quality bench-work can’t be rushed, and we want to ensure every wrap is perfect before they leave the bench."
+    answer: "We know you have a trip coming up. In-stock flies from the Fly Bar typically ship within 72 hours via tracked mail. For Custom Orders, our lead times scale proportionally with the size and complexity of your request. Since premium bench-work cannot be rushed, we will provide you with a tailored timeline for your specific order to guarantee that every wrap is perfect before they leave the vice."
   },
   {
     question: "I’m not sure what to buy for my local river. Can you help?",

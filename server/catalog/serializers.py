@@ -73,6 +73,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'id', 'filters', 'name', 'slug', 'description', 'details', 
             'base_price', 'price', 'discount_percentage', 'sale_price', 'current_price', 'has_discount',
             'sku', 'metadata', 'is_set', 'stock_quantity', 'is_active', 
+            'is_in_catalog', 'catalog_countries',
             'created_at', 'updated_at', 'images', 'primary_image', 'variants',
             'reviews_count', 'average_rating', 'price_range'
         ]
@@ -218,6 +219,7 @@ class ProductWriteSerializer(serializers.ModelSerializer):
             'id', 'name', 'slug', 'description', 'details', 'base_price', 
             'discount_percentage', 'sale_price',
             'sku', 'metadata', 'is_set', 'stock_quantity', 'is_active',
+            'is_in_catalog', 'catalog_countries',
             'filter_ids', 'filters', 
             'images_data', 'images',
             'variants_data', 'variants',

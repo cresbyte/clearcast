@@ -1,6 +1,6 @@
 {% extends 'email.html' %}
 
-{% block title %}Order Created - Clearcast Fly{% endblock %}
+{% block title %}Order Created - ClearCast Fly{% endblock %}
 
 {% block heading %}
     Order Confirmed!
@@ -9,7 +9,7 @@
 {% block content %}
     <p style="margin: 0; margin-bottom: 16px; font-size: 18px;">Dear {{ name }},</p>
     <p style="margin: 0; margin-bottom: 24px;">We have successfully received your custom order (<strong>Order #{{ order.id }}</strong>).</p>
-    
+
     <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: left; margin-bottom: 24px;">
         <p style="margin: 0; margin-bottom: 12px; font-weight: bold; border-bottom: 1px solid #ddd; padding-bottom: 8px;">Order Details:</p>
         <ul style="margin: 0; padding-left: 20px; margin-bottom: 16px; line-height: 1.8;">
@@ -21,7 +21,7 @@
         <p style="margin: 0;"><strong>Balance Due:</strong> ${{ order.balance }}</p>
     </div>
 
-    <p style="margin: 0;">We will be processing it shortly. Thank you for choosing <strong>Clearcast Fly!</strong></p>
+    <p style="margin: 0;">We will be processing it shortly. Thank you for choosing <strong>ClearCast Fly!</strong></p>
 {% endblock %}
 
 {% block action %}

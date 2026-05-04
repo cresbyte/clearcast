@@ -157,7 +157,7 @@ class ShopByCatalogSectionViewSet(viewsets.ModelViewSet):
     serializer_class = ShopByCatalogSectionSerializer
 
     def get_queryset(self):
-        qs = ShopByCatalogSection.objects.all().prefetch_related('categories')
+        qs = ShopByCatalogSection.objects.all().prefetch_related('filters')
         user = self.request.user
         if not (user and user.is_staff):
             qs = qs.filter(is_active=True)

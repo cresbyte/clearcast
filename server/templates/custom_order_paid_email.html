@@ -1,6 +1,6 @@
 {% extends 'email.html' %}
 
-{% block title %}Payment Received - Clearcast Fly{% endblock %}
+{% block title %}Payment Received - ClearCast Fly{% endblock %}
 
 {% block heading %}
     Payment Received!
@@ -9,7 +9,7 @@
 {% block content %}
     <p style="margin: 0; margin-bottom: 16px;">Dear {{ name }},</p>
     <p style="margin: 0; margin-bottom: 24px;">We have successfully received the payment for your custom order (<strong>Order #{{ order.id }}</strong>).</p>
-    
+
     <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: left; margin-bottom: 24px; border-left: 4px solid #bcff4f;">
         <p style="margin: 0;">Your remaining balance is now <strong>$0.00</strong>. We are preparing your order for shipment.</p>
     </div>

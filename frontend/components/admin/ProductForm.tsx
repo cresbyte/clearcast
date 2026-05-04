@@ -8,6 +8,7 @@ import { ChevronLeft, Upload, Plus, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import countryList from 'country-list';
 import {
     Select,
     SelectContent,
@@ -35,6 +36,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Badge } from '@/components/ui/badge';
 import { useAdminProduct, useCreateProduct, useUpdateProduct, useDeleteProduct, useUploadProductImages, useDeleteProductImage } from '@/api/adminProductApi';
 import { useFilters } from '@/api/filterQueries';
 import { toast } from 'sonner';
@@ -73,6 +75,12 @@ export default function ProductForm() {
     // Inventory
     const [sku, setSku] = useState('');
     const [quantity, setQuantity] = useState('');
+    
+    // Catalog
+    const [isInCatalog, setIsInCatalog] = useState(false);
+    const [catalogCountries, setCatalogCountries] = useState<string[]>([]);
+    
+    const countries = countryList.getNames();
 
     // Filters
     const [selectedFilters, setSelectedFilters] = useState<number[]>([]);
@@ -102,6 +110,8 @@ export default function ProductForm() {
             setSku(product.sku || '');
             setQuantity(product.stock_quantity || '');
             setIsSet(product.is_set || false);
+            setIsInCatalog(product.is_in_catalog || false);
+            setCatalogCountries(product.catalog_countries || []);
 
             if (product.filters && product.filters.length > 0) {
                 setSelectedFilters(product.filters.map((f: any) => f.id));
@@ -162,7 +172,7 @@ export default function ProductForm() {
         if (variants.length > 0 && sku) {
             setVariants(prev => prev.map(v => {
                 const variantSlug = slugify(v.size || '').toUpperCase();
-                const expectedAutoSku = sku ? `${sku}-${variantSlug}` : '';
+                const expectedAutoSku = sku ? `${sku}-${variantSlug}`.substring(0, 12) : '';
 
                 if (!v.sku || v.isSkuAutoSynced) {
                     return { ...v, sku: expectedAutoSku, isSkuAutoSynced: true };
@@ -178,7 +188,7 @@ export default function ProductForm() {
         const newVariant = {
             id: Date.now(),
             size: newVariantSize,
-            sku: sku ? `${sku}-${slugify(newVariantSize).toUpperCase()}` : '',
+            sku: sku ? `${sku}-${slugify(newVariantSize).toUpperCase()}`.substring(0, 12) : '',
             price: price || '0',
             quantity: '0',
             isAutoSynced: true,
@@ -274,6 +284,8 @@ export default function ProductForm() {
             stock_quantity: parseInt(quantity) || 0,
             is_active: status === 'active',
             is_set: isSet,
+            is_in_catalog: isInCatalog,
+            catalog_countries: isInCatalog ? catalogCountries : [],
             filter_ids: selectedFilters,
         };
 
@@ -428,7 +440,6 @@ export default function ProductForm() {
                                 <RichTextEditor
                                     value={details}
                                     onChange={setDetails}
-                                    placeholder="Full details about the fly..."
                                 />
                             </div>
                         </CardContent>
@@ -736,6 +747,72 @@ export default function ProductForm() {
                                     className="h-5 w-5"
                                     style={{ borderRadius: 0 }}
                                 />
+                            </div>
+
+                            <div className="flex flex-col space-y-4 border border-border/50 bg-muted/20 p-4">
+                                <div className="flex items-center space-x-2">
+                                    <Label htmlFor="catalog-toggle" className="flex-1 text-[10px] uppercase tracking-widest font-bold cursor-pointer">
+                                        Add to Catalog
+                                    </Label>
+                                    <Checkbox 
+                                        id="catalog-toggle" 
+                                        checked={isInCatalog} 
+                                        onCheckedChange={(checked) => setIsInCatalog(!!checked)}
+                                        className="h-5 w-5"
+                                        style={{ borderRadius: 0 }}
+                                    />
+                                </div>
+                                {isInCatalog && (
+                                    <div className="space-y-4 pt-4 border-t border-border/50">
+                                        <div className="space-y-2">
+                                            <Label className="text-[10px] uppercase tracking-widest font-bold">Add Catalog Country</Label>
+                                            <Select value="" onValueChange={(val) => {
+                                                if (val === 'All') {
+                                                    setCatalogCountries(['All']);
+                                                } else if (val && !catalogCountries.includes(val)) {
+                                                    const newCountries = catalogCountries.filter(c => c !== 'All');
+                                                    setCatalogCountries([...newCountries, val]);
+                                                }
+                                            }}>
+                                                <SelectTrigger className="rounded-none">
+                                                    <SelectValue placeholder="Select country to add..." />
+                                                </SelectTrigger>
+                                                <SelectContent className="rounded-none max-h-60">
+                                                    <SelectItem value="All" className="font-bold">All Countries</SelectItem>
+                                                    {countries.map(country => (
+                                                        <SelectItem key={country} value={country}>{country}</SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+
+                                        {catalogCountries.length > 0 && (
+                                            <div className="flex flex-wrap gap-2 pt-2">
+                                                {catalogCountries.map(country => (
+                                                    <Badge 
+                                                        key={country} 
+                                                        variant="secondary" 
+                                                        className="rounded-none flex items-center gap-1 pr-1 py-1"
+                                                    >
+                                                        {country}
+                                                        <Button 
+                                                            variant="ghost" 
+                                                            size="icon" 
+                                                            className="h-4 w-4 rounded-none hover:bg-transparent"
+                                                            onClick={() => setCatalogCountries(catalogCountries.filter(c => c !== country))}
+                                                        >
+                                                            <X className="h-3 w-3" />
+                                                        </Button>
+                                                    </Badge>
+                                                ))}
+                                            </div>
+                                        )}
+                                        
+                                        {catalogCountries.length === 0 && (
+                                            <p className="text-xs text-muted-foreground italic">No countries selected. Will not appear in any catalog.</p>
+                                        )}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="space-y-4">

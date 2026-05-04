@@ -30,7 +30,7 @@ class Product(models.Model):
     filters = models.ManyToManyField(FilterOption, blank=True, related_name='products')
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     details = models.TextField(blank=True, null=True)
     
     # Use Decimal for money! Never float.
@@ -48,7 +48,7 @@ class Product(models.Model):
         help_text="Calculated sale price after discount"
     )
     
-    sku = models.CharField(max_length=50, unique=True, verbose_name="Stock Keeping Unit")
+    sku = models.CharField(max_length=12, unique=True, verbose_name="Stock Keeping Unit")
     
     # JSONField allows you to store specific specs (e.g., 'hook_size' for flies) 
     # without needing a thousand different tables.
@@ -57,6 +57,8 @@ class Product(models.Model):
     
     stock_quantity = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
+    is_in_catalog = models.BooleanField(default=False)
+    catalog_countries = models.JSONField(default=list, blank=True, help_text="Specific countries for the catalog (e.g. ['USA', 'Canada']) or ['All']")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -86,7 +88,7 @@ class ProductImage(models.Model):
 class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants')
     size = models.CharField(max_length=255, verbose_name="Size", default="Default") # e.g. "Hook 12"
-    sku = models.CharField(max_length=50, unique=True, blank=True, null=True)
+    sku = models.CharField(max_length=12, unique=True, blank=True, null=True)
     price_override = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     stock_quantity = models.PositiveIntegerField(default=0)
     
@@ -109,7 +111,7 @@ class ProductVariant(models.Model):
         if not self.sku and self.product.sku:
             # Generate SKU: PRODUCTSKU-OPTION1-OPTION2
             variant_slug = slugify(self.size).upper()
-            self.sku = f"{self.product.sku}-{variant_slug}"
+            self.sku = f"{self.product.sku}-{variant_slug}"[:12]
         super().save(*args, **kwargs)
 
     def __str__(self):

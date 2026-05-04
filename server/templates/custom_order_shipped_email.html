@@ -1,6 +1,6 @@
 {% extends 'email.html' %}
 
-{% block title %}Order Shipped - Clearcast Fly Ltd{% endblock %}
+{% block title %}Order Shipped - ClearCast Fly {% endblock %}
 
 {% block heading %}
     Your Order is on the Way!
@@ -9,12 +9,12 @@
 {% block content %}
     <p style="margin: 0; margin-bottom: 16px;">Dear {{ name }},</p>
     <p style="margin: 0; margin-bottom: 24px;">Great news! Your custom order (<strong>Order #{{ order.id }}</strong>) has been shipped and is heading your way.</p>
-    
+
     <div style="background-color: #f9f9f9; padding: 20px; border-radius: 5px; text-align: left; margin-bottom: 24px; border-left: 4px solid #000000;">
         <p style="margin: 0;">We hope you enjoy your new gear! If you have any questions about your shipment, please don't hesitate to reach out.</p>
     </div>
 
-    <p style="margin: 0;">Thank you for choosing <strong>Clearcast Fly Ltd!</strong></p>
+    <p style="margin: 0;">Thank you for choosing <strong>ClearCast Fly !</strong></p>
 {% endblock %}
 
 {% block action %}

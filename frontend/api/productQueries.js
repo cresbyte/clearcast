@@ -14,16 +14,28 @@ export const fetchProducts = async ({
     priceRange = [0, 1000],
     sortBy = 'featured',
     page = 1,
-    isSet = null
+    pageSize = null,
+    isSet = null,
+    is_in_catalog = false,
+    catalog_country = null
 }) => {
     const params = new URLSearchParams();
 
     if (searchQuery) params.append('search', searchQuery);
     if (page) params.append('page', page);
+    if (pageSize) params.append('page_size', pageSize.toString());
     if (isSet !== null && isSet !== undefined) params.append('is_set', isSet.toString());
+    
+    // Catalog fields
+    if (is_in_catalog) params.append('is_in_catalog', 'true');
+    if (catalog_country && catalog_country !== 'All') params.append('catalog_country', catalog_country);
 
     // Filters are an array of option slugs
-    filters.forEach((slug) => params.append('filters__slug', slug));
+    if (Array.isArray(filters)) {
+        filters.forEach((slug) => params.append('filters__slug', slug));
+    } else if (filters.filters && Array.isArray(filters.filters)) {
+        filters.filters.forEach((slug) => params.append('filters__slug', slug));
+    }
 
     // Price range
     if (priceRange && priceRange.length === 2) {
@@ -144,6 +156,10 @@ export const fetchInfiniteProducts = async ({ pageParam = 1, filters = {} }) => 
     params.append('page', pageParam);
 
     if (filters.searchQuery) params.append('search', filters.searchQuery);
+    
+    // Catalog
+    if (filters.is_in_catalog) params.append('is_in_catalog', 'true');
+    if (filters.catalog_country && filters.catalog_country !== 'All') params.append('catalog_country', filters.catalog_country);
 
     // Filters
     if (filters.filters && filters.filters.length > 0) {
